@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e27797307d978a41ba284db6816788c, type: 3}
+  m_Name: Config
+  m_EditorClassIdentifier: 
+  <CollisionSound>k__BackingField: {fileID: 8300000, guid: 611d4e21eba7f9b4ea5d1b904be54760, type: 3}
+  <Items>k__BackingField:
+  - Name: 1
+    <Sample>k__BackingField: {fileID: 5775349761809549678, guid: 5bf4cfd74616c2044a4ed6a6a626befb, type: 3}
+  - Name: 2
+    <Sample>k__BackingField: {fileID: 6899597295950334748, guid: ae217afb9b3fec14997da99f651866d5, type: 3}
+  - Name: 
+    <Sample>k__BackingField: {fileID: 3596799037509997627, guid: 5e945eff68630714291b2ef70a571c9e, type: 3}
+  - Name: 
+    <Sample>k__BackingField: {fileID: 239222769901638143, guid: 4c4be0770a8c8094abc665d3323afb8f, type: 3}
+  - Name: 
+    <Sample>k__BackingField: {fileID: 6690833739231472591, guid: 8e19f499838fcee429c13ebc006bc619, type: 3}
+  - Name: 
+    <Sample>k__BackingField: {fileID: 6184684008670191328, guid: 5091f8d0518d9024fa038e86907d3971, type: 3}
+  - Name: 
+    <Sample>k__BackingField: {fileID: 2126079414874744878, guid: 5f1c520481e73224d9f91db46fc10fad, type: 3}
+  - Name: 
+    <Sample>k__BackingField: {fileID: 1201160681416923515, guid: 77d8433a5e25572448c1ad03957c0827, type: 3}
+  - Name: 
+    <Sample>k__BackingField: {fileID: 8206700084722782258, guid: 0a523665a57d04b4f9be7fef1e3f6481, type: 3}
+  - Name: 
+    <Sample>k__BackingField: {fileID: 7987976286654445231, guid: 556307ab726355e49b30282438887506, type: 3}
+  - Name: 
+    <Sample>k__BackingField: {fileID: 3193506898962924155, guid: fba60803f44daa64bb5af3b03aa796ef, type: 3}
+  - Name: 
+    <Sample>k__BackingField: {fileID: 3260825501283489258, guid: ebe9fbd1f7a2ec247aca8da20df63954, type: 3}
+  - Name: 
+    <Sample>k__BackingField: {fileID: 4688227112404386695, guid: a7b47ca8595fe58449ace710017bff82, type: 3}

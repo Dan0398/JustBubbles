@@ -1,0 +1,1266 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1028752232, guid: b2fa8f05806b6234483d9583ad4ccc09, type: 3}
+  m_Name: Data
+  m_EditorClassIdentifier: 
+  Editor_KeysTabWidth: 150
+  Keys:
+  - NameOfTheGame
+  - Endless
+  - Survival
+  - Strategy
+  - Merge
+  - Settings
+  - Music
+  - Sounds
+  - WatchAds
+  - Received
+  - ColorRemoved
+  - 'Mode_Formatted
+
+'
+  - StrategyDescription0
+  - StrategyDescription1
+  - GameOver
+  - Close
+  - Retry
+  - Moves
+  - Record
+  - NewRecordMark
+  - LeaderBoard
+  - Player
+  - Instrument_Formatted
+  - Tool_Bomb_Name
+  - Tool_Bomb_Descr
+  - Tool_Sniper_Name
+  - Tool_Sniper_Descr
+  - Tool_Laser_Name
+  - Tool_Laser_Descr
+  - StrategyMode
+  - Menu
+  - SurvivalMode
+  - Max
+  - Skip
+  - WatchAdAndContinue
+  - ComboFormatted
+  - SurvivalDescription0
+  - SurvivalDescription1
+  - SurvivalDescription2
+  - StrategyFailInfo
+  - MusicSourceDescription
+  - Score_Formatted
+  - SaveSlots
+  - NewGame
+  - Save&Menu
+  - Score
+  - Loss
+  - MergeMode
+  - EmptySlot
+  - MergeDescription0
+  - Merge_SizeName_Formatted
+  - Merge_ThemeName_Formatted
+  - Money_Formatted
+  - Themes
+  - Smiles
+  - Balls
+  - Sizes
+  - Slim
+  - AvailabeForTouch
+  - Select
+  - Quad
+  - NotAvailabeForTouch
+  - Wide
+  - ShowAds
+  - Shop
+  - Money
+  - Saving
+  - Blocked
+  - 2048
+  - Planets
+  - Food
+  - Yes
+  - No
+  - DeleteRequest_Formatted
+  - Tool_Shaker_Name
+  - Tool_MultiBall_Name
+  - Tool_MultiBall_Descr
+  - Deletion
+  Languages:
+  - Fullname: English
+    ISOCode: en
+    Editor_TabWidth: 283
+    Editor_TabWrapped: 0
+    Values:
+    - Just Bubbles
+    - Endless
+    - Survival
+    - Strategy
+    - Merge
+    - Settings
+    - Music
+    - Sounds
+    - Watch Ads
+    - received
+    - Color Removed!
+    - '{0} Mode'
+    - "    <color=#FFDE18>Task:</color> clear the playing field of balls in the minimum
+      number of moves.\r\nFrom the start of the game there are 6 colors on the field.
+      Removing all the balls of the same color, this color ceases to appear on the
+      playing field, and the game becomes more complicated.\r\n    <color=#FFDE18>Rules:</color>\r\n-You
+      can only place the balls on the field a few times. Then - new lines of balls
+      are added from above. The number of possible additions depends on the complexity
+      of the game.\r\n-The number of lines added also depends on the difficulty.\r\n-Even
+      if you pop the balls by adding a third, there is a counter of combo additions.
+      5 additions in a row will be counted as a miss.\r\n\r\nHow these indicators
+      look in the interface:"
+    - '1. The number of balls added to the field before the line was added.
+
+      2.
+      How many lines will be added from the top after the addition counter is exhausted.
+
+      3.
+      Combo counter in the form of a ring. Filled to 2/5. After 3 more additions,
+      the combo will be reset to zero, and the counter of available additions (on
+      the right) will decrease.
+
+      4. The number of completed moves per game.'
+    - Game Over!
+    - Close
+    - Retry
+    - 'Moves:'
+    - 'Record:'
+    - New!
+    - Leaderboard
+    - Player
+    - Tool "{0}"
+    - Bomb
+    - Destroys everything in the blast radius.
+    - Sniper Shot
+    - Destroys everything along the line of the shot.
+    - Laser
+    - Burns out the balls under its beam.
+    - Strategy Mode
+    - Menu
+    - Survival Mode
+    - Max
+    - Skip
+    - Watch Ads and Continue
+    - Combo X{0}
+    - "    <color=#FFDE18>Task:</color> hold out as long as possible and earn as
+      many points as possible.\r\nOver the course of the game, levels will follow
+      one after another, changing the number of colors of the balls and the reference
+      value of the combo.\r\n\r\n    <color=#FFDE18>Rules for scoring points:\r\n</color>\r\n+50
+      * Multiplier * Each dropped ball.\r\n\r\n+20 * Multiplier * Each burst ball.\r\n\r\nHow
+      to influence the multiplier? Collect combos.\r\n\r\n    <color=#FFDE18>Combo:</color>"
+    - "A set of combos occurs through popping groups of balls in a row.\r\n    By
+      typing a combo multiple of the reference value (RV), you increase the multiplier
+      and also get a bonus:\r\nCombo > RV * 1: 1,25\r\nCombo > RV * 2: 1,7 + bonus\nCombo
+      > RV * 3: 2,5 + bonus\nCombo > RV * 4: 3,2 + bonus\nThe combo is less than
+      the reference value: 1.\r\n\r\n<color=#FFDE18>Interface view:</color>"
+    - '1. The number of colors on the playing field.
+
+      2. Score Multiplier
+
+      3.
+      Points scored for the game
+
+      4. The reference (anchor) value of the combo
+
+      5.
+      Combo counter
+
+      6. The strip at the bottom. In-game level progress'
+    - Moves are recorded as a record only when the playing field is completely cleared.
+    - '5 tracks provided by the album "Free Music Lo-Fi Tracks" from RustedMusicStudio.
+      Learn:
+
+
+
+      https://rustedstudio.itch.io/free-music-lofi-tracks
+
+
+
+      The
+      music below is provided by the platform Freesound.org under a Creative Commons
+      license 0 or 4.0.
+
+      Authors, their compositions and audio ID on the site:
+
+
+      Seth_Makes_Sounds:
+
+      "Chill
+      Background Music" (670039)
+
+      "Lofi Guitar Drum Loop" (679004)
+
+      "Good
+      Vibe Background Music" (661782)
+
+      "bel fiore" (681104)
+
+      "Fat Lofi
+      Loop" (680333)
+
+      "Relaxing Background Music" (673325)
+
+      Doctor_Dreamchip:
+
+      "2020-01-10.wav"
+      (501796)
+
+      Migfus20:
+
+      "Lo-fi Music Guitar (loop version)" (580045)'
+    - 'Score: {0}'
+    - Save slots
+    - New Game
+    - Save & Menu
+    - 'Score:'
+    - Loss
+    - Merge Mode
+    - Empty Slot
+    - "    <color=#FFDE18>Task:</color> see all kinds of game objects of the chosen
+      theme and score as many points as possible by setting records.\r\n    It is
+      necessary to drop objects into the playing field. Two identical objects are
+      connected into a new one and give points.\r\n    There is a penalty area on
+      top, which objects should not touch. Otherwise, the game will be over. The
+      filling time is 5 seconds.\r\n    The game supports saving. Do not forget to
+      save manually before exiting - through the floppy disk icon, or exit the game
+      mode through the settings."
+    - 'Size: {0}'
+    - 'Theme: {0}'
+    - 'Money: {0}'
+    - Themes
+    - Emojis
+    - Balls
+    - Sizes
+    - Slim
+    - Availabe for smartphones
+    - Select
+    - Quad
+    - Not availabe for smartphones
+    - Wide
+    - Show Ads
+    - Shop
+    - 'Money:'
+    - Saving...
+    - Blocked
+    - 2048
+    - Planets
+    - Food
+    - Yes
+    - No
+    - Delete data from slot {0}?
+    - Shaker
+    - Multi-Ball
+    - Bursts color groups next to 2 balls, regardless of the color.
+    - Deletion
+  - Fullname: "\u0420\u0443\u0441\u0441\u043A\u0438\u0439"
+    ISOCode: ru
+    Editor_TabWidth: 234
+    Editor_TabWrapped: 1
+    Values:
+    - "\u041F\u0440\u043E\u0441\u0442\u043E \u0428\u0430\u0440\u0438\u043A\u0438"
+    - "\u0411\u0435\u0441\u043A\u043E\u043D\u0435\u0447\u043D\u043E"
+    - "\u0412\u044B\u0436\u0438\u0432\u0430\u043D\u0438\u0435"
+    - "\u0421\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u044F"
+    - "\u0421\u043B\u0438\u044F\u043D\u0438\u0435"
+    - "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438"
+    - "\u041C\u0443\u0437\u044B\u043A\u0430"
+    - "\u0417\u0432\u0443\u043A\u0438"
+    - "\u0421\u043C\u043E\u0442\u0440\u0435\u0442\u044C \u0440\u0435\u043A\u043B\u0430\u043C\u0443"
+    - "\u043F\u043E\u043B\u0443\u0447\u0435\u043D\u043E"
+    - "\u0426\u0432\u0435\u0442 \u0423\u0431\u0440\u0430\u043D!"
+    - "\u0420\u0435\u0436\u0438\u043C \"{0}\""
+    - "    <color=#FFDE18>\u0417\u0430\u0434\u0430\u0447\u0430:</color> \u043E\u0447\u0438\u0441\u0442\u0438\u0442\u044C
+      \u0438\u0433\u0440\u043E\u0432\u043E\u0435 \u043F\u043E\u043B\u0435 \u043E\u0442
+      \u0448\u0430\u0440\u0438\u043A\u043E\u0432 \u0437\u0430 \u043C\u0438\u043D\u0438\u043C\u0430\u043B\u044C\u043D\u043E\u0435
+      \u043A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0445\u043E\u0434\u043E\u0432.\n  
+      \u0421\u043E \u0441\u0442\u0430\u0440\u0442\u0430 \u0438\u0433\u0440\u044B
+      \u043D\u0430 \u043F\u043E\u043B\u0435 \u043D\u0430\u0445\u043E\u0434\u0438\u0442\u0441\u044F
+      6 \u0446\u0432\u0435\u0442\u043E\u0432. \u0423\u0431\u0438\u0440\u0430\u044F
+      \u0432\u0441\u0435 \u0448\u0430\u0440\u0438\u043A\u0438 \u043E\u0434\u043D\u043E\u0433\u043E
+      \u0446\u0432\u0435\u0442\u0430, \u044D\u0442\u043E\u0442 \u0446\u0432\u0435\u0442
+      \u043F\u0435\u0440\u0435\u0441\u0442\u0430\u0451\u0442 \u043F\u043E\u044F\u0432\u043B\u044F\u0442\u044C\u0441\u044F
+      \u043D\u0430 \u0438\u0433\u0440\u043E\u0432\u043E\u043C \u043F\u043E\u043B\u0435,
+      \u0430 \u0438\u0433\u0440\u0430 \u0443\u0441\u043B\u043E\u0436\u043D\u044F\u0435\u0442\u0441\u044F.\n  
+      <color=#FFDE18>\u041F\u0440\u0430\u0432\u0438\u043B\u0430:</color>\n   -\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C
+      \u0448\u0430\u0440\u0438\u043A\u0438 \u043D\u0430 \u043F\u043E\u043B\u0435
+      \u043C\u043E\u0436\u043D\u043E \u0442\u043E\u043B\u044C\u043A\u043E \u043D\u0435\u0441\u043A\u043E\u043B\u044C\u043A\u043E
+      \u0440\u0430\u0437. \u0417\u0430\u0442\u0435\u043C - \u0441\u0432\u0435\u0440\u0445\u0443
+      \u0434\u043E\u0431\u0430\u0432\u043B\u044F\u044E\u0442\u0441\u044F \u043D\u043E\u0432\u044B\u0435
+      \u043B\u0438\u043D\u0438\u0438 \u0448\u0430\u0440\u0438\u043A\u043E\u0432.
+      \u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u044B\u0445
+      \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0439 \u0437\u0430\u0432\u0438\u0441\u0438\u0442
+      \u043E\u0442 \u0441\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u0438 \u0438\u0433\u0440\u044B.\n  
+      -\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0434\u043E\u0431\u0430\u0432\u043B\u044F\u0435\u043C\u044B\u0445
+      \u043B\u0438\u043D\u0438\u0439 \u0442\u0430\u043A\u0436\u0435 \u0437\u0430\u0432\u0438\u0441\u0438\u0442
+      \u043E\u0442 \u0441\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u0438.\n   -\u0414\u0430\u0436\u0435
+      \u0435\u0441\u043B\u0438 \u043B\u043E\u043F\u0430\u0442\u044C \u0448\u0430\u0440\u0438\u043A\u0438
+      \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0435\u043C \u0442\u0440\u0435\u0442\u044C\u0435\u0433\u043E,
+      \u0435\u0441\u0442\u044C \u0441\u0447\u0451\u0442\u0447\u0438\u043A \u043A\u043E\u043C\u0431\u043E
+      \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0439. 5 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0439
+      \u043F\u043E\u0434\u0440\u044F\u0434 \u0431\u0443\u0434\u0443\u0442 \u0437\u0430\u0441\u0447\u0438\u0442\u044B\u0432\u0430\u0442\u044C\u0441\u044F
+      \u043A\u0430\u043A \u043F\u0440\u043E\u043C\u0430\u0445.\n\n\u041A\u0430\u043A
+      \u044D\u0442\u0438 \u043F\u043E\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u0438
+      \u0432\u044B\u0433\u043B\u044F\u0434\u044F\u0442 \u0432 \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u0435:"
+    - "1. \u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0439
+      \u0448\u0430\u0440\u0438\u043A\u043E\u0432 \u0432 \u043F\u043E\u043B\u0435
+      \u0434\u043E \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u043B\u0438\u043D\u0438\u0438.\n2.
+      \u0421\u043A\u043E\u043B\u044C\u043A\u043E \u043B\u0438\u043D\u0438\u0439 \u0434\u043E\u0431\u0430\u0432\u0438\u0442\u0441\u044F
+      \u0441\u0432\u0435\u0440\u0445\u0443 \u043F\u043E\u0441\u043B\u0435 \u0438\u0441\u0447\u0435\u0440\u043F\u0430\u043D\u0438\u044F
+      \u0441\u0447\u0451\u0442\u0447\u0438\u043A\u0430 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0439.\n3.
+      \u0421\u0447\u0451\u0442\u0447\u0438\u043A \u043A\u043E\u043C\u0431\u043E \u0432
+      \u0432\u0438\u0434\u0435 \u043A\u043E\u043B\u044C\u0446\u0430. \u0417\u0430\u043F\u043E\u043B\u043D\u0435\u043D
+      \u043D\u0430 2/5. \u041F\u043E\u0441\u043B\u0435 \u0435\u0449\u0451 3 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0439
+      - \u043A\u043E\u043C\u0431\u043E \u043E\u0431\u043D\u0443\u043B\u0438\u0442\u0441\u044F,
+      \u0430 \u0441\u0447\u0451\u0442\u0447\u0438\u043A \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B\u0445
+      \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0439 (\u0441\u043F\u0440\u0430\u0432\u0430)
+      \u0443\u043C\u0435\u043D\u044C\u0448\u0438\u0442\u0441\u044F.\n4. \u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E
+      \u0441\u043E\u0432\u0435\u0440\u0448\u0451\u043D\u043D\u044B\u0445 \u0445\u043E\u0434\u043E\u0432
+      \u0437\u0430 \u0438\u0433\u0440\u0443."
+    - "\u0418\u0433\u0440\u0430 \u043E\u043A\u043E\u043D\u0447\u0435\u043D\u0430!"
+    - "\u0417\u0430\u043A\u0440\u044B\u0442\u044C"
+    - "\u0417\u0430\u043D\u043E\u0432\u043E"
+    - "\u0425\u043E\u0434\u043E\u0432:"
+    - "\u0420\u0435\u043A\u043E\u0440\u0434:"
+    - "\u041D\u043E\u0432\u044B\u0439!"
+    - "\u0422\u0430\u0431\u043B\u0438\u0446\u0430 \u043B\u0438\u0434\u0435\u0440\u043E\u0432"
+    - "\u0418\u0433\u0440\u043E\u043A"
+    - "\u0418\u043D\u0441\u0442\u0440\u0443\u043C\u0435\u043D\u0442 \"{0}\""
+    - "\u0411\u043E\u043C\u0431\u0430"
+    - "\u0423\u043D\u0438\u0447\u0442\u043E\u0436\u0430\u0435\u0442 \u0432\u0441\u0451
+      \u0432 \u0440\u0430\u0434\u0438\u0443\u0441\u0435 \u0432\u0437\u0440\u044B\u0432\u0430."
+    - "\u0412\u044B\u0441\u0442\u0440\u0435\u043B"
+    - "\u0423\u043D\u0438\u0447\u0442\u043E\u0436\u0430\u0435\u0442 \u0432\u0441\u0451
+      \u043F\u043E \u043B\u0438\u043D\u0438\u0438 \u0432\u044B\u0441\u0442\u0440\u0435\u043B\u0430."
+    - "\u041B\u0430\u0437\u0435\u0440"
+    - "\u0412\u044B\u0436\u0438\u0433\u0430\u0435\u0442 \u0448\u0430\u0440\u0438\u043A\u0438
+      \u043F\u043E\u0434 \u0441\u0432\u043E\u0438\u043C \u043B\u0443\u0447\u043E\u043C."
+    - "\u0420\u0435\u0436\u0438\u043C \"\u0421\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u044F\""
+    - "\u041C\u0435\u043D\u044E"
+    - "\u0420\u0435\u0436\u0438\u043C \"\u0412\u044B\u0436\u0438\u0432\u0430\u043D\u0438\u0435\""
+    - "\u041C\u0430\u043A\u0441"
+    - "\u041F\u0440\u043E\u043F\u0443\u0441\u0442\u0438\u0442\u044C"
+    - "\u0421\u043C\u043E\u0442\u0440\u0435\u0442\u044C \u0440\u0435\u043A\u043B\u0430\u043C\u0443
+      \u0438 \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C"
+    - "\u041A\u043E\u043C\u0431\u043E X{0}"
+    - "   <color=#FFDE18>\u0417\u0430\u0434\u0430\u0447\u0430:</color> \u043F\u0440\u043E\u0434\u0435\u0440\u0436\u0430\u0442\u044C\u0441\u044F
+      \u043A\u0430\u043A \u043C\u043E\u0436\u043D\u043E \u0434\u043E\u043B\u044C\u0448\u0435
+      \u0438 \u0437\u0430\u0440\u0430\u0431\u043E\u0442\u0430\u0442\u044C \u043A\u0430\u043A
+      \u043C\u043E\u0436\u043D\u043E \u0431\u043E\u043B\u044C\u0448\u0435 \u043E\u0447\u043A\u043E\u0432.\r\n  
+      \u0421 \u0442\u0435\u0447\u0435\u043D\u0438\u0435\u043C \u0438\u0433\u0440\u044B
+      \u0431\u0443\u0434\u0443\u0442 \u0441\u043B\u0435\u0434\u043E\u0432\u0430\u0442\u044C
+      \u0443\u0440\u043E\u0432\u043D\u0438 \u043E\u0434\u0438\u043D \u0437\u0430
+      \u0434\u0440\u0443\u0433\u0438\u043C, \u043C\u0435\u043D\u044F\u044F \u043A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E
+      \u0446\u0432\u0435\u0442\u043E\u0432 \u0448\u0430\u0440\u0438\u043A\u043E\u0432
+      \u0438 \u043E\u043F\u043E\u0440\u043D\u043E\u0435 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435
+      \u043A\u043E\u043C\u0431\u043E.\r\n\r\n   <color=#FFDE18>\u041F\u0440\u0430\u0432\u0438\u043B\u0430
+      \u043D\u0430\u0447\u0438\u0441\u043B\u0435\u043D\u0438\u044F \u043E\u0447\u043A\u043E\u0432:\r</color>\n+50
+      * \u041C\u043D\u043E\u0436\u0438\u0442\u0435\u043B\u044C * \u041A\u0430\u0436\u0434\u044B\u0439
+      \u0443\u043F\u0430\u0432\u0448\u0438\u0439 \u0448\u0430\u0440\u0438\u043A.\r\n\n+20
+      * \u041C\u043D\u043E\u0436\u0438\u0442\u0435\u043B\u044C * \u041A\u0430\u0436\u0434\u044B\u0439
+      \u043B\u043E\u043F\u043D\u0443\u0442\u044B\u0439 \u0448\u0430\u0440\u0438\u043A.\r\n\n\u041A\u0430\u043A
+      \u043F\u043E\u0432\u043B\u0438\u044F\u0442\u044C \u043D\u0430 \u043C\u043D\u043E\u0436\u0438\u0442\u0435\u043B\u044C?
+      \u0421\u043E\u0431\u0438\u0440\u0430\u0442\u044C \u043A\u043E\u043C\u0431\u043E.\r\n\r\n  
+      <color=#FFDE18>\u041A\u043E\u043C\u0431\u043E:</color> "
+    - "\u041D\u0430\u0431\u043E\u0440 \u043A\u043E\u043C\u0431\u043E \u043F\u0440\u043E\u0438\u0441\u0445\u043E\u0434\u0438\u0442
+      \u0447\u0435\u0440\u0435\u0437 \u043B\u043E\u043F\u0430\u043D\u0438\u0435 \u0433\u0440\u0443\u043F\u043F
+      \u0448\u0430\u0440\u0438\u043A\u043E\u0432 \u043F\u043E\u0434\u0440\u044F\u0434.\n   
+      \u041D\u0430\u0431\u0438\u0440\u0430\u044F \u043A\u043E\u043C\u0431\u043E \u043A\u0440\u0430\u0442\u043D\u043E
+      \u043E\u043F\u043E\u0440\u043D\u043E\u043C\u0443 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u044E
+      (RV), \u0412\u044B \u0443\u0432\u0435\u043B\u0438\u0447\u0438\u0432\u0430\u0435\u0442\u0435
+      \u043C\u043D\u043E\u0436\u0438\u0442\u0435\u043B\u044C, \u0430 \u0442\u0430\u043A\u0436\u0435
+      \u043F\u043E\u043B\u0443\u0447\u0430\u0435\u0442\u0435 \u0431\u043E\u043D\u0443\u0441:\r\n\u041A\u043E\u043C\u0431\u043E
+      > RV * 1:  1.25\r\n\u041A\u043E\u043C\u0431\u043E > RV * 2:  1.7 + \u0431\u043E\u043D\u0443\u0441\r\n\u041A\u043E\u043C\u0431\u043E
+      > RV * 3:  2.5 + \u0431\u043E\u043D\u0443\u0441\r\n\u041A\u043E\u043C\u0431\u043E
+      > RV * 4:  3.2 + \u0431\u043E\u043D\u0443\u0441\n\u041A\u043E\u043C\u0431\u043E
+      \u043C\u0435\u043D\u044C\u0448\u0435 \u043E\u043F\u043E\u0440\u043D\u043E\u0433\u043E
+      \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u044F: 1.\r\n\r\n   <color=#FFDE18>\u0412\u0438\u0434
+      \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u0430:</color>"
+    - "1. \u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0446\u0432\u0435\u0442\u043E\u0432
+      \u043D\u0430 \u0438\u0433\u0440\u043E\u0432\u043E\u043C \u043F\u043E\u043B\u0435.\n2.
+      \u041C\u043D\u043E\u0436\u0438\u0442\u0435\u043B\u044C \u043E\u0447\u043A\u043E\u0432\n3.
+      \u041D\u0430\u0431\u0440\u0430\u043D\u043D\u044B\u0435 \u043E\u0447\u043A\u0438
+      \u0437\u0430 \u0438\u0433\u0440\u0443\n4. \u041E\u043F\u043E\u0440\u043D\u043E\u0435(\u044F\u043A\u043E\u0440\u043D\u043E\u0435)
+      \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435 \u043A\u043E\u043C\u0431\u043E\n5.
+      \u0421\u0447\u0451\u0442\u0447\u0438\u043A \u043A\u043E\u043C\u0431\u043E\n6.
+      \u041F\u043E\u043B\u043E\u0441\u0430 \u0441\u043D\u0438\u0437\u0443. \u041F\u0440\u043E\u0433\u0440\u0435\u0441\u0441
+      \u0432\u043D\u0438\u0442\u0440\u0438\u0438\u0433\u0440\u043E\u0432\u043E\u0433\u043E
+      \u0443\u0440\u043E\u0432\u043D\u044F"
+    - "\u0425\u043E\u0434\u044B \u0437\u0430\u043F\u0438\u0441\u044B\u0432\u0430\u044E\u0442\u0441\u044F
+      \u043A\u0430\u043A \u0440\u0435\u043A\u043E\u0440\u0434 \u0442\u043E\u043B\u044C\u043A\u043E
+      \u0442\u043E\u0433\u0434\u0430, \u043A\u043E\u0433\u0434\u0430 \u0438\u0433\u0440\u043E\u0432\u043E\u0435
+      \u043F\u043E\u043B\u0435 \u043F\u043E\u043B\u043D\u043E\u0441\u0442\u044C\u044E
+      \u043E\u0447\u0438\u0449\u0435\u043D\u043E."
+    - "5 \u043A\u043E\u043C\u043F\u043E\u0437\u0438\u0446\u0438\u0439 \u043F\u0440\u0435\u0434\u043E\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u043E
+      \u0430\u043B\u044C\u0431\u043E\u043C\u043E\u043C \"Free Music Lo-Fi Tracks\"
+      \u043E\u0442 RustedMusicStudio. \u041E\u0437\u043D\u0430\u043A\u043E\u043C\u0438\u0442\u044C\u0441\u044F:\n\nhttps://rustedstudio.itch.io/free-music-lofi-tracks\n\n\u041C\u0443\u0437\u044B\u043A\u0430
+      \u043D\u0438\u0436\u0435 \u043F\u0440\u0435\u0434\u043E\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u0430
+      \u043F\u043B\u043E\u0449\u0430\u0434\u043A\u043E\u0439 Freesound.org \u043F\u043E
+      \u043B\u0438\u0446\u0435\u043D\u0437\u0438\u0438 Creative Commons 0 \u043B\u0438\u0431\u043E
+      4.0.\n\u0410\u0432\u0442\u043E\u0440\u044B, \u0438\u0445 \u043A\u043E\u043C\u043F\u043E\u0437\u0438\u0446\u0438\u0438
+      \u0438 ID \u0430\u0443\u0434\u0438\u043E \u043D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u043A\u0435:\n\nSeth_Makes_Sounds:\r\n\"Chill
+      Background Music\" (670039)\r\n\"Lofi Guitar Drum Loop\" (679004)\r\n\"Good
+      Vibe Background Music\" (661782)\r\n\"bel fiore\" (681104)\r\n\"Fat Lofi Loop\"
+      (680333)\r\n\"Relaxing Background Music\" (673325)\r\nDoctor_Dreamchip:\r\n\"2020-01-10.wav\"
+      (501796)\r\nMigfus20:\r\n\"Lo-fi Music Guitar (loop version)\" (580045)"
+    - "\u041E\u0447\u043A\u0438: {0}"
+    - "\u0421\u043B\u043E\u0442\u044B \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0439"
+    - "\u041D\u043E\u0432\u0430\u044F \u0438\u0433\u0440\u0430"
+    - "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C & \u041C\u0435\u043D\u044E"
+    - "\u041E\u0447\u043A\u0438"
+    - "\u041F\u0440\u043E\u0438\u0433\u0440\u044B\u0448"
+    - "\u0420\u0435\u0436\u0438\u043C \"\u0421\u043B\u0438\u044F\u043D\u0438\u0435\""
+    - "\u041F\u0443\u0441\u0442\u043E\u0439 \u0441\u043B\u043E\u0442"
+    - "    <color=#FFDE18>\u0417\u0430\u0434\u0430\u0447\u0430:</color> \u0443\u0432\u0438\u0434\u0435\u0442\u044C
+      \u0432\u0441\u0435\u0432\u043E\u0437\u043C\u043E\u0436\u043D\u044B\u0435 \u0438\u0433\u0440\u043E\u0432\u044B\u0435
+      \u043E\u0431\u044A\u0435\u043A\u0442\u044B \u0432\u044B\u0431\u0440\u0430\u043D\u043D\u043E\u0439
+      \u0442\u0435\u043C\u044B \u0438 \u043D\u0430\u0431\u0440\u0430\u0442\u044C
+      \u043A\u0430\u043A \u043C\u043E\u0436\u043D\u043E \u0431\u043E\u043B\u044C\u0448\u0435
+      \u043E\u0447\u043A\u043E\u0432, \u0443\u0441\u0442\u0430\u043D\u0430\u0432\u043B\u0438\u0432\u0430\u044F
+      \u0440\u0435\u043A\u043E\u0440\u0434\u044B. \r\n    \u041D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u043E
+      \u0441\u0431\u0440\u0430\u0441\u044B\u0432\u0430\u0442\u044C \u043E\u0431\u044A\u0435\u043A\u0442\u044B
+      \u0432 \u0438\u0433\u0440\u043E\u0432\u043E\u0435 \u043F\u043E\u043B\u0435.
+      \u0414\u0432\u0430 \u043E\u0434\u0438\u043D\u0430\u043A\u043E\u0432\u044B\u0445
+      \u043E\u0431\u044A\u0435\u043A\u0442\u0430 \u0441\u043E\u0435\u0434\u0438\u043D\u044F\u044E\u0442\u0441\u044F
+      \u0432 \u043D\u043E\u0432\u044B\u0439 \u0438 \u0434\u0430\u044E\u0442 \u043E\u0447\u043A\u0438.\r\n   
+      \u0421\u0432\u0435\u0440\u0445\u0443 \u0435\u0441\u0442\u044C \u0448\u0442\u0440\u0430\u0444\u043D\u0430\u044F
+      \u0437\u043E\u043D\u0430, \u043A\u043E\u0442\u043E\u0440\u0443\u044E \u043D\u0435
+      \u0434\u043E\u043B\u0436\u043D\u044B \u043A\u0430\u0441\u0430\u0442\u044C\u0441\u044F
+      \u043E\u0431\u044A\u0435\u043A\u0442\u044B. \u0418\u043D\u0430\u0447\u0435
+      \u0438\u0433\u0440\u0430 \u0431\u0443\u0434\u0435\u0442 \u0437\u0430\u0432\u0435\u0440\u0448\u0435\u043D\u0430.
+      \u0412\u0440\u0435\u043C\u044F \u0437\u0430\u043F\u043E\u043B\u043D\u0435\u043D\u0438\u044F
+      - 5 \u0441\u0435\u043A\u0443\u043D\u0434.\r\n    \u0418\u0433\u0440\u0430 \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0435\u0442
+      \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F. \u041D\u0435
+      \u0437\u0430\u0431\u044B\u0432\u0430\u0439\u0442\u0435 \u043F\u0435\u0440\u0435\u0434
+      \u0432\u044B\u0445\u043E\u0434\u043E\u043C \u0432\u0440\u0443\u0447\u043D\u0443\u044E
+      \u0441\u043E\u0445\u0440\u0430\u043D\u044F\u0442\u044C\u0441\u044F - \u0447\u0435\u0440\u0435\u0437
+      \u0438\u043A\u043E\u043D\u043A\u0443 \u0434\u0438\u0441\u043A\u0435\u0442\u044B,
+      \u043B\u0438\u0431\u043E \u0432\u044B\u0439\u0442\u0438 \u0438\u0437 \u0438\u0433\u0440\u043E\u0432\u043E\u0433\u043E
+      \u0440\u0435\u0436\u0438\u043C\u0430 \u0447\u0435\u0440\u0435\u0437 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438."
+    - "\u0420\u0430\u0437\u043C\u0435\u0440: {0}"
+    - "\u0422\u0435\u043C\u0430: {0}"
+    - "\u0414\u0435\u043D\u044C\u0433\u0438: {0}"
+    - "\u0422\u0435\u043C\u044B"
+    - "\u0421\u043C\u0430\u0439\u043B\u044B"
+    - "\u041C\u044F\u0447\u0438"
+    - "\u0420\u0430\u0437\u043C\u0435\u0440\u044B"
+    - "\u0423\u0437\u043A\u0438\u0439"
+    - "\u0414\u043E\u0441\u0442\u0443\u043F\u043D\u043E \u0434\u043B\u044F \u0441\u043C\u0430\u0440\u0442\u0444\u043E\u043D\u043E\u0432"
+    - "\u0412\u044B\u0431\u0440\u0430\u0442\u044C"
+    - "\u041A\u0432\u0430\u0434\u0440\u0430\u0442"
+    - "\u041D\u0435\u0434\u043E\u0441\u0442\u0443\u043F\u043D\u043E \u0434\u043B\u044F
+      \u0441\u043C\u0430\u0440\u0442\u0444\u043E\u043D\u043E\u0432"
+    - "\u0428\u0438\u0440\u043E\u043A\u0438\u0439"
+    - "\u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C \u0440\u0435\u043A\u043B\u0430\u043C\u0443"
+    - "\u041C\u0430\u0433\u0430\u0437\u0438\u043D"
+    - "\u0414\u0435\u043D\u044C\u0433\u0438:"
+    - "\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435..."
+    - "\u0417\u0430\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u043D\u043E"
+    - 2048
+    - "\u041F\u043B\u0430\u043D\u0435\u0442\u044B"
+    - "\u0415\u0434\u0430"
+    - "\u0414\u0430"
+    - "\u041D\u0435\u0442"
+    - "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0434\u0430\u043D\u043D\u044B\u0435
+      \u0438\u0437 \u0441\u043B\u043E\u0442\u0430 {0}?"
+    - "\u0428\u0435\u0439\u043A\u0435\u0440"
+    - "\u041C\u0443\u043B\u044C\u0442\u0438-\u0428\u0430\u0440\u0438\u043A"
+    - "\u041B\u043E\u043F\u0430\u0435\u0442 \u0446\u0432\u0435\u0442\u043E\u0432\u044B\u0435
+      \u0433\u0440\u0443\u043F\u043F\u044B \u0440\u044F\u0434\u043E\u043C \u043E\u0442
+      2 \u0448\u0430\u0440\u043E\u0432 \u0432\u043D\u0435 \u0437\u0430\u0432\u0438\u0441\u0438\u043C\u043E\u0441\u0442\u0438
+      \u043E\u0442 \u0446\u0432\u0435\u0442\u0430."
+    - "\u0423\u0434\u0430\u043B\u0435\u043D\u0438\u0435"
+  - Fullname: "\u0422\u0443\u0440\u0435\u0446\u043A\u0438\u0439"
+    ISOCode: tr
+    Editor_TabWidth: 218
+    Editor_TabWrapped: 1
+    Values:
+    - Sadece Toplar
+    - Sonsuz
+    - Hayatta kalma
+    - Strateji
+    - "Birle\u015Ftirmek"
+    - Ayarlar
+    - "M\xFCzik"
+    - Sesler
+    - "Reklamlar\u0131 \u0130zle"
+    - "kabul edilmi\u015F"
+    - "Renk Kald\u0131r\u0131ld\u0131!"
+    - '{0} Modu'
+    - "    <color=#FFDE18> G\xF6rev:</color> minimum say\u0131da hamlede toplar\u0131n
+      oyun alan\u0131n\u0131 temizleyin.\r\nOyunun ba\u015F\u0131ndan itibaren sahada
+      6 renk var. Ayn\u0131 renkteki t\xFCm toplar\u0131 kald\u0131rarak, bu renk
+      oyun alan\u0131nda g\xF6r\xFCnmeyi b\u0131rak\u0131r ve oyun daha karma\u015F\u0131k
+      hale gelir.\r\n    <color=#FFDE18>Kurallar:</color>\r\n- Toplar\u0131 sahaya
+      sadece birka\xE7 kez yerle\u015Ftirebilirsiniz. Sonra - yukar\u0131dan yeni
+      top \xE7izgileri eklenir. Olas\u0131 eklemelerin say\u0131s\u0131 oyunun karma\u015F\u0131kl\u0131\u011F\u0131na
+      ba\u011Fl\u0131d\u0131r.\r\n- Eklenen sat\u0131r say\u0131s\u0131 da zorlu\u011Fa
+      ba\u011Fl\u0131d\u0131r.\r\n- \xDC\xE7te birini ekleyerek toplar\u0131 patlatsan\u0131z
+      bile, a\xE7\u0131lan eklemelerin bir sayac\u0131 vard\u0131r. \xFCst \xFCste
+      5 ekleme bir bayan olarak say\u0131lacakt\u0131r.\r\n\r\nBu g\xF6stergelerin
+      aray\xFCzde nas\u0131l g\xF6r\xFCnd\xFC\u011F\xFC:"
+    - "1. \xC7izgi eklenmeden \xF6nce sahaya eklenen top say\u0131s\u0131.\n2. Ekleme
+      sayac\u0131 bitince \xFCstten ka\xE7 sat\u0131r eklenecek?\n3. Halka \u015Feklinde
+      kombo sayac\u0131. 2/5'e kadar doldurulmu\u015Ftur. 3 ekleme daha yap\u0131ld\u0131ktan
+      sonra kombo s\u0131f\u0131rlanacak ve mevcut eklemelerin sayac\u0131 (sa\u011Fda)
+      azalacakt\u0131r.\n4. Oyun ba\u015F\u0131na tamamlanan hamle say\u0131s\u0131."
+    - Oyun bitti!
+    - "Kapal\u0131"
+    - Yeniden dene
+    - 'Hareket:'
+    - "Kay\u0131t:"
+    - Yeni!
+    - "Liderler S\u0131ralamas\u0131"
+    - Oyuncu
+    - "Ara\xE7 \"{0}\""
+    - Bomba
+    - "Patlama yar\u0131\xE7ap\u0131ndaki her \u015Feyi yok eder."
+    - "Keskin Ni\u015Fanc\u0131 At\u0131\u015F\u0131"
+    - "At\u0131\u015F hatt\u0131 boyunca her \u015Feyi yok eder."
+    - Lazer
+    - "I\u015F\u0131n\u0131n alt\u0131ndaki toplar\u0131 yakar."
+    - Strateji Modu
+    - "Men\xFC"
+    - Hayatta kalma modu
+    - Maks
+    - Atlamak
+    - "Reklamlar\u0131 \u0130zleyin ve Devam Edin"
+    - Kombo X{0}
+    - "    <color=#FFDE18> G\xF6rev: </color> m\xFCmk\xFCn oldu\u011Funca uzun s\xFCre
+      dayan\u0131n ve m\xFCmk\xFCn oldu\u011Funca \xE7ok puan kazan\u0131n.\r\nOyun
+      boyunca, seviyeler birbiri ard\u0131na takip edecek, toplar\u0131n renk say\u0131s\u0131n\u0131
+      ve kombinasyonun referans de\u011Ferini de\u011Fi\u015Ftirecektir.\r\n\r\n   
+      <color=#FFDE18>Puanlama kurallar\u0131:\r\n</color>\r\n50 * \xC7arpan * Her
+      d\xFC\u015Fen top.\r\n\r\n20 * \xC7arpan * Her patlama topu.\r\n\r\n\xC7arpan\u0131
+      nas\u0131l etkileyebilirim? Kombinasyonlar\u0131 toplay\u0131n.\r\n\r\n   
+      <color=#FFDE18>Birle\u015Fik giri\u015F:</color>"
+    - "Bir dizi kombinasyon, \xFCst \xFCste top gruplar\u0131n\u0131 patlatarak ger\xE7ekle\u015Fir.\r\nReferans
+      de\u011Ferin (RV) birle\u015Fik kat\u0131n\u0131 yazarak \xE7arpan\u0131 art\u0131r\u0131r
+      ve ayr\u0131ca bonus kazan\u0131rs\u0131n\u0131z:\r\nKombo > RV * 1: 1.25\r\nKombo
+      > RV * 2: 1.7 + bonus\r\nKombo > RV * 3: 2.5 + bonus\r\nKombo > RV * 4: 3.2
+      + bonus\r\nBirle\u015Fik giri\u015F, referans de\u011Ferinden daha azd\u0131r:
+      1.\r\n\r\n<color=#FFDE18> Aray\xFCz g\xF6r\xFCn\xFCm\xFC:</color>"
+    - "1. Oyun alan\u0131ndaki renklerin say\u0131s\u0131.\n2. Puan \xC7arpan\u0131\n3.
+      Oyunda kazan\u0131lan puanlar\n4. Kombinin referans (\xE7apa) de\u011Feri\n5.
+      Kombine saya\xE7\n6. Alttaki \u015Ferit. Oyun i\xE7i seviye ilerlemesi"
+    - "Hareketler yaln\u0131zca oyun alan\u0131 tamamen temizlendi\u011Finde rekor
+      olarak kaydedilir."
+    - "5 par\xE7a RustedMusicStudio'nun \"Free Music Lo-Fi Tracks\" alb\xFCm\xFC
+      taraf\u0131ndan sa\u011Flanm\u0131\u015Ft\u0131r. \xD6\u011Frenin:\r\n\r\nhttps://rustedstudio.itch.io/free-music-lofi-tracks\r\n\r\nA\u015Fa\u011F\u0131daki
+      m\xFCzik, Freesound.org platformu taraf\u0131ndan Creative Commons lisans\u0131
+      0 veya 4.0 kapsam\u0131nda sa\u011Flanmaktad\u0131r.\r\nSitedeki yazarlar,
+      besteleri ve ses kimlikleri:\n\nSeth_Makes_Sounds:\r\n\"Chill Background Music\"
+      (670039)\r\n\"Lofi Guitar Drum Loop\" (679004)\r\n\"Good Vibe Background Music\"
+      (661782)\r\n\"bel fiore\" (681104)\r\n\"Fat Lofi Loop\" (680333)\r\n\"Relaxing
+      Background Music\" (673325)\r\nDoctor_Dreamchip:\r\n\"2020-01-10.wav\" (501796)\r\nMigfus20:\r\n\"Lo-fi
+      Music Guitar (loop version)\" (580045)"
+    - 'Puan: {0}'
+    - "Yuvalar\u0131 kaydet"
+    - Yeni oyun
+    - Kaydetmek
+    - 'Gol:'
+    - "Kay\u0131p"
+    - "Birle\u015Ftirme Modu"
+    - "Bo\u015F yuva"
+    - "    <color=#FFDE18>G\xF6rev: </color> Se\xE7ilen teman\u0131n her t\xFCrl\xFC
+      oyun nesnesini g\xF6rmek ve kay\u0131tlar\u0131 ayarlayarak m\xFCmk\xFCn oldu\u011Funca
+      \xE7ok puan kazanmak.\r\n    Nesneleri oyun alan\u0131na b\u0131rakman\u0131z
+      gerekir. \u0130ki \xF6zde\u015F nesne yenisine ba\u011Flan\u0131r ve puan verir.\r\n   
+      Yukar\u0131dan, nesnelerin dokunmamas\u0131 gereken bir ceza alan\u0131 vard\u0131r.
+      Aksi takdirde oyun bitecek. Dolum s\xFCresi 5 saniyedir.\r\n    Oyun kaydetmeyi
+      destekliyor. \xC7\u0131kmadan \xF6nce manuel olarak kaydedilmeyi unutmay\u0131n
+      - disket simgesiyle veya ayarlar arac\u0131l\u0131\u011F\u0131yla oyun modundan
+      \xE7\u0131k\u0131n."
+    - 'Boyut: {0}'
+    - 'Tema: {0}'
+    - 'Para: {0}'
+    - Temalar
+    - Emojiler
+    - Toplar
+    - Boyutlar
+    - "\u0130nce"
+    - "Ak\u0131ll\u0131 telefonlar i\xE7in mevcut"
+    - "Se\xE7me"
+    - "D\xF6rtl\xFC"
+    - "Ak\u0131ll\u0131 telefonlar i\xE7in mevcut de\u011Fil"
+    - "Geni\u015F"
+    - "Reklamlar\u0131 G\xF6ster"
+    - "Ma\u011Faza"
+    - 'Para:'
+    - Kaydediliyor...
+    - Engellendi
+    - 2048
+    - Gezegenler
+    - Yiyecek
+    - Evet
+    - HAYIR
+    - "{0} yuvas\u0131ndaki veriler silinsin mi?"
+    - Shaker
+    - "\xC7oklu Top"
+    - "Renk ne olursa olsun, 2 topun yan\u0131ndaki renk gruplar\u0131n\u0131 patlat\u0131r."
+    - Silme
+  - Fullname: "\u0418\u0441\u043F\u0430\u043D\u0441\u043A\u0438\u0439"
+    ISOCode: es
+    Editor_TabWidth: 231
+    Editor_TabWrapped: 1
+    Values:
+    - Solo palle
+    - Sin fin
+    - Supervivencia
+    - Estrategia
+    - Unir
+    - Ajustes
+    - "M\xFAsica"
+    - Sonidos
+    - Ver anuncios
+    - "recibi\xF3"
+    - "\xA1Color eliminado!"
+    - Modo {0}
+    - "    <color=#FFDE18>Tarea:</color> despeja el campo de juego de bolas en el
+      n\xFAmero m\xEDnimo de movimientos.\r\nDesde el comienzo del juego hay 6 colores
+      en el campo. Al eliminar todas las bolas del mismo color, este color deja de
+      aparecer en el campo de juego y el juego se vuelve m\xE1s complicado.\r\n   
+      <color=#FFDE18>Reglas:</color>\r\n-Solo puedes colocar las bolas en el campo
+      unas cuantas veces. Luego, se agregan nuevas l\xEDneas de bolas desde arriba
+      . El n\xFAmero de adiciones posibles depende de la complejidad del juego.\r\n-El
+      n\xFAmero de l\xEDneas a\xF1adidas tambi\xE9n depende de la dificultad.\r\n-
+      Incluso si explotas las bolas agregando una tercera, hay un contador de adiciones
+      combinadas. 5 adiciones seguidas se contar\xE1n como una falta.\r\n\r\nC\xF3mo
+      se ven estos indicadores en la interfaz:"
+    - "1. El n\xFAmero de bolas agregadas al campo antes de que se agregara la l\xEDnea.\n2.
+      Cu\xE1ntas l\xEDneas se agregar\xE1n desde arriba despu\xE9s de que se agote
+      el contador de sumas.\n3. Contador combinado en forma de anillo. Lleno al 2/5.
+      Despu\xE9s de 3 adiciones m\xE1s, el combo se restablecer\xE1 a cero y el contador
+      de adiciones disponibles (a la derecha) disminuir\xE1.\n4. El n\xFAmero de
+      movimientos completados por partida."
+    - "\xA1Juego terminado!"
+    - Cerca
+    - Rever
+    - 'Movimientos:'
+    - 'Registro:'
+    - "\xA1Nuevo!"
+    - "Tabla de clasificaci\xF3n"
+    - Jugador
+    - Herramienta "{0}"
+    - Bomba
+    - "Destruye todo lo que se encuentre en el radio de la explosi\xF3n."
+    - Disparo de francotirador
+    - "Destruye todo lo que se encuentra a lo largo de la l\xEDnea del disparo."
+    - "L\xE1ser"
+    - Quema las bolas bajo su rayo.
+    - Modo estrategia
+    - "Men\xFA"
+    - Modo de supervivencia
+    - "M\xE1ximo"
+    - Saltar
+    - Ver anuncios y continuar
+    - Combo X{0}
+    - "    <color=#FFDE18>Tarea:</color> aguanta el mayor tiempo posible y gana tantos
+      puntos como sea posible.\r\nA lo largo del juego, los niveles se suceder\xE1n
+      uno tras otro, cambiando el n\xFAmero de colores de las bolas y el valor de
+      referencia del combo.\r\n\r\n    <color=#FFDE18>Reglas para sumar puntos:\r</color>\r\n+
+      50 * Multiplicador * Por cada bola ca\xEDda.\r\n\r\n+ 20 * Multiplicador *
+      Cada bola reventada.\r\n\r\n\xBFC\xF3mo influir en el multiplicador? Recoge
+      combos.\r\n\r\n    <color=#FFDE18>Combo:</color>"
+    - "Se produce una serie de combos haciendo estallar grupos de bolas en fila.\r\n   
+      Al escribir un m\xFAltiplo combinado del valor de referencia (RV), aumentas
+      el multiplicador y tambi\xE9n obtienes una bonificaci\xF3n:\r\nCombinado >
+      RV * 1: 1,25\r\nCombo > RV * 2: 1,7 + bonificaci\xF3n\r\nCombo > RV * 3: 2,5\r
+      + bonificaci\xF3n\r\nCombo > RV * 4: 3,2\r + bonificaci\xF3n\r\nEl combo es
+      menor que el valor de referencia: 1.\r\n\r\n<color=#FFDE18>Vista de interfaz:</color>"
+    - "1. El n\xFAmero de colores en el campo de juego.\n2. Multiplicador de puntuaci\xF3n\n3.
+      Puntos anotados por el juego.\n4. El valor de referencia (ancla) del combo.\n5.
+      Contador combinado\n6. La tira en la parte inferior. Progreso de nivel en el
+      juego"
+    - "Las jugadas se registran como r\xE9cord s\xF3lo cuando el campo de juego est\xE1
+      completamente despejado."
+    - "5 pistas proporcionadas por el \xE1lbum \"Free Music Lo-Fi Tracks\" de RustedMusicStudio.
+      Aprenda:\r\n\r\nhttps://rustedstudio.itch.io/free-music-lofi-tracks\r\n\r\nLa
+      m\xFAsica a continuaci\xF3n es proporcionada por la plataforma Freesound.org
+      bajo una licencia Creative Commons 0 o 4.0.\r\nAutores, sus composiciones e
+      identificaci\xF3n de audio en el sitio:\n\nSeth_Makes_Sounds:\r\n\"Chill Background
+      Music\" (670039)\r\n\"Lofi Guitar Drum Loop\" (679004)\r\n\"Good Vibe Background
+      Music\" (661782)\r\n\"bel fiore\" (681104)\r\n\"Fat Lofi Loop\" (680333)\r\n\"Relaxing
+      Background Music\" (673325)\r\nDoctor_Dreamchip:\r\n\"2020-01-10.wav\" (501796)\r\nMigfus20:\r\n\"Lo-fi
+      Music Guitar (loop version)\" (580045)"
+    - "Puntuaci\xF3n: {0}"
+    - Guardar espacios
+    - Nuevo juego
+    - Ahorrar
+    - 'Puntaje:'
+    - "P\xE9rdida"
+    - "Modo de fusi\xF3n"
+    - "Ranura vac\xEDa"
+    - "    <color=#FFDE18>Tarea:</color> ver todo tipo de objetos de juego del tema
+      seleccionado y anotar tantos puntos como sea posible estableciendo r\xE9cords.\r\n   
+      Es necesario tirar objetos en el campo de juego. Dos objetos id\xE9nticos se
+      unen en uno nuevo y dan puntos.\r\n    En la parte superior hay un \xE1rea
+      de penalizaci\xF3n que los objetos no deben tocar. De lo contrario, el juego
+      se completar\xE1. El tiempo de llenado es de 5 segundos.\r\n    El juego es
+      compatible con el ahorro. No se olvide de guardar manualmente antes de salir
+      - a trav\xE9s del icono del disquete, o salir del modo de juego a trav\xE9s
+      de la configuraci\xF3n."
+    - "Tama\xF1o: {0}"
+    - 'Tema: {0}'
+    - 'Dinero: {0}'
+    - Temas
+    - Emojis
+    - Pelotas
+    - "Tama\xF1os"
+    - Delgado
+    - "Disponible para tel\xE9fonos inteligentes"
+    - Seleccionar
+    - Patio
+    - "No disponible para tel\xE9fonos inteligentes"
+    - Ancho
+    - Mostrar anuncios
+    - Comercio
+    - 'Dinero:'
+    - Ahorro...
+    - Obstruido
+    - 2048
+    - Planetas
+    - Alimento
+    - "S\xED"
+    - No
+    - "\xBFEliminar datos del espacio {0}?"
+    - Criba vibradora
+    - Multibola
+    - Explota grupos de colores junto a 2 bolas, independientemente del color.
+    - "Supresi\xF3n"
+  - Fullname: "\u0418\u0442\u0430\u043B\u044C\u044F\u043D\u0441\u043A\u0438\u0439"
+    ISOCode: it
+    Editor_TabWidth: 342
+    Editor_TabWrapped: 1
+    Values:
+    - Solo palle
+    - Infinito
+    - Sopravvivenza
+    - Strategia
+    - Unisci
+    - Impostazioni
+    - Musica
+    - Suoni
+    - Guarda gli annunci
+    - ricevuto
+    - Colore rimosso!
+    - "Modalit\xE0 {0}"
+    - "    <color=#FFDE18>Tarea:</color> despeja el campo de juego de bolas en el
+      n\xFAmero m\xEDnimo de movimientos.\r\nDesde el comienzo del juego hay 6 colores
+      en el campo. Al eliminar todas las bolas del mismo color, este color deja de
+      aparecer en el campo de juego y el juego se vuelve m\xE1s complicado.\r\n   
+      <color=#FFDE18>Reglas:</color>\r\n-Solo puedes colocar las bolas en el campo
+      unas cuantas veces. Luego, se agregan nuevas l\xEDneas de bolas desde arriba
+      . El n\xFAmero de adiciones posibles depende de la complejidad del juego.\r\n-El
+      n\xFAmero de l\xEDneas a\xF1adidas tambi\xE9n depende de la dificultad.\r\n-
+      Incluso si explotas las bolas agregando una tercera, hay un contador de adiciones
+      combinadas. 5 adiciones seguidas se contar\xE1n como una falta.\r\n\r\nC\xF3mo
+      se ven estos indicadores en la interfaz:"
+    - "1. Il numero di palline aggiunte al campo prima che la linea fosse aggiunta.\n2.
+      Quante righe verranno aggiunte dall'alto una volta esaurito il contatore delle
+      aggiunte.\n3. Contatore combo a forma di anello. Riempito per 2/5. Dopo altre
+      3 aggiunte, la combo verr\xE0 azzerata e il contatore delle aggiunte disponibili
+      (a destra) diminuir\xE0.\n4. Il numero di mosse completate per partita."
+    - Game Over!
+    - Vicino
+    - Riprova
+    - 'Si muove:'
+    - 'Documentazione:'
+    - Nuovo!
+    - Classifica
+    - Giocatore
+    - Strumento "{0}"
+    - Bomba
+    - Distrugge tutto nel raggio dell'esplosione.
+    - Tiro da cecchino
+    - Distrugge tutto lungo la linea del tiro.
+    - Laser
+    - Brucia le palle sotto il suo raggio.
+    - "Modalit\xE0 strategica"
+    - "Men\xF9"
+    - "Modalit\xE0 sopravvivenza"
+    - Massimo
+    - Saltare
+    - Guarda gli annunci e continua
+    - Combinazione X{0}
+    - "    <color=#FFDE18>Tarea:</color>aguanta el mayor tiempo posible y gana tantos
+      puntos como sea posible.\r\nA lo largo del juego, los niveles se suceder\xE1n
+      uno tras otro, cambiando el n\xFAmero de colores de las bolas y el valor de
+      referencia del combo.\r\n\r\n    <color=#FFDE18>Reglas para sumar puntos:\r\n</color>\r\n+
+      50 * Multiplicador * Por cada bola ca\xEDda.\r\n\r\n+ 20 * Multiplicador *
+      Cada bola reventada.\r\n\r\n\xBFC\xF3mo influir en el multiplicador? Recoge
+      combos.\r\n\r\n<color=#FFDE18>Combo:</color>"
+    - "Una serie di combo avviene facendo scoppiare gruppi di palline in fila.\r\n   
+      Digitando una combo multipla del valore di riferimento (RV), aumenti il \u200B\u200Bmoltiplicatore
+      e ottieni anche un bonus:\r\nCombo > RV * 1: 1,25\r\nCombo > RV * 2: 1,7 +
+      bonus\nCombo > RV * 3: 2,5 + bonus\nCombo > RV * 4: 3,2 + bonus\nLa combo \xE8
+      inferiore al valore di riferimento: 1.\r\n\r\n<color=#FFDE18>Vista de interfaz:</color>"
+    - '1. Il numero di colori sul campo di gioco.
+
+      2. Moltiplicatore di punteggio
+
+      3.
+      Punti segnati per la partita
+
+      4. Il valore di riferimento (ancora) della
+      combo
+
+      5. Contatore combo
+
+      6. La striscia in basso. Avanzamento
+      del livello di gioco'
+    - "Le mosse vengono registrate come record solo quando il campo di gioco \xE8
+      completamente sgombrato."
+    - "5 brani forniti dall'album \"Free Music Lo-Fi Tracks\" di RustedMusicStudio.
+      Impara:\r\n\r\nhttps://rustedstudio.itch.io/free-music-lofi-tracks\r\n\r\nLa
+      musica qui sotto \xE8 fornita dalla piattaforma Freesound.org con licenza Creative
+      Commons 0 o 4.0.\r\nAutori, loro composizioni e ID audio sul sito:\n\nSeth_Makes_Sounds:\r\n\"Chill
+      Background Music\" (670039)\r\n\"Lofi Guitar Drum Loop\" (679004)\r\n\"Good
+      Vibe Background Music\" (661782)\r\n\"bel fiore\" (681104)\r\n\"Fat Lofi Loop\"
+      (680333)\r\n\"Relaxing Background Music\" (673325)\r\nDoctor_Dreamchip:\r\n\"2020-01-10.wav\"
+      (501796)\r\nMigfus20:\r\n\"Lo-fi Music Guitar (loop version)\" (580045)"
+    - 'Punteggio: {0}'
+    - Salva slot
+    - Nuovo gioco
+    - Salva
+    - 'Punto:'
+    - Perdita
+    - "Modalit\xE0 unione"
+    - Slot vuoto
+    - "    <color=#FFDE18>Sfida: </color> vedi tutti i tipi di oggetti di gioco del
+      tema selezionato e ottieni il maggior numero di punti possibile stabilendo
+      punteggi pi\xF9 alti.\r\n    \xC8 necessario ripristinare gli oggetti nel campo
+      di gioco. Due oggetti identici si uniscono in uno nuovo e danno punti.\r\n   
+      In alto c'\xE8 un'area di rigore che gli oggetti non dovrebbero toccare. Altrimenti
+      il gioco sar\xE0 completato. Tempo di riempimento - 5 secondi.\r\n    Il gioco
+      supporta il salvataggio. Non dimenticare di salvare manualmente prima di uscire
+      - attraverso l'icona del floppy o uscire dalla modalit\xE0 di gioco tramite
+      le impostazioni."
+    - 'Taglia: {0}'
+    - 'Tema: {0}'
+    - 'Denaro: {0}'
+    - Temi
+    - Emoji
+    - Palle
+    - Taglie
+    - Sottile
+    - Disponibile per smartphone
+    - Selezionare
+    - Quadruplo
+    - Non disponibile per smartphone
+    - Largo
+    - Mostra annunci
+    - Negozio
+    - 'Soldi:'
+    - Salvataggio...
+    - Bloccato
+    - 2048
+    - Pianeti
+    - Cibo
+    - "S\xCC"
+    - No
+    - Eliminare i dati dallo slot {0}?
+    - Shaker
+    - Multipalla
+    - Fa scoppiare gruppi di colori accanto a 2 palline, indipendentemente dal colore.
+    - Cancellazione
+  - Fullname: "\u041D\u0435\u043C\u0435\u0446\u043A\u0438\u0439"
+    ISOCode: de
+    Editor_TabWidth: 232
+    Editor_TabWrapped: 1
+    Values:
+    - "Nur B\xE4lle"
+    - Endlos
+    - "\xDCberleben"
+    - Strategie
+    - Verschmelzen
+    - Einstellungen
+    - Musik
+    - "Ger\xE4usche"
+    - Anzeigen ansehen
+    - erhalten
+    - Farbe entfernt!
+    - '{0} Modus'
+    - "    <color=#FFDE18>Aufgabe:</color> L\xF6sche das Spielfeld von B\xE4llen
+      in der minimalen Anzahl von Z\xFCgen.\r\nVon Beginn des Spiels an gibt es 6
+      Farben auf dem Spielfeld. Wenn Sie alle Kugeln derselben Farbe entfernen, erscheint
+      diese Farbe nicht mehr auf dem Spielfeld und das Spiel wird komplizierter.\r\n   
+      <color=#FFDE18>Regeln:</color>\r\n- Sie k\xF6nnen die B\xE4lle nur einige Male
+      auf das Spielfeld legen. Dann werden neue Ballreihen von oben hinzugef\xFCgt.
+      Die Anzahl der m\xF6glichen Erg\xE4nzungen h\xE4ngt von der Komplexit\xE4t
+      des Spiels ab.\r\n-Die Anzahl der hinzugef\xFCgten Zeilen h\xE4ngt auch vom
+      Schwierigkeitsgrad ab.\r\n- Selbst wenn Sie die B\xE4lle durch Hinzuf\xFCgen
+      eines dritten platzen lassen, gibt es einen Z\xE4hler f\xFCr Combo-Erg\xE4nzungen.
+      5 Zug\xE4nge in Folge werden als Fehlschuss gewertet.\r\n\r\nWie diese Indikatoren
+      in der Benutzeroberfl\xE4che aussehen:"
+    - "1. Die Anzahl der B\xE4lle, die dem Feld hinzugef\xFCgt wurden, bevor die
+      Linie hinzugef\xFCgt wurde.\n2. Wie viele Zeilen werden von oben hinzugef\xFCgt,
+      nachdem der Additionsz\xE4hler ersch\xF6pft ist?\n3. Combo-Z\xE4hler in Form
+      eines Rings. Zu 2/5 gef\xFCllt. Nach drei weiteren Additionen wird die Combo
+      auf Null zur\xFCckgesetzt und der Z\xE4hler der verf\xFCgbaren Additionen (rechts)
+      verringert sich.\n4. Die Anzahl der abgeschlossenen Z\xFCge pro Spiel."
+    - Spiel vorbei!
+    - "Schlie\xDFen"
+    - Wiederholen
+    - 'Bewegt:'
+    - 'Aufzeichnen:'
+    - Neu!
+    - Bestenliste
+    - Spieler
+    - "Werkzeug \u201C{0}\u201C"
+    - Bombe
+    - "Zerst\xF6rt alles im Explosionsradius."
+    - "Scharfsch\xFCtzenschuss"
+    - "Zerst\xF6rt alles entlang der Schusslinie."
+    - Laser
+    - Verbrennt die Eier unter seinem Strahl.
+    - Strategiemodus
+    - Speisekarte
+    - "\xDCberlebensmodus"
+    - Max
+    - "\xDCberspringen"
+    - Anzeigen ansehen und fortfahren
+    - Combo X{0}
+    - "    <color=#FFDE18>Aufgabe:</color> halte so lange wie m\xF6glich durch und
+      verdiene so viele Punkte wie m\xF6glich.\r\nIm Laufe des Spiels folgen nacheinander
+      Levels, die die Anzahl der Farben der B\xE4lle und den Referenzwert der Kombination
+      \xE4ndern.\r\n\r\n    <color=#FFDE18>Regeln f\xFCr die Punktewertung:\r</color>\r\n\n+50
+      * Multiplikator * F\xFCr jeden fallengelassenen Ball.\r\n\r\n+20 * Multiplikator
+      * F\xFCr jeden geplatzten Ball.\r\n\r\nWie kann man den Multiplikator beeinflussen?
+      Sammle Combos.\r\n\r\n    <color=#FFDE18>Kombination:</color>"
+    - "Eine Reihe von Combos entsteht durch das Platzen von Gruppen von B\xE4llen
+      hintereinander.\r\n    Durch die Eingabe eines kombinierten Vielfachen des
+      Referenzwerts (RV) erh\xF6hen Sie den Multiplikator und erhalten au\xDFerdem
+      einen Bonus:\r\nCombo > RV * 1: 1,25\r\nCombo > RV * 2: 1,7 + Bonus\r\nCombo
+      > RV * 3: 2,5 + Bonus\r\nCombo > RV * 4: 3,2 + Bonus\r\nDie Kombination ist
+      kleiner als der Referenzwert: 1.\r\n\r\n<color=#FFDE18>Schnittstellenansicht:</color>"
+    - "1. Die Anzahl der Farben auf dem Spielfeld.\n2. Punktemultiplikator\n3. F\xFCr
+      das Spiel erzielte Punkte\n4. Der Referenzwert (Ankerwert) der Kombination\n5.
+      Combo-Z\xE4hler\n6. Der Streifen unten. Levelfortschritt im Spiel\u201C"
+    - "Spielz\xFCge werden erst dann als Aufzeichnung erfasst, wenn das Spielfeld
+      vollst\xE4ndig ger\xE4umt ist."
+    - "5 Titel aus dem Album \u201EFree Music Lo-Fi Tracks\u201C von RustedMusicStudio.
+      Erfahren Sie:\r\n\r\nhttps://rustedstudio.itch.io/free-music-lofi-tracks\r\n\r\nDie
+      folgende Musik wird von der Plattform Freesound.org unter einer Creative Commons-Lizenz
+      0 oder 4.0 bereitgestellt.\r\nAutoren, ihre Kompositionen und Audio-ID auf
+      der Website:\n\nSeth_Makes_Sounds:\r\n\"Chill Background Music\" (670039)\r\n\"Lofi
+      Guitar Drum Loop\" (679004)\r\n\"Good Vibe Background Music\" (661782)\r\n\"bel
+      fiore\" (681104)\r\n\"Fat Lofi Loop\" (680333)\r\n\"Relaxing Background Music\"
+      (673325)\r\nDoctor_Dreamchip:\r\n\"2020-01-10.wav\" (501796)\r\nMigfus20:\r\n\"Lo-fi
+      Music Guitar (loop version)\" (580045)"
+    - 'Punktzahl: {0}'
+    - Slots speichern
+    - Neues Spiel
+    - Speichern
+    - 'Punktzahl:'
+    - Verlust
+    - "Zusammenf\xFChrungsmodus"
+    - Leerer Schlitz
+    - "   <color=#FFDE18>Aufgabe:</color> alle m\xF6glichen Spielobjekte des ausgew\xE4hlten
+      Themas sehen und so viele Punkte wie m\xF6glich erzielen, um Rekorde zu setzen.\r\n   
+      Es ist notwendig, Objekte auf das Spielfeld zu werfen. Zwei identische Objekte
+      verbinden sich zu einem neuen Objekt und geben Punkte.\r\n    Von oben gibt
+      es einen Strafraum, den Objekte nicht ber\xFChren sollten. Andernfalls wird
+      das Spiel beendet. Die F\xFCllzeit betr\xE4gt 5 Sekunden.\r\n    Das Spiel
+      unterst\xFCtzt Speichern. Vergessen Sie nicht, vor dem Verlassen manuell zu
+      speichern - \xFCber das Disketten-Symbol oder den Spielmodus \xFCber die Einstellungen
+      zu verlassen."
+    - "Gr\xF6\xDFe: {0}"
+    - 'Thema: {0}'
+    - 'Geld: {0}'
+    - Themen
+    - Emojis
+    - "B\xE4lle"
+    - "Gr\xF6\xDFen"
+    - Schlank
+    - "Verf\xFCgbar f\xFCr Smartphones"
+    - "W\xE4hlen"
+    - Quad
+    - "Nicht f\xFCr Smartphones verf\xFCgbar"
+    - Breit
+    - Anzeigen anzeigen
+    - "Gesch\xE4ft"
+    - 'Geld:'
+    - "Speichern\u2026"
+    - Verstopft
+    - 2048
+    - Planeten
+    - Essen
+    - Ja
+    - Nein
+    - "Daten aus Steckplatz {0} l\xF6schen?"
+    - Shaker
+    - Multiball
+    - "Springt Farbgruppen neben 2 B\xE4llen auf, unabh\xE4ngig von der Farbe."
+    - Streichung
+  - Fullname: "\u041F\u043E\u0440\u0442\u0443\u0433\u0430\u043B\u044C\u0441\u043A\u0438\u0439"
+    ISOCode: pt
+    Editor_TabWidth: 234.20001
+    Editor_TabWrapped: 1
+    Values:
+    - Apenas Bolas
+    - Sem fim
+    - "Sobreviv\xEAncia"
+    - "Estrat\xE9gia"
+    - Mesclar
+    - "Configura\xE7\xF5es"
+    - "M\xFAsica"
+    - Sons
+    - "Assistir an\xFAncios"
+    - recebido
+    - Cor removida!
+    - '{0} Modo'
+    - "    <color=#FFDE18>Tarefa:</color> limpe o campo de jogo das bolas no n\xFAmero
+      m\xEDnimo de movimentos.\r\nDesde o in\xEDcio do jogo, existem 6 cores no campo.
+      Removendo todas as bolas da mesma cor, essa cor deixa de aparecer no campo
+      de jogo e o jogo se torna mais complicado.\r\n    <color=#FFDE18>Regras:</color>\r\n-
+      Voc\xEA s\xF3 pode colocar as bolas no campo algumas vezes. Ent\xE3o - novas
+      linhas de bolas s\xE3o adicionadas de cima. O n\xFAmero de adi\xE7\xF5es poss\xEDveis
+      depende da complexidade do jogo.\r\n- O n\xFAmero de linhas adicionadas tamb\xE9m
+      depende da dificuldade.\r\n-Mesmo se voc\xEA estourar as bolas adicionando
+      um terceiro, h\xE1 um contador de adi\xE7\xF5es de combina\xE7\xE3o. 5 adi\xE7\xF5es
+      consecutivas ser\xE3o contadas como uma falta.\r\n\r\nComo esses indicadores
+      aparecem na interface:"
+    - "1. O n\xFAmero de bolas adicionadas ao campo antes da linha ser adicionada.\n2.
+      Quantas linhas ser\xE3o adicionadas a partir do topo depois que o contador
+      de adi\xE7\xE3o se esgotar.\n3. Contador combinado em forma de anel. Preenchido
+      at\xE9 2/5. Ap\xF3s mais 3 adi\xE7\xF5es, o combo ser\xE1 zerado e o contador
+      de adi\xE7\xF5es dispon\xEDveis (\xE0 direita) diminuir\xE1.\n4. O n\xFAmero
+      de jogadas completadas por jogo."
+    - Game Over!
+    - Fechar
+    - Tentar novamente
+    - 'Movimentos:'
+    - 'Registro:'
+    - Novo!
+    - Entre os melhores
+    - Jogador
+    - Ferramenta "{0}"
+    - Bombear
+    - "Destr\xF3i tudo no raio da explos\xE3o."
+    - Tiro de atirador
+    - "Destr\xF3i tudo ao longo da linha do tiro."
+    - Laser
+    - Queima as bolas sob sua trave.
+    - "Modo Estrat\xE9gia"
+    - "Card\xE1pio"
+    - "Modo de sobreviv\xEAncia"
+    - "M\xE1ximo"
+    - Pular
+    - "Assista aos an\xFAncios e continue"
+    - Combo X{0}
+    - "    <color=#FFDE18>Tarefa:</color> aguente o maior tempo poss\xEDvel e ganhe
+      o m\xE1ximo de pontos poss\xEDvel.\r\nAo longo do jogo, os n\xEDveis seguir\xE3o
+      um ap\xF3s o outro, alterando o n\xFAmero de cores das bolas e o valor de refer\xEAncia
+      do combo.\r\n\r\n    <color=#FFDE18>Regras para marcar pontos:\r</color>\r\n\n+
+      50 * Multiplicador * cada bola ca\xEDda.\r\n\r\n+ 20 * Multiplicador * cada
+      bola estourada.\r\n\r\nComo influenciar o Multiplicador? Recolha combos.\r\n\r\n   
+      <color=#FFDE18>Combina\xE7\xE3o:</color>"
+    - "\u201CUm conjunto de combos ocorre atrav\xE9s do lan\xE7amento de grupos de
+      bolas seguidas.\r\n    Ao digitar um m\xFAltiplo combo do valor de refer\xEAncia
+      (RV), voc\xEA aumenta o multiplicador e tamb\xE9m ganha um b\xF4nus:\r\nCombo
+      > RV * 1: 1,25\r\nCombo > RV * 2: 1,7 + b\xF4nus\nCombo > RV * 3: 2,5 + b\xF4nus\nCombo
+      > RV * 4: 3,2 + b\xF4nus\nA combina\xE7\xE3o \xE9 menor que o valor de refer\xEAncia:
+      1.\r\n\r\n<color=#FFDE18>Visualiza\xE7\xE3o da Interface:</color>"
+    - "1. O n\xFAmero de cores no campo de jogo.\n2. Multiplicador de pontua\xE7\xE3o\n3.
+      Pontos marcados no jogo\n4. O valor de refer\xEAncia (\xE2ncora) do combo\n5.
+      Contador de combina\xE7\xE3o\n6. A tira na parte inferior. Progresso de n\xEDvel
+      no jogo"
+    - "Os movimentos s\xE3o registrados como um registro somente quando o campo de
+      jogo est\xE1 completamente limpo."
+    - "5 faixas fornecidas pelo \xE1lbum \"Free Music Lo-Fi Tracks\" do RustedMusicStudio.
+      Aprenda:\r\n\r\nhttps://rustedstudio.itch.io/free-music-lofi-tracks\r\n\r\nA
+      m\xFAsica abaixo \xE9 fornecida pela plataforma Freesound.org sob licen\xE7a
+      Creative Commons 0 ou 4.0.\r\nAutores, suas composi\xE7\xF5es e identifica\xE7\xE3o
+      de \xE1udio no site:\n\nSeth_Makes_Sounds:\r\n\"Chill Background Music\" (670039)\r\n\"Lofi
+      Guitar Drum Loop\" (679004)\r\n\"Good Vibe Background Music\" (661782)\r\n\"bel
+      fiore\" (681104)\r\n\"Fat Lofi Loop\" (680333)\r\n\"Relaxing Background Music\"
+      (673325)\r\nDoctor_Dreamchip:\r\n\"2020-01-10.wav\" (501796)\r\nMigfus20:\r\n\"Lo-fi
+      Music Guitar (loop version)\" (580045)"
+    - "Pontua\xE7\xE3o: {0}"
+    - Salvar slots
+    - Novo jogo
+    - Salvar
+    - "Pontua\xE7\xE3o:"
+    - Perda
+    - Modo de mesclagem
+    - Slot Vazio
+    - "    <color=#FFDE18>Desafio:</color> ver todos os tipos de objetos de jogo
+      do tema escolhido e marcar tantos pontos quanto poss\xEDvel, estabelecendo
+      recordes.\r\n    \xC9 necess\xE1rio despejar objetos no campo de jogo. Dois
+      objetos id\xEAnticos s\xE3o unidos em um novo e d\xE3o pontos.\r\n    No topo
+      h\xE1 uma \xE1rea de penalidade, que n\xE3o deve tocar os objetos. Caso contr\xE1rio,
+      o jogo estar\xE1 terminado. Tempo de preenchimento-5 segundos.\r\n    O jogo
+      suporta salvar. N\xE3o se esque\xE7a de salvar manualmente antes de sair -
+      atrav\xE9s do \xEDcone do disquete, ou sair do modo de jogo atrav\xE9s das
+      configura\xE7\xF5es."
+    - 'Tamanho: {0}'
+    - 'Tema: {0}'
+    - 'Dinheiro: {0}'
+    - Temas
+    - Emojis
+    - Bolas
+    - Tamanhos
+    - Magro
+    - "Dispon\xEDvel para smartphones"
+    - Selecionar
+    - "Quadr\xFApede"
+    - "N\xE3o dispon\xEDvel para smartphones"
+    - Largo
+    - "Mostrar an\xFAncios"
+    - Comprar
+    - 'Dinheiro:'
+    - "Salvando\u2026"
+    - Bloqueado
+    - 2048
+    - Planetas
+    - Comida
+    - Sim
+    - "N\xE3o"
+    - Excluir dados do slot {0}?
+    - Agitador
+    - Multi-bola
+    - "Explode grupos de cores pr\xF3ximos a 2 bolas, independentemente da cor."
+    - "Elimina\xE7\xE3o"
+  - Fullname: "\u0424\u0440\u0430\u043D\u0446\u0443\u0437\u0441\u043A\u0438\u0439"
+    ISOCode: fr
+    Editor_TabWidth: 255.40002
+    Editor_TabWrapped: 1
+    Values:
+    - Juste\ndes\nboules
+    - Sans fin
+    - Survie
+    - "Strat\xE9gie"
+    - Fusionner
+    - "Param\xE8tres"
+    - Musique
+    - Des sons
+    - Regarder les annonces
+    - "re\xE7u"
+    - "Couleur supprim\xE9e!"
+    - "Mode\_{0}"
+    - "    <color=#FFDE18>T\xE2che:</color> vider le terrain de jeu des balles en
+      un minimum de coups.\r\nD\xE8s le d\xE9but du jeu, il y a 6 couleurs sur le
+      terrain. En supprimant toutes les boules de la m\xEAme couleur, cette couleur
+      cesse d'appara\xEEtre sur le terrain de jeu et le jeu devient plus compliqu\xE9.\r\n   
+      <color=#FFDE18>R\xE8gles:</color>\r\n-Vous ne pouvez placer les balles sur
+      le terrain que quelques fois. Ensuite, de nouvelles lignes de balles sont ajout\xE9es
+      par le haut. Le nombre d'ajouts possibles d\xE9pend de la complexit\xE9 du
+      jeu.\r\n-Le nombre de lignes ajout\xE9es d\xE9pend \xE9galement de la difficult\xE9.\r\n-M\xEAme
+      si vous faites \xE9clater les boules en en ajoutant une troisi\xE8me, il y
+      a un compteur d'ajouts de combo. 5 ajouts cons\xE9cutifs seront compt\xE9s
+      comme manqu\xE9s.\r\n\r\n\xC0 quoi ressemblent ces indicateurs dans l'interface:"
+    - "1. Le nombre de balles ajout\xE9es au terrain avant l'ajout de la ligne.\n2.
+      Combien de lignes seront ajout\xE9es par le haut une fois le compteur d'addition
+      \xE9puis\xE9.\n3. Compteur combo en forme d'anneau. Rempli au 2/5. Apr\xE8s
+      3 ajouts suppl\xE9mentaires, le combo sera remis \xE0 z\xE9ro, et le compteur
+      des ajouts disponibles (\xE0 droite) diminuera.\n4. Le nombre de coups termin\xE9s
+      par partie."
+    - "Jeu termin\xE9!"
+    - Fermer
+    - Recommencez
+    - "Se d\xE9place:"
+    - 'Enregistrer:'
+    - Nouveau!
+    - Classement
+    - Joueur
+    - Outil "{0}"
+    - Bombe
+    - "D\xE9truit tout dans le rayon de l'explosion."
+    - "Tir de tireur d'\xE9lite"
+    - "D\xE9truit tout le long de la ligne de tir."
+    - Laser
+    - "Br\xFBle les balles sous son faisceau."
+    - "Mode strat\xE9gie"
+    - Menu
+    - Mode de survie
+    - Maximum
+    - Sauter
+    - "Regardez les publicit\xE9s et continuez"
+    - "Combo\_X{0}"
+    - "    <color=#FFDE18>T\xE2che:</color> tenez le plus longtemps possible et gagnez
+      autant de points que possible.\r\nAu cours du jeu, les niveaux se succ\xE9deront,
+      modifiant le nombre de couleurs des boules et la valeur de r\xE9f\xE9rence
+      du combo.\r\n\r\n    <color=#FFDE18>R\xE8gles pour marquer des points:\r</color>\r\n+
+      50 * Multiplicateur * Chaque balle l\xE2ch\xE9e.\r\n\r\n+ 20 * Multiplicateur
+      * Chaque balle \xE9clat\xE9e.\r\n\r\nComment influencer le multiplicateur?
+      Recueillir des combos.\r\n\r\n    <color=#FFDE18>Combinaison:</color>"
+    - "Un ensemble de combos se produit en faisant \xE9clater des groupes de balles
+      d'affil\xE9e.\r\n    En tapant un multiple combo de la valeur de r\xE9f\xE9rence
+      (RV), vous augmentez le multiplicateur et obtenez \xE9galement un bonus :\r\nCombo
+      > VD * 1\_: 1,25\r\nCombo > RV*2\_:\_1,7 + bonus\nCombo > RV*3\_: 2,5 + bonus\nCombo
+      > RV*4\_: 3,2 + bonus\nLe combo est inf\xE9rieur \xE0 la valeur de r\xE9f\xE9rence
+      : 1.\r\n\r\n<color=#FFDE18>Vue de l'interface:</color>"
+    - "1. Le nombre de couleurs sur le terrain de jeu.\n2. Multiplicateur de score\n3.
+      Points marqu\xE9s pour le match\n4. La valeur de r\xE9f\xE9rence (ancre) du
+      combo\n5. Compteur combin\xE9\n6. La bande en bas. Progression des niveaux
+      dans le jeu\_\xBB"
+    - "Les mouvements ne sont enregistr\xE9s comme un record que lorsque le terrain
+      de jeu est compl\xE8tement d\xE9gag\xE9."
+    - "5 titres fournis par l'album \"Free Music Lo-Fi Tracks\" de RustedMusicStudio.
+      Apprenez\_:\r\n\r\nhttps://rustedstudio.itch.io/free-music-lofi-tracks\r\n\r\nLa
+      musique ci-dessous est fournie par la plateforme Freesound.org sous une licence
+      Creative Commons 0 ou 4.0.\r\nAuteurs, leurs compositions et identifiant audio
+      sur le site :\n\nSeth_Makes_Sounds:\r\n\"Chill Background Music\" (670039)\r\n\"Lofi
+      Guitar Drum Loop\" (679004)\r\n\"Good Vibe Background Music\" (661782)\r\n\"bel
+      fiore\" (681104)\r\n\"Fat Lofi Loop\" (680333)\r\n\"Relaxing Background Music\"
+      (673325)\r\nDoctor_Dreamchip:\r\n\"2020-01-10.wav\" (501796)\r\nMigfus20:\r\n\"Lo-fi
+      Music Guitar (loop version)\" (580045)"
+    - "\xAB\_Note\_:\_{0}\_\xBB"
+    - Enregistrer les emplacements
+    - Nouveau jeu
+    - Sauvegarder
+    - 'Score:'
+    - Perte
+    - Mode Fusion
+    - Emplacement vide
+    - "    <color=#FFDE18>D\xE9fi:</color> voir toutes sortes d'objets de jeu du
+      th\xE8me s\xE9lectionn\xE9 et marquer autant de points que possible en \xE9tablissant
+      des Records.\r\n    Vous devez d\xE9poser des objets sur le terrain de jeu.
+      Deux objets identiques se connectent dans un nouveau et donnent des points.\r\n   
+      Au-dessus, il y a une zone de p\xE9nalit\xE9 qui ne doit pas toucher les objets.
+      Sinon, le jeu sera termin\xE9. Le temps de remplissage est de 5 secondes.\r\n   
+      Le jeu prend en charge la sauvegarde. N'oubliez pas de sauvegarder manuellement
+      avant de quitter - via l'ic\xF4ne de la disquette, ou de quitter le mode de
+      jeu via les param\xE8tres."
+    - "Taille\_:\_{0}"
+    - "Th\xE8me\_:\_{0}"
+    - "Argent\_:\_{0}"
+    - "Th\xE8mes"
+    - "\xC9mojis"
+    - Des balles
+    - Tailles
+    - Mince
+    - Disponible pour les smartphones
+    - "S\xE9lectionner"
+    - Quads
+    - Non disponible pour les smartphones
+    - Large
+    - Afficher les annonces
+    - Boutique
+    - 'Argent:'
+    - "\xC9conomie..."
+    - "Bloqu\xE9"
+    - 2048
+    - "Plan\xE8tes"
+    - Nourriture
+    - Oui
+    - Non
+    - "Supprimer les donn\xE9es de l'emplacement {0}?"
+    - Mixeur
+    - Multi-Billes
+    - "\xC9clate les groupes de couleurs \xE0 c\xF4t\xE9 de 2 boules, quelle que
+      soit la couleur."
+    - Effacement

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 056665bc9d126b641be1ee2659186b0c, type: 3}
+  m_Name: Instruments
+  m_EditorClassIdentifier: 
+  <Instruments>k__BackingField:
+  - <Type>k__BackingField: 1
+    <Sprite>k__BackingField: {fileID: 21300000, guid: 45575900e801c5b4e951db80cad6ca62, type: 3}
+    <NameLangKey>k__BackingField: Tool_Bomb_Name
+    <DescriptionLangKey>k__BackingField: Tool_Bomb_Descr
+    <IncreaseCount>k__BackingField: 3
+  - <Type>k__BackingField: 2
+    <Sprite>k__BackingField: {fileID: 21300000, guid: c64db4927eee49e4095b772696b4388b, type: 3}
+    <NameLangKey>k__BackingField: Tool_Sniper_Name
+    <DescriptionLangKey>k__BackingField: Tool_Sniper_Descr
+    <IncreaseCount>k__BackingField: 3
+  - <Type>k__BackingField: 3
+    <Sprite>k__BackingField: {fileID: 21300000, guid: 2e471c9c4fc6d244ea6ce50cdd6f8618, type: 3}
+    <NameLangKey>k__BackingField: Tool_Laser_Name
+    <DescriptionLangKey>k__BackingField: Tool_Laser_Descr
+    <IncreaseCount>k__BackingField: 2
+  - <Type>k__BackingField: 4
+    <Sprite>k__BackingField: {fileID: 21300000, guid: ef5122ed52a8d0040884b26495b45f50, type: 3}
+    <NameLangKey>k__BackingField: Tool_MultiBall_Name
+    <DescriptionLangKey>k__BackingField: Tool_MultiBall_Descr
+    <IncreaseCount>k__BackingField: 4

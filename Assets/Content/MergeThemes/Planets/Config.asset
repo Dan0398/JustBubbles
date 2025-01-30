@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e27797307d978a41ba284db6816788c, type: 3}
+  m_Name: Config
+  m_EditorClassIdentifier: 
+  <CollisionSound>k__BackingField: {fileID: 8300000, guid: 9887d6b49b3ba744fa8110cc9ef44a14, type: 3}
+  <Items>k__BackingField:
+  - Name: 1
+    <Sample>k__BackingField: {fileID: 2051116570601572100, guid: 788c54002cc0c4b42940522f8f76bd19, type: 3}
+  - Name: 2
+    <Sample>k__BackingField: {fileID: 1864231465557454707, guid: 4515505bde07f684086cc3c282924224, type: 3}
+  - Name: 4
+    <Sample>k__BackingField: {fileID: 2508671361541521114, guid: 9bd03ca19dc48a04191ab123569736ef, type: 3}
+  - Name: 8
+    <Sample>k__BackingField: {fileID: 8814017063819594259, guid: d77d5db8bfa38ce4cb64bd192157fcf6, type: 3}
+  - Name: 16
+    <Sample>k__BackingField: {fileID: 7321759917245185050, guid: f621a359bf401004e9a0264a08ea134d, type: 3}
+  - Name: 32
+    <Sample>k__BackingField: {fileID: 4283368463444581156, guid: 38291d30db5bd9d4282e1e3f59344b6a, type: 3}
+  - Name: 64
+    <Sample>k__BackingField: {fileID: 4394046471682572775, guid: 060b2b93c1429f5469720d3348324e8a, type: 3}
+  - Name: 128
+    <Sample>k__BackingField: {fileID: 8682593513337109026, guid: 58a2366c2a2b9f0418d0a49a1719a365, type: 3}
+  - Name: 256
+    <Sample>k__BackingField: {fileID: 8643660691944729162, guid: 9a4afd7ac69ac1140accf9eb873d5996, type: 3}
+  - Name: 512
+    <Sample>k__BackingField: {fileID: 274592554932064645, guid: 7b14b03cfa2e6c64ea0de9df12561681, type: 3}
+  - Name: 1024
+    <Sample>k__BackingField: {fileID: 7354261059465101608, guid: 58927ab7779d2ba45b6ab497afb55461, type: 3}
+  - Name: 2048
+    <Sample>k__BackingField: {fileID: 4447888125202241308, guid: d13e5685f93ad454bbaf977102ada6d5, type: 3}
+  - Name: 4096
+    <Sample>k__BackingField: {fileID: 3064927827964774157, guid: c80d6636e03502e4685c96f382032ca3, type: 3}
+  - Name: 8192
+    <Sample>k__BackingField: {fileID: 3303019534171161465, guid: 625cbc7197fbe62419055c01b8de9133, type: 3}
+  - Name: 16384
+    <Sample>k__BackingField: {fileID: 8737233507035925202, guid: 9b9ddd6ba8225ce4f9bbaba59fa1ae4d, type: 3}
+  - Name: 32768
+    <Sample>k__BackingField: {fileID: 4360559332605541591, guid: d09735a800c12284e9e72f5b143ab7b9, type: 3}
+  - Name: 65536
+    <Sample>k__BackingField: {fileID: 2574839669640453083, guid: fbd09bd1bfcb7a24689879be3ec73ac0, type: 3}

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3075dded1d6b4e499e1183fa270012b, type: 3}
+  m_Name: MergeThemes
+  m_EditorClassIdentifier: 
+  <Themes>k__BackingField:
+  - <NameLangKey>k__BackingField: Smiles
+    <Sprite>k__BackingField: {fileID: 21300000, guid: 3297a830ffa66e244b9d931aa529af88, type: 3}
+    <BundlePath>k__BackingField: merge/smiles
+    <AdsRequired>k__BackingField: 0
+  - <NameLangKey>k__BackingField: 2048
+    <Sprite>k__BackingField: {fileID: 21300000, guid: cb5311afa2668c242906425177ea348d, type: 3}
+    <BundlePath>k__BackingField: merge/2048
+    <AdsRequired>k__BackingField: 0
+  - <NameLangKey>k__BackingField: Balls
+    <Sprite>k__BackingField: {fileID: 21300000, guid: 552a7d6356e5fb74b96f2d13cdcb686f, type: 3}
+    <BundlePath>k__BackingField: merge/balls
+    <AdsRequired>k__BackingField: 1
+  - <NameLangKey>k__BackingField: Planets
+    <Sprite>k__BackingField: {fileID: 21300000, guid: b4b4ae590b1a940258067f0f0d045a47, type: 3}
+    <BundlePath>k__BackingField: merge/planets
+    <AdsRequired>k__BackingField: 1
+  - <NameLangKey>k__BackingField: Food
+    <Sprite>k__BackingField: {fileID: 21300000, guid: 91c38dce353100a4a90282f3f35ce0d9, type: 3}
+    <BundlePath>k__BackingField: merge/food
+    <AdsRequired>k__BackingField: 1

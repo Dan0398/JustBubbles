@@ -1,0 +1,151 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0296858bd34a5d4ba42d102ed21a630, type: 3}
+  m_Name: SoundConfig
+  m_EditorClassIdentifier: 
+  <BundlePath>k__BackingField: sounds
+  <SoundPairs>k__BackingField:
+  - Name: Click
+    <Type>k__BackingField: 1
+    <NameInBundle>k__BackingField: buttonclick0
+    <Looped>k__BackingField: 0
+    <DefaultVolume>k__BackingField: 1
+  - Name: Hover
+    <Type>k__BackingField: 2
+    <NameInBundle>k__BackingField: buttonclick0
+    <Looped>k__BackingField: 0
+    <DefaultVolume>k__BackingField: 1
+  - Name: Victory
+    <Type>k__BackingField: 3
+    <NameInBundle>k__BackingField: victory
+    <Looped>k__BackingField: 0
+    <DefaultVolume>k__BackingField: 1
+  - Name: Instrument Picked
+    <Type>k__BackingField: 4
+    <NameInBundle>k__BackingField: pickup holy
+    <Looped>k__BackingField: 0
+    <DefaultVolume>k__BackingField: 0.8
+  - Name: Instrument Fail
+    <Type>k__BackingField: 5
+    <NameInBundle>k__BackingField: show_time_out_01
+    <Looped>k__BackingField: 0
+    <DefaultVolume>k__BackingField: 1
+  - Name: Record
+    <Type>k__BackingField: 6
+    <NameInBundle>k__BackingField: Victory SoundFX3
+    <Looped>k__BackingField: 0
+    <DefaultVolume>k__BackingField: 1
+  - Name: Bubble Shoot
+    <Type>k__BackingField: 23
+    <NameInBundle>k__BackingField: bubbleshoot
+    <Looped>k__BackingField: 0
+    <DefaultVolume>k__BackingField: 1
+  - Name: Bubble Pop
+    <Type>k__BackingField: 22
+    <NameInBundle>k__BackingField: bubblepop
+    <Looped>k__BackingField: 0
+    <DefaultVolume>k__BackingField: 1
+  - Name: Bubble Set
+    <Type>k__BackingField: 21
+    <NameInBundle>k__BackingField: bubbleset
+    <Looped>k__BackingField: 0
+    <DefaultVolume>k__BackingField: 1
+  - Name: Bubble Switch
+    <Type>k__BackingField: 24
+    <NameInBundle>k__BackingField: bubbleswitch
+    <Looped>k__BackingField: 0
+    <DefaultVolume>k__BackingField: 1
+  - Name: Wall Hit
+    <Type>k__BackingField: 25
+    <NameInBundle>k__BackingField: wallhit
+    <Looped>k__BackingField: 0
+    <DefaultVolume>k__BackingField: 1
+  - Name: User Score Counter
+    <Type>k__BackingField: 8
+    <NameInBundle>k__BackingField: counter
+    <Looped>k__BackingField: 1
+    <DefaultVolume>k__BackingField: 0.45
+  - Name: Info Show
+    <Type>k__BackingField: 7
+    <NameInBundle>k__BackingField: info_1
+    <Looped>k__BackingField: 0
+    <DefaultVolume>k__BackingField: 1
+  - Name: Unwrap
+    <Type>k__BackingField: 9
+    <NameInBundle>k__BackingField: unwrapwindow
+    <Looped>k__BackingField: 1
+    <DefaultVolume>k__BackingField: 1
+  - Name: Laser Fire
+    <Type>k__BackingField: 51
+    <NameInBundle>k__BackingField: lazer_fire
+    <Looped>k__BackingField: 1
+    <DefaultVolume>k__BackingField: 1
+  - Name: Laser Idle
+    <Type>k__BackingField: 50
+    <NameInBundle>k__BackingField: lazer_idle
+    <Looped>k__BackingField: 1
+    <DefaultVolume>k__BackingField: 1
+  - Name: Sniper Show
+    <Type>k__BackingField: 40
+    <NameInBundle>k__BackingField: rifle_show
+    <Looped>k__BackingField: 0
+    <DefaultVolume>k__BackingField: 1
+  - Name: Sniper Shoot
+    <Type>k__BackingField: 41
+    <NameInBundle>k__BackingField: rifle_shot
+    <Looped>k__BackingField: 0
+    <DefaultVolume>k__BackingField: 1
+  - Name: Bomb Idle
+    <Type>k__BackingField: 30
+    <NameInBundle>k__BackingField: bomb_idle
+    <Looped>k__BackingField: 1
+    <DefaultVolume>k__BackingField: 1
+  - Name: Bomb Fly
+    <Type>k__BackingField: 31
+    <NameInBundle>k__BackingField: bombfly
+    <Looped>k__BackingField: 1
+    <DefaultVolume>k__BackingField: 1
+  - Name: Bomb Explode
+    <Type>k__BackingField: 33
+    <NameInBundle>k__BackingField: odinochnyiy-vzryiv
+    <Looped>k__BackingField: 0
+    <DefaultVolume>k__BackingField: 1
+  - Name: Settings_SoundTest
+    <Type>k__BackingField: 100
+    <NameInBundle>k__BackingField: bubblepop
+    <Looped>k__BackingField: 1
+    <DefaultVolume>k__BackingField: 1
+  - Name: Revive TickTack
+    <Type>k__BackingField: 101
+    <NameInBundle>k__BackingField: clocktick
+    <Looped>k__BackingField: 1
+    <DefaultVolume>k__BackingField: 1
+  - Name: Merge Sound
+    <Type>k__BackingField: 60
+    <NameInBundle>k__BackingField: mergesound
+    <Looped>k__BackingField: 0
+    <DefaultVolume>k__BackingField: 1
+  - Name: Merge Saved
+    <Type>k__BackingField: 61
+    <NameInBundle>k__BackingField: merge_saved
+    <Looped>k__BackingField: 0
+    <DefaultVolume>k__BackingField: 1
+  - Name: Merge Shaker
+    <Type>k__BackingField: 62
+    <NameInBundle>k__BackingField: merge_shaker
+    <Looped>k__BackingField: 1
+    <DefaultVolume>k__BackingField: 1
+  - Name: Merge Drop
+    <Type>k__BackingField: 63
+    <NameInBundle>k__BackingField: merge_drop
+    <Looped>k__BackingField: 0
+    <DefaultVolume>k__BackingField: 1
