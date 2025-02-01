@@ -40,34 +40,16 @@ function DetectTargetSDK()
 	{
 		ParentalLink = document.URL.toLowerCase();
 	}
-	if (true)//ParentalLink.includes("yandex."))
+	if (ParentalLink.includes("yandex."))
 	{		
 		TryLog("Detecting Yandex Games environment");
 		EnableYandexGames();
 		return;
 	}
-	else if (ParentalLink.includes("crazygames.") || ParentalLink.includes("1001juegos.com"))
-	{
-		TryLog("Detecting Crazy Games environment");
-		EnableCrazyGames();
-		return;
-	}
-	else if (ParentalLink.includes("gamedistribution"))
-	{
-		TryLog("Detecting GameDistribution environment");
-		EnableGameDistribution();
-		return;
-	}
-	else if (ParentalLink.includes("gamepix."))
-	{
-		TryLog("Detecting GamePix environment");
-		EnableGamePix();
-		return;
-	}
-	else if (ParentalLink.includes("gamemonetize"))
+	else
 	{
 		TryLog("Detecting GameMonetize environment");
-		EnableGameMonetize();
+		EnableDefault();
 		return;
 	}
 	
@@ -84,12 +66,9 @@ function EnableSDK(Name)
 }
 
 function EnableYandexGames() 		{ EnableSDK("YandexGames"); }
-function EnableCrazyGames() 		{ EnableSDK("CrazyGames"); }
-function EnableGameDistribution() 	{ EnableSDK("GameDistribution"); }
-function EnableGamePix() 			{ EnableSDK("GamePix"); }
-function EnableGameMonetize() 		{ EnableSDK("GameMonetize"); }
+function EnableDefault() 			{ EnableSDK("Default"); }
 
-var FullLogEnabled = false;
+var FullLogEnabled = true;
 function TryLog(message)
 {
 	if (FullLogEnabled)
