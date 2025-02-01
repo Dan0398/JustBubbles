@@ -8,12 +8,13 @@ namespace Data
         public ObsFloat SoundLevel, MusicLevel;
         public ObsString UserLanguage;
         
+        [UnityEngine.Scripting.Preserve]
         public Settings()
         {
             SoundLevel = 0.4f;
             MusicLevel = 0.4f;
             #if UNITY_ANDROID || UNITY_IOS
-            UserLanguage = BrakelessGames.Localization.Utilities.LangCodeFromSystemLanguage();
+            UserLanguage = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
             #else
             UserLanguage = "en";
             #endif
@@ -24,7 +25,7 @@ namespace Data
             SoundLevel = 0.4f;
             MusicLevel = 0.4f;
             #if UNITY_ANDROID || UNITY_IOS
-            UserLanguage = BrakelessGames.Localization.Utilities.LangCodeFromSystemLanguage();
+            UserLanguage = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
             #else
             UserLanguage = "en";
             #endif

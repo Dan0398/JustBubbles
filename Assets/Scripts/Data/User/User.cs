@@ -9,6 +9,7 @@ namespace Data
         public ObsInt SurvivalBestScore;
         public int StrategyBestScore;
         
+        [UnityEngine.Scripting.Preserve]
         public User()
         {
             SelectedBubbleID = 0;
