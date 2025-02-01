@@ -505,6 +505,48 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Menu_LowRight
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 352
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 60, z: 60, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f78224aac342db4bb1b71afeb1aa306
+      internalID: -143708115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Menu_Inner_LowRight
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 388
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 60, z: 60, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 062bace913bc49a4d808e8f877a0d43a
+      internalID: 1179253287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -530,6 +572,8 @@ TextureImporter:
       LoadCircle: -314711880
       Menu_Back: 1837191831
       Menu_Inner: 2078360976
+      Menu_Inner_LowRight: 1179253287
+      Menu_LowRight: -143708115
       Menu_Subblock: 1015530328
       Outline: -904216171
       Strategy_Help: 1647779603

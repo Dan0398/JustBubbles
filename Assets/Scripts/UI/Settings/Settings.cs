@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
 using BrakelessGames.Localization;
+using Cysharp.Threading.Tasks;
 
 namespace UI.Settings
 {
@@ -10,6 +11,7 @@ namespace UI.Settings
     {
         public bool GoToMenuAvailable;
         public SkinsSettings Skins;
+        [SerializeField] string[] LanguageCodes;
         [SerializeField] GameObject MenuButton;
         [SerializeField] Gameplay.Controller Gameplay;
         [SerializeField] Slider SoundsSlider, MusicSlider;
@@ -17,6 +19,7 @@ namespace UI.Settings
         [SerializeField] TextTMPLocalized GoToMenuLabel;
         //[SerializeField] AudioSource EffectsSource;
         System.Action AfterHide;
+        Data.SettingsController settings;
         
         public void ShowSettings(System.Action afterHide = null)
         {
@@ -37,12 +40,12 @@ namespace UI.Settings
         IEnumerator BindSounds()
         {
             var Wait = new WaitForFixedUpdate();
-            var Settings = Services.DI.Single<Data.SettingsController>();
-            while (!Settings.isDataLoaded) 
+            settings = Services.DI.Single<Data.SettingsController>();
+            while (!settings.isDataLoaded) 
             {
                 yield return Wait;
             }
-            SubscribeToAudio(Settings);
+            SubscribeToAudio(settings);
         }
         
         void SubscribeToAudio(Data.SettingsController Settings)
@@ -94,6 +97,17 @@ namespace UI.Settings
             gameObject.SetActive(false);
             AfterHide?.Invoke();
             AfterHide = null;
+        }
+        
+        public void IncrementLanguage()
+        {
+            var codeIndex = System.Array.IndexOf(LanguageCodes, settings.Data.UserLanguage.Value);
+            if (codeIndex < 0) throw new System.Exception("Code index not found.");
+            codeIndex++;
+            if (codeIndex >= LanguageCodes.Length) codeIndex = 0;
+            settings.Data.UserLanguage.Value = LanguageCodes[codeIndex];
+            settings.SaveData();
+            BrakelessGames.Localization.Controller.SetLanguageByCode(LanguageCodes[codeIndex]);
         }
     }
 }
