@@ -9,9 +9,9 @@
 
 </details>
 Попробовать можно здесь:
-<br><a href="https://yandex.com/games/app/225752" title="Yandex Games"><img src="https://yastatic.net/s3/games-static/static-data/images/single-logo/yandex_games_games_en_white.svg" style="height:40px; margin-right: 20px;"></a>
+<br><a href="https://yandex.com/games/app/225752" title="Yandex Games"><img src="https://yastatic.net/s3/games-static/static-data/images/single-logo/yandex_games_games_ru_white.svg" style="height:40px; margin-right: 20px;"></a>
 <a href="https://dan398.itch.io/justbubbles" title="Itch.io"><img src="https://static.itch.io/images/badge.svg" style="height:40px; margin-right: 20px;"></a>
-<a href="https://github.com/Dan0398/JustBubbles" title="GitHub"><img src="GithubImages/GitHub_Lockup_Light.svg" height="40"></a>
+<a href="https://dan0398.github.io/JustBubbles/" title="GitHub"><img src="GithubImages/GitHub_Lockup_Light.svg" height="40"></a>
 
 Билд для **Win x86** и **Android ArmV7** доступен [в разделе релизов.](https://github.com/Dan0398/JustBubbles/releases/tag/V1.2)
 
