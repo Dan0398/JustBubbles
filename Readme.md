@@ -31,7 +31,7 @@ Initially, the project was done as a test task. Even [the repository has been pr
 
 ## Project and code structure
 Entry points to the project:
-- [Registrar](/Assets/Scripts/Services/DI/Registrar.cs). Registers services in the Service Locator from the start of the application. Due to the `[RuntimeInitializeOnLoadMethod]` attribute, startup does not require an object on the stage, and there is also a call to `Awake()` on the stage, which removes the need to wait for initialization.
+- [Registrator](/Assets/Scripts/Services/DI/Registrator.cs). Registers services in the Service Locator from the start of the application. Due to the `[RuntimeInitializeOnLoadMethod]` attribute, startup does not require an object on the stage, and there is also a call to `Awake()` on the stage, which removes the need to wait for initialization.
 - [Gameplay Controller](/Assets/Scripts/Gameplay/Controller.cs). It's hanging on the Main Camera (number 1 below). In fact, it switches game states, smoothly disabling the previous one.
 
 The whole game takes place on one stage.
