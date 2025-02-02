@@ -1,13 +1,20 @@
 # JUST BUBBLES
-[<img src="GithubImages/eng.png" height="30"/>](/Readme.md)
-[<img src="GithubImages/rus.png" height="30"/>](/Readme_ru.md)
+[<img src="GithubImages/eng.png" height="40"/>](/Readme.md)
+[<img src="GithubImages/rus.png" height="40"/>](/Readme_ru.md)
 <br>Казуальный 2D бабл-шутер, разработанный на Unity3D для платформы Яндекс.Игры.
+<details>
+  <summary>Видео с геймплеем.</summary>
+  
+  https://github.com/user-attachments/assets/a0745bc1-491d-48f3-abcb-c22e1d6ad5fd
 
+</details>
 Попробовать можно здесь:
 <br><a href="https://yandex.com/games/app/225752" title="Yandex Games"><img src="https://yastatic.net/s3/games-static/static-data/images/single-logo/yandex_games_games_en_white.svg" style="height:40px; margin-right: 20px;"></a>
 <a href="https://dan398.itch.io/justbubbles" title="Itch.io"><img src="https://static.itch.io/images/badge.svg" style="height:40px; margin-right: 20px;"></a>
 <a href="https://github.com/Dan0398/JustBubbles" title="GitHub"><img src="GithubImages/GitHub_Lockup_Light.svg" height="40"></a>
-<br>Билд для **Win x86** и **Android ArmV7** доступен [в разделе релизов.](https://github.com/Dan0398/JustBubbles/releases/tag/V1.2)
+
+Билд для **Win x86** и **Android ArmV7** доступен [в разделе релизов.](https://github.com/Dan0398/JustBubbles/releases/tag/V1.2)
+
 ## Кратко:
 - Unity3D 2022.3.10f1.
 - Интерфейс Unity UI.
