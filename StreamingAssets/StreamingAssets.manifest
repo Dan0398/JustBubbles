@@ -1,0 +1,61 @@
+ManifestFileVersion: 0
+CRC: 3238283386
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: merge/2048
+      Dependencies: {}
+    Info_1:
+      Name: sounds
+      Dependencies: {}
+    Info_2:
+      Name: music/2
+      Dependencies: {}
+    Info_3:
+      Name: music/1
+      Dependencies: {}
+    Info_4:
+      Name: merge/balls
+      Dependencies: {}
+    Info_5:
+      Name: music/7
+      Dependencies: {}
+    Info_6:
+      Name: music/11
+      Dependencies: {}
+    Info_7:
+      Name: merge/smiles
+      Dependencies: {}
+    Info_8:
+      Name: music/0
+      Dependencies: {}
+    Info_9:
+      Name: merge/food
+      Dependencies: {}
+    Info_10:
+      Name: music/6
+      Dependencies: {}
+    Info_11:
+      Name: music/10
+      Dependencies: {}
+    Info_12:
+      Name: music/5
+      Dependencies: {}
+    Info_13:
+      Name: music/9
+      Dependencies: {}
+    Info_14:
+      Name: music/4
+      Dependencies: {}
+    Info_15:
+      Name: music/8
+      Dependencies: {}
+    Info_16:
+      Name: merge/planets
+      Dependencies: {}
+    Info_17:
+      Name: music/3
+      Dependencies: {}
+    Info_18:
+      Name: music/12
+      Dependencies: {}

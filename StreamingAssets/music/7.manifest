@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 2251119360
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 9638f8f31419e77bd57f021ac2977aad
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9a2ca7bdbd1871f7131daf57de908e0c
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 9638f8f31419e77bd57f021ac2977aad
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Audio/Music/Freesound/681104__seth_makes_sounds__bel-fiore.mp3
+Dependencies: []

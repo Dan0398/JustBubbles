@@ -1,0 +1,45 @@
+ManifestFileVersion: 0
+CRC: 2565425367
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: eeb5186e6d8649645f461d22fe529d5c
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9a2ca7bdbd1871f7131daf57de908e0c
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: eeb5186e6d8649645f461d22fe529d5c
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Scripts/Gameplay/Merge/Sounds/MergeSound.mp3
+- Assets/Audio/FX/Casual SoundFX Pack/Sounds/Victory.wav
+- Assets/Audio/UnwrapWindow.wav
+- Assets/Instruments/Bubble/bubblepop.wav
+- Assets/Instruments/Bomb/BombFly.wav
+- Assets/Audio/Info_1.mp3
+- Assets/Audio/FX/ButtonClick0.wav
+- Assets/Instruments/Bubble/bubbleset.wav
+- Assets/Audio/FX/Casual SoundFX Pack/Sounds/Positive Holy1.wav
+- Assets/Audio/merge_saved.wav
+- Assets/Scripts/Gameplay/Merge/Sounds/Merge_Drop.wav
+- Assets/Instruments/Sniper/Rifle_Shot.wav
+- Assets/Instruments/Sniper/Rifle_Show.wav
+- Assets/Audio/FX/Casual SoundFX Pack/Sounds/Victory SoundFX3.wav
+- Assets/Audio/merge_shaker.wav
+- Assets/Audio/FX/ClockTick.wav
+- Assets/Instruments/Laser/Lazer_Idle.wav
+- Assets/Instruments/Bubble/WallHit.wav
+- Assets/Instruments/Bomb/odinochnyiy-vzryiv.mp3
+- Assets/Instruments/Laser/Lazer_Fire.wav
+- Assets/Instruments/Bubble/BubbleSwitch.wav
+- Assets/Instruments/Bubble/BubbleShoot.wav
+- Assets/Audio/FX/Casual SoundFX Pack/Sounds/Pickup Holy.wav
+- Assets/Audio/Counter.wav
+- Assets/Audio/FX/show_time_out_01.mp3
+- Assets/Instruments/Bomb/Bomb_Idle.wav
+Dependencies: []

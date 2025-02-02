@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 4229365917
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 7ff3ef5ef7b86d890cfb36a5834ef8ef
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9a2ca7bdbd1871f7131daf57de908e0c
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 7ff3ef5ef7b86d890cfb36a5834ef8ef
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Audio/Music/Freesound/680333__seth_makes_sounds__fat-lofi-loop.mp3
+Dependencies: []

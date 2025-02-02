@@ -1,0 +1,50 @@
+ManifestFileVersion: 0
+CRC: 1265080991
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 9761440627b328cbd56302ce49c99ea4
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 3d3da9d79c3bccc83088620656f2769e
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 9761440627b328cbd56302ce49c99ea4
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 50
+  Script: {instanceID: 0}
+- Class: 58
+  Script: {instanceID: 0}
+- Class: 60
+  Script: {instanceID: 0}
+- Class: 62
+  Script: {instanceID: 0}
+- Class: 83
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0d454dfd977f82e4ebaad0dc3415167a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 6e27797307d978a41ba284db6816788c, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 212
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: Assembly-CSharp
+  ClassName: Content.Merge.ViewConfig/Item
+Assets:
+- Assets/Content/MergeThemes/Smiles/Config.asset
+Dependencies: []

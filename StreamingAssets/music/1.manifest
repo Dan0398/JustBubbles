@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 4062094844
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 349c717f9aa22787cb73c5ec897de7e0
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9a2ca7bdbd1871f7131daf57de908e0c
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 349c717f9aa22787cb73c5ec897de7e0
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Audio/Music/Freesound/580045__migfus20__lo-fi-music-guitar-loop-version.mp3
+Dependencies: []

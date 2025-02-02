@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 701160059
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 8cdf17c8d5e440c8475fe5858b1d86fe
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9a2ca7bdbd1871f7131daf57de908e0c
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 8cdf17c8d5e440c8475fe5858b1d86fe
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Audio/Music/Freesound/501796__doctor_dreamchip__2020-01-10.mp3
+Dependencies: []
