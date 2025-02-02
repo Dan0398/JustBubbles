@@ -1,8 +1,13 @@
 # JUST BUBBLES
-[<img src="GithubImages/eng.png" height="30"/>](/Readme.md)
-[<img src="GithubImages/rus.png" height="30"/>](/Readme_ru.md)
+[<img src="GithubImages/eng.png" height="40"/>](/Readme.md)
+[<img src="GithubImages/rus.png" height="40"/>](/Readme_ru.md)
 <br>A casual 2D bubble shooter developed on Unity3D for the Yandex.Games platform.
+<details>
+  <summary>Gameplay preview</summary>
+  
+  https://github.com/user-attachments/assets/a0745bc1-491d-48f3-abcb-c22e1d6ad5fd
 
+</details>
 You can try it here:
 <br><a href="https://yandex.com/games/app/225752" title="Yandex Games"><img src="https://yastatic.net/s3/games-static/static-data/images/single-logo/yandex_games_games_en_white.svg" style="height:40px; margin-right: 20px;"></a>
 <a href="https://dan398.itch.io/justbubbles" title="Itch.io"><img src="https://static.itch.io/images/badge.svg" style="height:40px; margin-right: 20px;"></a>
