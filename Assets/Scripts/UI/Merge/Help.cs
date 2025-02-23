@@ -5,21 +5,21 @@ namespace UI.Merge
 {   
     public class Help : BaseAnimatedWindow
     {
-        Gameplay.GameType.Merge gameType;
+        private Gameplay.GameType.Merge _gameType;
         
         public void RegisterPauser(Gameplay.GameType.Merge GameType)
         {
-            gameType = GameType;
+            _gameType = GameType;
         }
         
         public void Show()
         {
             gameObject.SetActive(true);
-            gameType.ProcessPause();
+            _gameType.ProcessPause();
             StartCoroutine(AnimateShow());
         } 
         
-        IEnumerator AnimateShow()
+        private IEnumerator AnimateShow()
         {
             SetTurnOffStatus(false);
             StartCoroutine(AnimateFade(.5f));
@@ -30,9 +30,12 @@ namespace UI.Merge
             SetTurnOffStatus(true);
         }
         
-        public void Hide() => StartCoroutine(AnimateHide());
+        public void Hide()
+        {
+            StartCoroutine(AnimateHide());
+        }
         
-        IEnumerator AnimateHide()
+        private IEnumerator AnimateHide()
         {
             SetTurnOffStatus(false);
             yield return AnimateUnwrapWindow(.8f, true);
@@ -40,7 +43,7 @@ namespace UI.Merge
             StartCoroutine(AnimateHeaderColor(.7f, true));
             StartCoroutine(AnimateFade(.7f, true));
             yield return AnimateHeader(.7f, true);
-            gameType.ProcessUnpause();
+            _gameType.ProcessUnpause();
             gameObject.SetActive(false);
         }
     }

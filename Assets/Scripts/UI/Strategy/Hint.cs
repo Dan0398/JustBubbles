@@ -8,30 +8,30 @@ namespace UI.Strategy
 {
     public class Hint : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, ISelectHandler, IDeselectHandler
     {
-        const int MaxSteps = 40;
-        [SerializeField] TextTMPLocalized Text;
-        [SerializeField] GameObject Window;
-        [SerializeField] Image Mask;
-        [SerializeField] int step;
-        bool maskShown, pointerInside, isPCLogic;
-        Button Interactable;
-        WaitForFixedUpdate Wait;
-        Coroutine MaskAnimation;
+        private const int MaxSteps = 40;
+        [SerializeField] private TextTMPLocalized _text;
+        [SerializeField] private GameObject _window;
+        [SerializeField] private Image _mask;
+        [SerializeField] private int _step;
+        private bool _maskShown, _pointerInside, _isPCLogic;
+        private Button _interactable;
+        private WaitForFixedUpdate _wait;
+        private Coroutine _maskAnimation;
 
 #region  PC_Callbacks
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (!isPCLogic) return;
+            if (!_isPCLogic) return;
             IncrementStep(MaxSteps);
         }
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (!isPCLogic) return;
-            pointerInside = true;
+            if (!_isPCLogic) return;
+            _pointerInside = true;
         }
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (!isPCLogic) return;
+            if (!_isPCLogic) return;
             Stop();
         }
 #endregion
@@ -39,66 +39,66 @@ namespace UI.Strategy
 #region  TouchCallbacks
         public void OnDeselect(BaseEventData eventData)
         {
-            if (isPCLogic) return;
+            if (_isPCLogic) return;
             Stop();
         }
         
         public void OnSelect(BaseEventData eventData)
         {
-            if (isPCLogic) return;
+            if (_isPCLogic) return;
             IncrementStep(MaxSteps);
         }
 #endregion
 
-        void Start()
+        private void Start()
         {
-            Interactable = GetComponent<Button>();
+            _interactable = GetComponent<Button>();
             var Env = Services.DI.Single<Services.Environment>();
             System.Action Refresh = () => 
             {
-                isPCLogic = !Env.IsUsingTouch.Value;
-                Interactable.navigation = new Navigation()
+                _isPCLogic = !Env.IsUsingTouch.Value;
+                _interactable.navigation = new Navigation()
                 {
-                    mode = isPCLogic? Navigation.Mode.None : Navigation.Mode.Automatic
+                    mode = _isPCLogic? Navigation.Mode.None : Navigation.Mode.Automatic
                 };
             };
             Refresh.Invoke();
             Env.IsUsingTouch.Changed += Refresh;
         }
 
-        void FixedUpdate()
+        private void FixedUpdate()
         {
-            if (!pointerInside) return;
+            if (!_pointerInside) return;
             IncrementStep(1);
         }
         
-        void IncrementStep(int Amount)
+        private void IncrementStep(int Amount)
         {
-            if (maskShown) return;
-            step += Amount;
-            if (step >= MaxSteps)
+            if (_maskShown) return;
+            _step += Amount;
+            if (_step >= MaxSteps)
             {
-                maskShown = true;
-                MaskAnimation = StartCoroutine(FillMask());
+                _maskShown = true;
+                _maskAnimation = StartCoroutine(FillMask());
             }
         }
         
-        void Stop()
+        private void Stop()
         {
-            pointerInside = false;
-            step = 0;
-            maskShown = false;
-            Mask.fillAmount = 0;
-            if (MaskAnimation != null)
+            _pointerInside = false;
+            _step = 0;
+            _maskShown = false;
+            _mask.fillAmount = 0;
+            if (_maskAnimation != null)
             {
-                StopCoroutine(MaskAnimation);
+                StopCoroutine(_maskAnimation);
             }
             
         }
         
         public void Hide()
         {
-            Window.SetActive(false);
+            _window.SetActive(false);
             gameObject.SetActive(false);
         }
 
@@ -110,18 +110,18 @@ namespace UI.Strategy
                 return;
             }
             Stop();
-            Text.SetNewKey(InfoLangKey);
-            Window.SetActive(true);
+            _text.SetNewKey(InfoLangKey);
+            _window.SetActive(true);
             gameObject.SetActive(true);
         }
         
-        IEnumerator FillMask()
+        private IEnumerator FillMask()
         {
-            if (Wait == null) Wait = new WaitForFixedUpdate();
+            _wait ??= new WaitForFixedUpdate();
             for (int i = 0; i <= 25; i++)
             {
-                Mask.fillAmount = Mathf.Sin(i/25f * 90f * Mathf.Deg2Rad);
-                yield return Wait;
+                _mask.fillAmount = Mathf.Sin(i/25f * 90f * Mathf.Deg2Rad);
+                yield return _wait;
             }
         }
     }

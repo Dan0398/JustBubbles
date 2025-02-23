@@ -8,30 +8,31 @@ namespace Gameplay.Field
     public class ColorStatistic
     {
         public System.Action<List<Bubble.BubbleColor>> OnColorRemove;
-        List<Bubble.BubbleColor> availableColors;
         public bool RequireFilter;
+        public ObsInt ColorsCount   { get; private set; }
+        public ObsInt FullCount     { get; private set; }
+        [SerializeField] private Pair[] _pairs;
+        private List<Bubble.BubbleColor> _availableColors;
+        
         public List<Bubble.BubbleColor> AvailableColors
         {
-            get => availableColors;
+            get => _availableColors;
             set 
             {
-                availableColors = value;
+                _availableColors = value;
                 ColorsCount.Value = AvailableColors.Count;
             }
         }
-        public ObsInt ColorsCount   { get; private set; }
-        public ObsInt FullCount     { get; private set; }
-        [SerializeField] Pair[] pairs;
         
         public ColorStatistic()
         {
             FullCount = 0;
             ColorsCount = 0;
             var ColorValues = System.Enum.GetValues(typeof(Bubble.BubbleColor));
-            pairs = new Pair[ColorValues.Length];
-            for (int i = 0; i < pairs.Length; i ++)
+            _pairs = new Pair[ColorValues.Length];
+            for (int i = 0; i < _pairs.Length; i ++)
             {
-                pairs[i] = new Pair((Bubble.BubbleColor)ColorValues.GetValue(i));
+                _pairs[i] = new Pair((Bubble.BubbleColor)ColorValues.GetValue(i));
             }
         }
         
@@ -50,7 +51,7 @@ namespace Gameplay.Field
             TryFilter();
         }
         
-        void InnerDecount(Bubble decounted)
+        private void InnerDecount(Bubble decounted)
         {
             Convert(decounted).Count--;
             FullCount.Value--;
@@ -71,16 +72,16 @@ namespace Gameplay.Field
             TryFilter();
         }
         
-        void InnerIncrement(Bubble inremented)
+        private void InnerIncrement(Bubble incremented)
         {
-            Convert(inremented).Count++;
+            Convert(incremented).Count++;
             FullCount.Value++;
         }
         
-        Pair Convert(Bubble target)
+        private Pair Convert(Bubble target)
         {
-            if (target == null) throw new System.Exception("!!");
-            foreach(var pair in pairs)
+            if (target == null) throw new System.ArgumentException("Target bubble cannot be null.");
+            foreach(var pair in _pairs)
             {
                 if (pair.Color == target.MyColor)
                 {
@@ -90,20 +91,18 @@ namespace Gameplay.Field
             return null;
         }
         
-        void TryFilter()
+        private void TryFilter()
         {
             if (!RequireFilter) return;
             List<Bubble.BubbleColor> Removed = null;
-            //bool Filtered = false;
-            foreach(var pair in pairs)
+            foreach(var pair in _pairs)
             {
                 if (pair.Count == pair.CountBeforeCheck) continue;
                 if (pair.Count == 0 && pair.CountBeforeCheck != 0)
                 {
-                    if (Removed == null) Removed = new List<Bubble.BubbleColor>(1);
+                    Removed ??= new List<Bubble.BubbleColor>(1);
                     AvailableColors.Remove(pair.Color);
                     Removed.Add(pair.Color);
-                    //Filtered = true;
                 }
                 pair.CountBeforeCheck = pair.Count;
             }

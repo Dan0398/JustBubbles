@@ -7,23 +7,23 @@ namespace UI.Components.Shift
     [AddComponentMenu("Shift'On'Click Reactor")]
     public class Reactor : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
-        [SerializeField] float ShiftScale;
-        Shifted[] shifted;
-        Vector2 shiftVector;
+        [SerializeField] private float _shiftScale;
+        private Shifted[] _shifted;
+        private Vector2 _shiftVector;
         
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (shifted == null) return;
-            foreach(var UnderShift in shifted) UnderShift.Shift(shiftVector);
+            if (_shifted == null) return;
+            foreach(var UnderShift in _shifted) UnderShift.Shift(_shiftVector);
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            if (shifted == null) return;
-            foreach(var UnderShift in shifted) UnderShift.Shift(Vector2.zero);
+            if (_shifted == null) return;
+            foreach(var UnderShift in _shifted) UnderShift.Shift(Vector2.zero);
         }
 
-        void Start()
+        private void Start()
         {
             var ShiftedChildren = new List<Shifted>();
             for (int i = 0; i < transform.childCount; i++)
@@ -33,31 +33,31 @@ namespace UI.Components.Shift
                     ShiftedChildren.Add(new Shifted(rect));
                 }
             }
-            shifted = ShiftedChildren.ToArray();
+            _shifted = ShiftedChildren.ToArray();
             OnValidate();
         }
         
-        void OnValidate()
+        private void OnValidate()
         {
-            shiftVector = Vector2.down * ShiftScale;
+            _shiftVector = Vector2.down * _shiftScale;
         }
         
-        class Shifted
+        private class Shifted
         {
-            RectTransform myRect;
-            Vector2 offsetMin, offsetMax;
+            private RectTransform _myRect;
+            private Vector2 _offsetMin, _offsetMax;
             
             public Shifted(RectTransform onScene)
             {
-                myRect = onScene;
-                offsetMin = onScene.offsetMin;
-                offsetMax = onScene.offsetMax;
+                _myRect = onScene;
+                _offsetMin = onScene.offsetMin;
+                _offsetMax = onScene.offsetMax;
             }
             
             public void Shift(Vector2 Vector)
             {
-                myRect.offsetMin = offsetMin + Vector;
-                myRect.offsetMax = offsetMax + Vector;
+                _myRect.offsetMin = _offsetMin + Vector;
+                _myRect.offsetMax = _offsetMax + Vector;
             }
         }
     }

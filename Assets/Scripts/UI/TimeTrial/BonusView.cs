@@ -8,28 +8,27 @@ namespace UI.Survival
     [RequireComponent(typeof(Animator))]
     public class BonusView : MonoBehaviour
     {
-        [SerializeField] Image InstrumentIcon;
-        [SerializeField] TextTMPLocalized InstrumentName;
-        Animator animator;
-        Queue<ShowQuery> QueryForShow;
-        Services.Audio.Sounds.Service sounds;
-        bool started;
+        [SerializeField] Image _instrumentIcon;
+        [SerializeField] TextTMPLocalized _instrumentName;
+        private Animator _animator;
+        private Queue<ShowQuery> _queryForShow;
+        private Services.Audio.Sounds.Service _sounds;
         
-        void Start()
+        private void Start()
         {
-            if (QueryForShow != null) return;
-            sounds = Services.DI.Single<Services.Audio.Sounds.Service>();
-            animator = GetComponent<Animator>();
-            QueryForShow = new Queue<ShowQuery>(2);
+            if (_queryForShow != null) return;
+            _sounds = Services.DI.Single<Services.Audio.Sounds.Service>();
+            _animator = GetComponent<Animator>();
+            _queryForShow = new Queue<ShowQuery>(2);
         }
         
         public void ShowBonuses(IEnumerable<Content.Instrument.WorkType> Types, Content.Instrument.Config ViewData, System.Action<Content.Instrument.WorkType> OnReceive)
         {
-            if (QueryForShow == null) Start();
+            if (_queryForShow == null) Start();
             foreach(var Type in Types)
             {
                 var Pair = GetPair(Type);
-                QueryForShow.Enqueue(new ShowQuery()
+                _queryForShow.Enqueue(new ShowQuery()
                 {
                     Icon = Pair.Sprite,
                     Name = Pair.NameLangKey,
@@ -38,7 +37,7 @@ namespace UI.Survival
             }
             if (!gameObject.activeSelf)
             {
-                RefreshView(QueryForShow.Peek());
+                RefreshView(_queryForShow.Peek());
                 gameObject.SetActive(true);
             }
             
@@ -54,12 +53,12 @@ namespace UI.Survival
         
         public void ReadyToShowNew()
         {
-            if (QueryForShow.TryDequeue(out var result))
+            if (_queryForShow.TryDequeue(out var result))
             {
                 RefreshView(result);
                 result.OnReceive.Invoke();
-                animator.SetTrigger("ShowNew");
-                sounds.Play(Services.Audio.Sounds.SoundType.InstrumentPicked);
+                _animator.SetTrigger("ShowNew");
+                _sounds.Play(Services.Audio.Sounds.SoundType.InstrumentPicked);
             }
             else
             {
@@ -67,13 +66,13 @@ namespace UI.Survival
             }
         }
         
-        void RefreshView(ShowQuery shown)
+        private void RefreshView(ShowQuery shown)
         {
-            InstrumentIcon.sprite = shown.Icon;
-            InstrumentName.SetNewKey(shown.Name);
+            _instrumentIcon.sprite = shown.Icon;
+            _instrumentName.SetNewKey(shown.Name);
         }
         
-        class ShowQuery
+        private class ShowQuery
         {
             public Sprite Icon;
             public string Name;

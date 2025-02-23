@@ -1,17 +1,16 @@
-using System.Collections;
-using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine;
 
 namespace Content
 {
     public class Bubble: BaseView<Material>
     {
-        [SerializeField] RawImage BubbleOnScene;
+        [SerializeField] private RawImage _bubbleOnScene;
         
         protected override void ApplyAvailable()
         {
-            if (BubbleOnScene == null) return;
-            BubbleOnScene.material = SelectedContent.Value;
+            if (_bubbleOnScene == null) return;
+            _bubbleOnScene.material = SelectedContent.Value;
         }
         
         protected override void SaveSelected()

@@ -9,50 +9,49 @@ namespace Gameplay.Effects
         public class ShiftPackage
         {
             const float WorldAffect = 0.3f;
-            bool Reversed;
-            public Bubble bubble {get; private set;}
-            Vector3 OldPosInLocal, EndPlaceInLocal, ShiftedPlaceInLocal;
-            Transform BubbleTransform;
+            public Bubble Bubble { get; private set;}
+            private bool _reversed;
+            private Vector3 _oldPosInLocal, _endPlaceInLocal, _shiftedPlaceInLocal;
+            private Transform _bubbleTransform;
             
-            
-            ShiftPackage(Bubble bubble, float Multiplier, Vector3 Dir, float ZOutstand)
+            private ShiftPackage(Bubble bubble, float multiplier, Vector3 direction, float zOutstand)
             {
-                Reversed = false;
-                this.bubble = bubble;
-                BubbleTransform = bubble.MyTransform;
-                ShiftedPlaceInLocal = BubbleTransform.localPosition + Dir * Multiplier * WorldAffect - Vector3.forward * 0.1f * ZOutstand;
-                EndPlaceInLocal = bubble.LocalPosInLine;
+                Bubble = bubble;
+                _reversed = false;
+                _bubbleTransform = bubble.MyTransform;
+                _shiftedPlaceInLocal = _bubbleTransform.localPosition + multiplier * WorldAffect * direction - 0.1f * zOutstand * Vector3.forward;
+                _endPlaceInLocal = bubble.LocalPosInLine;
             }
             
             public ShiftPackage(Bubble bubble, Vector3 Dir, float Multiplier, float ZOutstand): this(bubble, Multiplier, Dir, ZOutstand)
             {
-                OldPosInLocal = BubbleTransform.parent.InverseTransformPoint(BubbleTransform.position);
+                _oldPosInLocal = _bubbleTransform.parent.InverseTransformPoint(_bubbleTransform.position);
             }
             
             public ShiftPackage(Bubble bubble, Vector3 Dir, float Multiplier, Vector3 WorldPos, float ZOutstand): this(bubble, Multiplier, Dir, ZOutstand)
             {
-                OldPosInLocal = BubbleTransform.parent.InverseTransformPoint(WorldPos);
-                ShiftedPlaceInLocal = EndPlaceInLocal + Dir * Multiplier * WorldAffect - Vector3.forward * 0.1f * ZOutstand;
+                _oldPosInLocal = _bubbleTransform.parent.InverseTransformPoint(WorldPos);
+                _shiftedPlaceInLocal = _endPlaceInLocal + Dir * Multiplier * WorldAffect - Vector3.forward * 0.1f * ZOutstand;
             }
             
             public void ApplyShift(float Scale)
             {
-                if (!Reversed)
+                if (!_reversed)
                 {
-                    BubbleTransform.localPosition = Vector3.Lerp(OldPosInLocal, ShiftedPlaceInLocal, Scale);
+                    _bubbleTransform.localPosition = Vector3.Lerp(_oldPosInLocal, _shiftedPlaceInLocal, Scale);
                 }
                 else 
                 {
-                    BubbleTransform.localPosition = Vector3.Lerp(EndPlaceInLocal, ShiftedPlaceInLocal, Scale);
+                    _bubbleTransform.localPosition = Vector3.Lerp(_endPlaceInLocal, _shiftedPlaceInLocal, Scale);
                 }
             }
             
-            public void Reverse() => Reversed = true;
+            public void Reverse() => _reversed = true;
         }
     
         public void ShiftBubblesAfterContact(Bubble Central, List<Bubble> ConnectedBubbles, Vector3 ConnectionDirection, Vector3 WorldPos, float MaxDistance)
         {
-            Sounds.PlayBubbleSet();
+            _sounds.PlayBubbleSet();
             List<ShiftPackage> Shifted = new(5)
             {
                 new(Central, ConnectionDirection, .4f, WorldPos, 1)
@@ -75,7 +74,7 @@ namespace Gameplay.Effects
             StartCoroutine(AnimateShiftAfterContact(Shifted));
         }
         
-        IEnumerator AnimateShiftAfterContact(List<ShiftPackage> Shifted)
+        private IEnumerator AnimateShiftAfterContact(List<ShiftPackage> Shifted)
         {
             const int FramesOfAnimation = 20;
             const int FramesHalf = 10;
@@ -84,12 +83,12 @@ namespace Gameplay.Effects
             for (int k = 0; k < Shifted.Count; k++)
             {
                 var Curr = Shifted[k];
-                Curr.bubble.OnSceneAnimationEnds?.Invoke();
-                Curr.bubble.OnSceneAnimationEnds = () => 
+                Curr.Bubble.OnSceneAnimationEnds?.Invoke();
+                Curr.Bubble.OnSceneAnimationEnds = () => 
                 {
                     Curr.ApplyShift(0);
                     Shifted.Remove(Curr);
-                    Curr.bubble.OnSceneAnimationEnds = null;
+                    Curr.Bubble.OnSceneAnimationEnds = null;
                 };
             }
             
@@ -101,12 +100,12 @@ namespace Gameplay.Effects
                     Shifted[k].ApplyShift(Lerp);
                     if (i == FramesHalf) Shifted[k].Reverse();
                 }
-                yield return Wait;
+                yield return _wait;
             }
             
             for (int k = Shifted.Count-1; k >= 0; k--)
             {
-                Shifted[k].bubble.OnSceneAnimationEnds?.Invoke();
+                Shifted[k].Bubble.OnSceneAnimationEnds?.Invoke();
             }
         }
     }

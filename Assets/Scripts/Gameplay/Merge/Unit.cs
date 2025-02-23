@@ -1,8 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Gameplay.Pools;
 using UnityEngine;
+using System;
 
 namespace Gameplay.Merge
 {
@@ -13,24 +11,25 @@ namespace Gameplay.Merge
         [field:SerializeField] public int Point             { get; private set; }
         [field:SerializeField] public float PhysicalSize    { get; private set; }
         [NonSerialized] public MergeField Field;
-        public bool MergeBlocked;
-        Rigidbody2D myRigid;
-        SaveModel.UnitStatus BeforeSleep;
-        bool sleeping;
+        public bool _mergeBlocked;
+        private Rigidbody2D _myRigid;
+        private SaveModel.UnitStatus _beforeSleep;
+        private bool _sleeping;
 
         public Transform MyTransform => transform;
         
-        public Vector2 velocity => myRigid.velocity;
-        public float angularSpeed => myRigid.angularVelocity;
+        public Vector2 Velocity => _myRigid.velocity;
+        
+        public float AngularSpeed => _myRigid.angularVelocity;
 
         public void PrepareForScene(Vector2 worldPos, float YRot = 0, Vector2 speed = default, float angularSpeed = 0)
         {
             gameObject.SetActive(true);
-            myRigid ??= GetComponent<Rigidbody2D>();
-            if (!sleeping)
+            _myRigid ??= GetComponent<Rigidbody2D>();
+            if (!_sleeping)
             {
-                myRigid.velocity = speed;
-                myRigid.angularVelocity = angularSpeed;
+                _myRigid.velocity = speed;
+                _myRigid.angularVelocity = angularSpeed;
             }
             Replace(worldPos, YRot);
         }
@@ -41,53 +40,53 @@ namespace Gameplay.Merge
             transform.eulerAngles = Vector3.forward * YPos;
         }
         
-        void FixedUpdate()
+        private void FixedUpdate()
         {
-            if (sleeping) myRigid.Sleep();
-            MergeBlocked = false;
+            if (_sleeping) _myRigid.Sleep();
+            _mergeBlocked = false;
         }
         
-        internal void SwitchGravityTo(bool Falling)
+        public void SwitchGravityTo(bool Falling)
         {
-            myRigid ??= GetComponent<Rigidbody2D>();
-            myRigid.gravityScale = Falling? 1 : 0;
+            _myRigid ??= GetComponent<Rigidbody2D>();
+            _myRigid.gravityScale = Falling? 1 : 0;
         }
         
         public void Sleep()
         {
-            if (sleeping) return;
-            myRigid ??= GetComponent<Rigidbody2D>();
-            BeforeSleep = CaptureStatus();
-            myRigid.bodyType = RigidbodyType2D.Static;
+            if (_sleeping) return;
+            _myRigid ??= GetComponent<Rigidbody2D>();
+            _beforeSleep = CaptureStatus();
+            _myRigid.bodyType = RigidbodyType2D.Static;
             GetComponent<Collider2D>().enabled = false;
-            sleeping = true;
+            _sleeping = true;
         }
         
         public void WakeUp()
         {
-            if (!sleeping) return;
+            if (!_sleeping) return;
             GetComponent<Collider2D>().enabled = true;
-            myRigid ??= GetComponent<Rigidbody2D>();
-            myRigid.bodyType = RigidbodyType2D.Dynamic;
-            PrepareForScene(BeforeSleep.Pos.ToVector(), BeforeSleep.Ang, BeforeSleep.Vel.ToVector(), BeforeSleep.AngVel);
-            sleeping = false;
+            _myRigid ??= GetComponent<Rigidbody2D>();
+            _myRigid.bodyType = RigidbodyType2D.Dynamic;
+            PrepareForScene(_beforeSleep.Pos.ToVector(), _beforeSleep.Ang, _beforeSleep.Vel.ToVector(), _beforeSleep.AngVel);
+            _sleeping = false;
         }
 
-        void OnCollisionEnter2D(Collision2D col)
+        private void OnCollisionEnter2D(Collision2D col)
         {
-            if (MergeBlocked) return;
+            if (_mergeBlocked) return;
             if (!col.gameObject.activeSelf) return;
             if (!gameObject.activeSelf) return;
             Field.ReactOnCollision(this, col);
         }
 
-        internal SaveModel.UnitStatus CaptureStatus() => new SaveModel.UnitStatus()
+        public SaveModel.UnitStatus CaptureStatus() => new SaveModel.UnitStatus()
         {
             ID = Point,
             Pos = new SaveModel.SerVector2(transform.position),
             Ang = Mathf.RoundToInt(transform.eulerAngles.z),
-            Vel = new SaveModel.SerVector2(myRigid.velocity),
-            AngVel = Mathf.RoundToInt(myRigid.angularVelocity)
+            Vel = new SaveModel.SerVector2(_myRigid.velocity),
+            AngVel = Mathf.RoundToInt(_myRigid.angularVelocity)
         };
     }
 }

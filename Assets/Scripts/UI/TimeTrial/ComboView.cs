@@ -6,18 +6,18 @@ namespace UI.Survival
     [System.Serializable]
     public class ComboView
     {
-        [SerializeField] string ComboLangKey;
-        [SerializeField] TextTMPLocalized ComboLabel;
-        [SerializeField] TMPro.TMP_Text PointsMultiplierLabel;
-        float oldPointsMultiplier;
+        [SerializeField] private string _comboLangKey;
+        [SerializeField] private TextTMPLocalized _comboLabel;
+        [SerializeField] private TMPro.TMP_Text _pointsMultiplierLabel;
+        private float _oldPointsMultiplier;
         
         public void Refresh(int ComboCount, float PointsMultiplier)
         {
-            ComboLabel.SetNewKeyFormatted(ComboLangKey, new string[]{ComboCount.ToString()});
-            if (PointsMultiplier != oldPointsMultiplier)
+            _comboLabel.SetNewKeyFormatted(_comboLangKey, new string[]{ComboCount.ToString()});
+            if (PointsMultiplier != _oldPointsMultiplier)
             {
-                oldPointsMultiplier = PointsMultiplier;
-                PointsMultiplierLabel.text = oldPointsMultiplier.ToString();
+                _oldPointsMultiplier = PointsMultiplier;
+                _pointsMultiplierLabel.text = _oldPointsMultiplier.ToString();
             }
         }
     }

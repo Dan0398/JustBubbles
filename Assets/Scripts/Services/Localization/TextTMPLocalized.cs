@@ -6,20 +6,20 @@ namespace BrakelessGames.Localization
     [RequireComponent(typeof(TMP_Text)), AddComponentMenu("UI/Localization/TextMeshPro Localized")]
     public class TextTMPLocalized: LocalizedBehaviour
     {
-        TMP_Text MyTextComponent;
+        private TMP_Text _myTextComponent;
         
         protected override void AfterStart()
         {
-            MyTextComponent = GetComponent<TMP_Text>();
+            _myTextComponent = GetComponent<TMP_Text>();
         }
         
         protected override void UpdateContent()
         {
-            if (MyTextComponent == null)
+            if (_myTextComponent == null)
             {
-                MyTextComponent = GetComponent<TMP_Text>();
+                _myTextComponent = GetComponent<TMP_Text>();
             }
-			MyTextComponent.text = ResultLocalized.Replace(@"\n", System.Environment.NewLine);
+			_myTextComponent.text = ResultLocalized.Replace(@"\n", System.Environment.NewLine);
         }
     }
 }

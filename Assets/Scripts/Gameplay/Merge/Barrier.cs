@@ -6,108 +6,106 @@ namespace Gameplay.Merge
     [System.Serializable]
     public class Barrier
     {
-        const float ColliderWidth = 0.3f;
-        [SerializeField] Vector2 RootPoint;
-        [SerializeField] float Height;
-        [SerializeField] Transform Left, Right, Bottom, Top;
-        [SerializeField] SpriteRenderer[] Recolor;
-        [SerializeField] Color MainColor;
-        Vector2 actualSize;
-        float halfWidth;
-        public float Width => actualSize.x;
-        WaitForFixedUpdate Wait;
+        private const float ColliderWidth = 0.3f;
+        
+        [SerializeField] private Vector2 _rootPoint;
+        [SerializeField] private float _height;
+        [SerializeField] private Transform _left;
+        [SerializeField] private Transform _right;
+        [SerializeField] private Transform _bottom;
+        [SerializeField] private Transform _top;
+        [SerializeField] private SpriteRenderer[] _recolor;
+        [SerializeField] private Color _mainColor;
+        private Vector2 _actualSize;
+        private float _halfWidth;
+        private WaitForFixedUpdate _wait;
+        
+        public float Width => _actualSize.x;
         
         public IEnumerator ShowAndResizeAnimated(SizeType type, End gameOverPlace, float Duration = 1f)
         {
-            Wait ??= new();
+            _wait ??= new();
             int Steps = Mathf.RoundToInt(Duration / Time.fixedDeltaTime);
-            actualSize = SizeFromType(type);
-            halfWidth = actualSize.x * 0.5f;
-            var ZeroSize = new Vector2(0, Height);
-            var PureColor = new Color(MainColor.r, MainColor.g, MainColor.b, 0);
+            _actualSize = SizeFromType(type);
+            _halfWidth = _actualSize.x * 0.5f;
+            var ZeroSize = new Vector2(0, _height);
+            var PureColor = new Color(_mainColor.r, _mainColor.g, _mainColor.b, 0);
             for (int i = 0; i <= Steps; i++)
             {
                 var Lerp = EasingFunction.EaseInSine(0,1, i/(float) Steps);
-                var ShownSize = Vector2.Lerp(ZeroSize, actualSize, Lerp);
-                if (Bottom != null)
+                var ShownSize = Vector2.Lerp(ZeroSize, _actualSize, Lerp);
+                if (_bottom != null)
                 {
-                    Bottom.position = RootPoint + Vector2.down * ColliderWidth * 0.5f;
-                    Bottom.localScale = new Vector3(ShownSize.x + ColliderWidth * 2, ColliderWidth);
-                    Bottom.gameObject.SetActive(true);
+                    _bottom.position = _rootPoint + Vector2.down * ColliderWidth * 0.5f;
+                    _bottom.localScale = new Vector3(ShownSize.x + ColliderWidth * 2, ColliderWidth);
+                    _bottom.gameObject.SetActive(true);
                 }
-                if (Top != null)
+                if (_top != null)
                 {
-                    Top.position = RootPoint + Vector2.up * (actualSize.y - ColliderWidth * 0.5f);
-                    Top.localScale = new Vector3(ShownSize.x + ColliderWidth * 2, ColliderWidth);
-                    Top.gameObject.SetActive(true);
+                    _top.position = _rootPoint + Vector2.up * (_actualSize.y - ColliderWidth * 0.5f);
+                    _top.localScale = new Vector3(ShownSize.x + ColliderWidth * 2, ColliderWidth);
+                    _top.gameObject.SetActive(true);
                 }
-                if (Left != null)
+                if (_left != null)
                 {
-                    Left.position = new Vector3(RootPoint.x - (ShownSize.x + ColliderWidth) * 0.5f, RootPoint.y + ShownSize.y * 0.5f);
-                    Left.localScale = new Vector3(ColliderWidth, ShownSize.y);
-                    Left.gameObject.SetActive(true);
+                    _left.position = new Vector3(_rootPoint.x - (ShownSize.x + ColliderWidth) * 0.5f, _rootPoint.y + ShownSize.y * 0.5f);
+                    _left.localScale = new Vector3(ColliderWidth, ShownSize.y);
+                    _left.gameObject.SetActive(true);
                 }
-                if (Right != null)
+                if (_right != null)
                 {
-                    Right.position = new Vector3(RootPoint.x + (ShownSize.x + ColliderWidth) * 0.5f, RootPoint.y + ShownSize.y * 0.5f);
-                    Right.localScale = new Vector3(ColliderWidth, ShownSize.y);
-                    Right.gameObject.SetActive(true);
+                    _right.position = new Vector3(_rootPoint.x + (ShownSize.x + ColliderWidth) * 0.5f, _rootPoint.y + ShownSize.y * 0.5f);
+                    _right.localScale = new Vector3(ColliderWidth, ShownSize.y);
+                    _right.gameObject.SetActive(true);
                 }
-                foreach(var recolor in Recolor)
+                foreach(var recolor in _recolor)
                 {
-                    recolor.color = Color.Lerp(PureColor, MainColor, Lerp);
+                    recolor.color = Color.Lerp(PureColor, _mainColor, Lerp);
                 }
                 gameOverPlace.RefreshView(ShownSize.x, Lerp);
-                yield return Wait;
+                yield return _wait;
             }
         }
         
-        public enum SizeType : byte
-        {
-            Slim = 0,
-            Quad = 1,
-            Wide = 2,
-        }
-        
-        Vector2 SizeFromType(SizeType type)
+        private Vector2 SizeFromType(SizeType type)
         {
             if (type == SizeType.Slim)
             {
-                return new Vector2(5, Height);
+                return new Vector2(5, _height);
             }
             else if (type == SizeType.Quad)
             {
-                return new Vector2(Height, Height);
+                return new Vector2(_height, _height);
             }
             else if (type == SizeType.Wide)
             {
-                return new Vector2(15, Height);
+                return new Vector2(15, _height);
             }
             throw new System.Exception("Barrier size not found");
         }
 
-        internal bool IsPosInside(Vector2 input)
+        public bool IsPosInside(Vector2 input)
         {
-            return  input.x > RootPoint.x - halfWidth &&
-                    input.x < RootPoint.x + halfWidth &&
-                    input.y > RootPoint.y             &&
-                    input.x < RootPoint.y + actualSize.y;
+            return  input.x > _rootPoint.x - _halfWidth &&
+                    input.x < _rootPoint.x + _halfWidth &&
+                    input.y > _rootPoint.y             &&
+                    input.x < _rootPoint.y + _actualSize.y;
         }
 
-        internal void Hide()
+        public void Hide()
         {
-            Bottom?.gameObject.SetActive(false);
-            Left?.gameObject.SetActive(false);
-            Right?.gameObject.SetActive(false);
-            Top?.gameObject.SetActive(false);
+            _bottom?.gameObject.SetActive(false);
+            _left?.gameObject.SetActive(false);
+            _right?.gameObject.SetActive(false);
+            _top?.gameObject.SetActive(false);
         }
         
         public IEnumerator Shake()
         {
-            Wait ??= new();
-            float Width = Bottom.localScale.x;
-            Vector3[] LocalDefault = new Vector3[] { Left.position, Right.position, Bottom.position, Top.position};
-            Rigidbody2D[] rigids = new Rigidbody2D[] { Left.GetComponent<Rigidbody2D>(), Right.GetComponent<Rigidbody2D>(), Bottom.GetComponent<Rigidbody2D>(), Top.GetComponent<Rigidbody2D>() };
+            _wait ??= new();
+            float Width = _bottom.localScale.x;
+            Vector3[] LocalDefault = new Vector3[] { _left.position, _right.position, _bottom.position, _top.position};
+            Rigidbody2D[] rigids = new Rigidbody2D[] { _left.GetComponent<Rigidbody2D>(), _right.GetComponent<Rigidbody2D>(), _bottom.GetComponent<Rigidbody2D>(), _top.GetComponent<Rigidbody2D>() };
             foreach(var rigid in rigids) rigid.bodyType = RigidbodyType2D.Kinematic;
             for (int i = 0; i <= 60; i++)
             {
@@ -116,7 +114,7 @@ namespace Gameplay.Merge
                 {
                     rigids[k].MovePosition(LocalDefault[k] + Lerp * Width * 0.25f * Vector3.right);
                 }
-                yield return Wait;
+                yield return _wait;
             }
             foreach(var rigid in rigids) rigid.bodyType = RigidbodyType2D.Static;
         }

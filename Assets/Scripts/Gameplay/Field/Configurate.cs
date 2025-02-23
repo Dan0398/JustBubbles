@@ -8,9 +8,9 @@ namespace Gameplay.Field
     {
         public void ReceiveConfig(Config config)
         {
-            ReactOnBubbleSet = config.ReactOnBubbleSet;
-            IsFieldSizeDynamic = config.IsFieldSizeDynamic;
-            MaxAspectRatio = config.MaxAspectRatio;
+            _reactOnBubbleSet = config.ReactOnBubbleSet;
+            _isFieldSizeDynamic = config.IsFieldSizeDynamic;
+            _maxAspectRatio = config.MaxAspectRatio;
             UpperRelativePlace = config.RelativeOutstand;
             CheckAspectChange();
         }

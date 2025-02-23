@@ -6,46 +6,48 @@ namespace UI.Strategy
 {
     public class Endgame: MonoBehaviour
     {
-        const int Steps = 17;
-        public System.Action BeforeTurnOff;
-        [SerializeField] BrakelessGames.Localization.TextTMPLocalized WindowHeader;
-        [SerializeField] TMPro.TMP_Text UserClick;
-        [SerializeField] BrakelessGames.Localization.TextTMPLocalized BestScore;
-        [SerializeField] Hint Hints;
-        [SerializeField] GameObject buttonsParent;
-        [Header("Header Langs"), SerializeField] string GameEnded;
-        [SerializeField] string CloseLangKey, RetryLangKey;
-        [SerializeField] Leaderboards leaderboards;
-        Services.Audio.Sounds.Service sound;
-        Result actualResult;
-        WaitForSecondsRealtime Wait;
-        WaitForSecondsRealtime LongWait;
-        System.Action afterHide;
-        string headerLangKey;
-        bool turnOffAllowed;
+        private const int Steps = 17;
         
-        void Start()
+        public System.Action BeforeTurnOff;
+        [SerializeField] private BrakelessGames.Localization.TextTMPLocalized _windowHeader;
+        [SerializeField] private TMPro.TMP_Text _userClick;
+        [SerializeField] private BrakelessGames.Localization.TextTMPLocalized _bestScore;
+        [SerializeField] private Hint _hints;
+        [SerializeField] private GameObject _buttonsParent;
+        [Header("Header Langs")]
+        [SerializeField] private string _gameEnded;
+        [SerializeField] private string _closeLangKey;
+        [SerializeField] private string _retryLangKey;
+        [SerializeField] private Leaderboards _leaderboards;
+        private Services.Audio.Sounds.Service _sound;
+        private Result _actualResult;
+        private WaitForSecondsRealtime _wait;
+        private WaitForSecondsRealtime _longWait;
+        private System.Action _afterHide;
+        private string _headerLangKey;
+        private bool _turnOffAllowed;
+        
+        private void Start()
         {
-            Wait = new WaitForSecondsRealtime(0.05f);
-            LongWait = new WaitForSecondsRealtime(0.7f);
-            leaderboards.Init(this);
+            _wait = new WaitForSecondsRealtime(0.05f);
+            _longWait = new WaitForSecondsRealtime(0.7f);
         }
         
         public void ShowEndgame(Result result)
         {
-            actualResult = result;
+            _actualResult = result;
             ResetViewsToDefaults();
-            leaderboards.PrepareView(result);
+            _leaderboards.PrepareView(result);
             gameObject.SetActive(true);
         }
         
-        void ResetViewsToDefaults()
+        private void ResetViewsToDefaults()
         {
-            Hints.Hide();
-            WindowHeader.SetNewKey(GameEnded);
-            buttonsParent.SetActive(false);
-            UserClick.text = string.Empty;
-            BestScore.SetTextNoTranslate(string.Empty);
+            _hints.Hide();
+            _windowHeader.SetNewKey(_gameEnded);
+            _buttonsParent.SetActive(false);
+            _userClick.text = string.Empty;
+            _bestScore.SetTextNoTranslate(string.Empty);
         }
         
         public void ReceiveEndgameUnwrapped()
@@ -53,90 +55,90 @@ namespace UI.Strategy
             StartCoroutine(AnimateValues());
         }
         
-        IEnumerator AnimateValues()
+        private IEnumerator AnimateValues()
         {
             yield return AnimateScore();
-            yield return LongWait;
-            Hints.Show(actualResult.HintLangKey);
+            yield return _longWait;
+            _hints.Show(_actualResult.HintLangKey);
             yield return AnimateBest();
-            yield return LongWait;
-            leaderboards.Show();
-            buttonsParent.SetActive(true);
-            turnOffAllowed = true;
+            yield return _longWait;
+            _leaderboards.Show();
+            _buttonsParent.SetActive(true);
+            _turnOffAllowed = true;
         }
         
-        IEnumerator AnimateScore()
+        private IEnumerator AnimateScore()
         {
-            if (sound == null) sound = Services.DI.Single<Services.Audio.Sounds.Service>();
-            sound.Play(Services.Audio.Sounds.SoundType.Counter);
+            if (_sound == null) _sound = Services.DI.Single<Services.Audio.Sounds.Service>();
+            _sound.Play(Services.Audio.Sounds.SoundType.Counter);
             for (int i = 0; i < Steps; i++)
             {
-                UserClick.text = (actualResult.SessionResult * i / Steps).ToString();
-                yield return Wait;
+                _userClick.text = (_actualResult.SessionResult * i / Steps).ToString();
+                yield return _wait;
             }
-            UserClick.text = actualResult.SessionResult.ToString();
-            sound.Stop(Services.Audio.Sounds.SoundType.Counter);
+            _userClick.text = _actualResult.SessionResult.ToString();
+            _sound.Stop(Services.Audio.Sounds.SoundType.Counter);
         }
         
-        IEnumerator AnimateBest()
+        private IEnumerator AnimateBest()
         {
             string ShownResult = "-";
-            if (actualResult.BestResult > 0)
+            if (_actualResult.BestResult > 0)
             {
-                ShownResult = actualResult.BestResult.ToString();
+                ShownResult = _actualResult.BestResult.ToString();
             }
-            if (!actualResult.IsNewHighScore)
+            if (!_actualResult.IsNewHighScore)
             {
-                BestScore.SetTextNoTranslate(ShownResult);
+                _bestScore.SetTextNoTranslate(ShownResult);
                 yield break;
             }
-            BestScore.SetNewKey("NewRecordMark");
+            _bestScore.SetNewKey("NewRecordMark");
             Services.DI.Single<Services.Audio.Sounds.Service>().Play(Services.Audio.Sounds.SoundType.Record);
-            var Rect = BestScore.GetComponent<RectTransform>();
+            var Rect = _bestScore.GetComponent<RectTransform>();
             for (int i = 1; i <= Steps; i++)
             {
                 Rect.localScale = (1 + 0.2f * Mathf.Sin(i/(float)Steps * 180 * Mathf.Deg2Rad)) * Vector3.one;
-                yield return Wait;
+                yield return _wait;
             }
             Rect.localScale = Vector3.one;
-            yield return LongWait;
-            var Maskable = BestScore.GetComponent<MaskableGraphic>();
+            yield return _longWait;
+            var Maskable = _bestScore.GetComponent<MaskableGraphic>();
             for (int i = 1; i <= Steps; i++)
             {
                 Maskable.color = Color.white - Color.black * Mathf.Sin(i/(float)Steps * 180 * Mathf.Deg2Rad);
-                if (i == Steps/2) BestScore.SetTextNoTranslate(ShownResult);
-                yield return Wait;
+                if (i == Steps/2) _bestScore.SetTextNoTranslate(ShownResult);
+                yield return _wait;
             }
         }
         
         public async void GoToMenu()
         {
-            if (!turnOffAllowed) return;
+            if (!_turnOffAllowed) return;
             await Services.DI.Single<Services.Advertisements.Controller>().ShowInterstitial();
-            StartHide(actualResult.OnEnd, CloseLangKey);
+            StartHide(_actualResult.OnEnd, _closeLangKey);
         }
         
         public async void GoRetry()
         {
-            if (!turnOffAllowed) return;
+            if (!_turnOffAllowed) return;
             await Services.DI.Single<Services.Advertisements.Controller>().ShowInterstitial();
-            StartHide(actualResult.OnRetry, RetryLangKey);
+            StartHide(_actualResult.OnRetry, _retryLangKey);
         }
         
-        void StartHide(System.Action BeforeHeaderHide, string HeaderLangKey)
+        private void StartHide(System.Action BeforeHeaderHide, string HeaderLangKey)
         {
-            buttonsParent.SetActive(false);
-            turnOffAllowed = false;
-            afterHide = BeforeHeaderHide;
+            _buttonsParent.SetActive(false);
+            _turnOffAllowed = false;
+            _afterHide = BeforeHeaderHide;
             GetComponent<Animator>().SetTrigger("Hide");
-            headerLangKey = HeaderLangKey;
+            _headerLangKey = HeaderLangKey;
         }
         
         public void CallHeaderFullAlpha()
         {
-            WindowHeader.SetNewKey(headerLangKey);
-            afterHide.Invoke();
-            afterHide = null;
+            _windowHeader.SetNewKey(_headerLangKey);
+            _afterHide.Invoke();
+            _afterHide = null;
         }
         
         public void FinalizeHide()

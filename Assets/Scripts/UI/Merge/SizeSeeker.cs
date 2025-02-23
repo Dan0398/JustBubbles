@@ -4,41 +4,41 @@ namespace UI.Merge
 {
     public class SizeSeeker : MonoBehaviour
     {
-        const int MaxStep = 20;
-        [SerializeField] GameObject Turnable;
-        float minimalAspect;
-        Gameplay.GameType.Merge pauser;
-        int step;
-        int oldWidth, oldHeight;
+        private const int MaxStep = 20;
+        [SerializeField] private GameObject _turnable;
+        private float _minimalAspect;
+        private Gameplay.GameType.Merge _pauser;
+        private int _step;
+        private int _oldWidth, _oldHeight;
         
         public void Activate(Gameplay.GameType.Merge merge, float MinimalAspect)
         {
-            pauser = merge;
+            _pauser = merge;
             enabled = true;
-            minimalAspect = MinimalAspect;
+            _minimalAspect = MinimalAspect;
         }
         
         public void Deactivate()
         {
-            pauser = null;
+            _pauser = null;
             enabled = false;
         }
         
-        void Update()
+        private void Update()
         {
-            step ++;
-            if (step != MaxStep) return;
-            step = 0;
-            if (Screen.width == oldWidth && Screen.height == oldHeight) return;
-            oldWidth = Screen.width;
-            oldHeight = Screen.height;
-            float Aspect = oldWidth / (float) oldHeight;
-            bool turnedOn = Aspect < minimalAspect;
-            if (Turnable.activeSelf != turnedOn)
+            _step ++;
+            if (_step != MaxStep) return;
+            _step = 0;
+            if (Screen.width == _oldWidth && Screen.height == _oldHeight) return;
+            _oldWidth = Screen.width;
+            _oldHeight = Screen.height;
+            float Aspect = _oldWidth / (float) _oldHeight;
+            bool turnedOn = Aspect < _minimalAspect;
+            if (_turnable.activeSelf != turnedOn)
             {
-                Turnable.SetActive(turnedOn);
-                if (turnedOn) pauser.ProcessPause();
-                else pauser.ProcessUnpause();
+                _turnable.SetActive(turnedOn);
+                if (turnedOn) _pauser.ProcessPause();
+                else _pauser.ProcessUnpause();
             }
         }
     }

@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -10,8 +9,8 @@ namespace Utils.Observables
      : ISerializationCallbackReceiver
 #endif
     {
-        [JsonRequired] T myValue;
-        [JsonIgnore, SerializeField] T inspector;
+        [JsonRequired] private T myValue;
+        [JsonIgnore, SerializeField] private T inspector;
         [JsonIgnore] public System.Action Changed;
         [JsonIgnore] public T Value
         {

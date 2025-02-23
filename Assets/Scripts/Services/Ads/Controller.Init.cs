@@ -6,15 +6,15 @@ namespace Services.Advertisements
         {
             
     #if   UNITY_EDITOR
-            AdSystem = new IdleAds();
+            _adSystem = new IdleAds();
     #elif UNITY_WEBGL
-            AdSystem = new WebGLAds();
+            _adSystem = new WebGLAds();
     #elif UNITY_ANDROID
-            AdSystem = new IdleAds();
+            _adSystem = new IdleAds();
     #else
-            AdSystem = new IdleAds();
+            _adSystem = new IdleAds();
     #endif
-            AdSystem.Init();
+            _adSystem.Init();
         }
     }
 }

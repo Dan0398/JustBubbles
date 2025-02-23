@@ -6,7 +6,7 @@ namespace Gameplay.Effects
 {
     public partial class Controller : MonoBehaviour
     {
-        int PopAnimationsCount;
+        private int _popAnimationsCount;
         
         public void PopBubbles(List<Bubble> Bubbles)
         {
@@ -16,46 +16,46 @@ namespace Gameplay.Effects
             }
             foreach(var Bubble in Bubbles)
             {
-                PopAnimationsCount++;
+                _popAnimationsCount++;
                 Bubble.OnSceneAnimationEnds?.Invoke();
-                Bubble.MyTransform.SetParent(MovingParent);
+                Bubble.MyTransform.SetParent(_movingParent);
                 Bubble.DeactivateCollisions();
                 Bubble.MyRigid.isKinematic = true;
             }
             StartCoroutine(AnimatePopping(Bubbles));
         }
 
-        IEnumerator AnimatePopping(List<Bubble> Bubbles)
+        private IEnumerator AnimatePopping(List<Bubble> Bubbles)
         {
-            if (BubblePopTransform == null)
+            if (_bubblePopTransform == null)
             {
-                BubblePopTransform = BubblePopParticle.transform;
+                _bubblePopTransform = _bubblePopParticle.transform;
             }
-            var Main = BubblePopParticle.main;
+            var Main = _bubblePopParticle.main;
             Main.startColor = ColorPicker.GetColorByEnum(Bubbles[0].MyColor);
             for (int i = 0; i < Bubbles.Count; i ++)
             {
                 PlayPopEffectAt(Bubbles[i].MyTransform.position + Vector3.back * 0.1f);
-                yield return Wait;
-                yield return Wait;
+                yield return _wait;
+                yield return _wait;
                 StartCoroutine(SoftHideBubble(Bubbles[i], RemoveAndCheck));
             }
             
             void RemoveAndCheck()
             {
-                PopAnimationsCount--;
+                _popAnimationsCount--;
                 TryResetMovingParent();
             }
         }
         
         public void PlayPopEffectAt(Vector3 pos)
         {
-            BubblePopTransform.position = pos;
-            BubblePopParticle.Emit(1);
-            Sounds.PlayBubblePop();
+            _bubblePopTransform.position = pos;
+            _bubblePopParticle.Emit(1);
+            _sounds.PlayBubblePop();
         }
         
-        IEnumerator SoftHideBubble(Bubble Target, System.Action OnEnd = null)
+        private IEnumerator SoftHideBubble(Bubble Target, System.Action OnEnd = null)
         {
             const int Steps = 20;
             
@@ -67,9 +67,9 @@ namespace Gameplay.Effects
             {
                 Renderer.color = Color.Lerp(OldColor, NewColor, Step/(float)Steps);
                 Shadow.color = new Color(0,0,0,1 - Mathf.Clamp01( (Step*2f)/(float)Steps));
-                yield return Wait;
+                yield return _wait;
             }
-            BubblesPool.Hide(Target);
+            _bubblesPool.Hide(Target);
             Shadow.color = Color.black;
             OnEnd?.Invoke();
         }
@@ -80,7 +80,7 @@ namespace Gameplay.Effects
             {
                 bubble.OnSceneAnimationEnds?.Invoke();
             }
-            BubblesPool.Hide(bubbles);
+            _bubblesPool.Hide(bubbles);
         }
     }
 }

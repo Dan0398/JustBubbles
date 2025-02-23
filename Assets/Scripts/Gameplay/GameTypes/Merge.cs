@@ -13,210 +13,207 @@ namespace Gameplay.GameType
 {
     public class Merge : BaseType
     {
+        private MergeField _field;
+        private User.MergeUser _user;
+        private UI.Merge.MergeCanvas _canvas;
+        
+        private int _slotNumber;
+        private bool _allWrapped, _wasInGame;
+        
+        private Data.MergeController _userData;
+        private Content.Merge.Service _content;
+        
+        private Content.Merge.SizesList.Size _selectedSize;
+        private Content.Merge.ThemesList.Theme _selectedTheme;
+        private SaveModel _saveSlot;
+        
         protected override string Settings_ExitLangKey => "Save&Menu";
-        MergeField Field;
-        User.MergeUser User;
-        UI.Merge.MergeCanvas Canvas;
         
-        int SlotNumber;
-        bool allWrapped, wasInGame;
-        
-        Data.MergeController UserData;
-        Content.Merge.Service Content;
-        
-        Content.Merge.SizesList.Size SelectedSize;
-        Content.Merge.ThemesList.Theme SelectedTheme;
-        SaveModel SaveSlot;
-        
-        public Content.Merge.ThemesList Views => Content.ThemesConfig;
+        public Content.Merge.ThemesList Views => _content.ThemesConfig;
 
         public Merge(Gameplay.Controller Gameplay, Settings Settings, InGameParents InGameParts, MergeField field, User.MergeUser user, UI.Merge.MergeCanvas canvas) 
         : base(Gameplay, user, Settings, InGameParts)
         {
-            Field = field;
-            User = user;
-            Canvas = canvas;
-            UserData = Services.DI.Single<Data.MergeController>();
-            Content = Services.DI.Single<Content.Merge.Service>();
-            SelectedTheme = null;
+            _field = field;
+            _user = user;
+            _canvas = canvas;
+            _userData = Services.DI.Single<Data.MergeController>();
+            _content = Services.DI.Single<Content.Merge.Service>();
+            _selectedTheme = null;
             Gameplay.StartCoroutine(Start());
-            allWrapped = false;
+            _allWrapped = false;
         }
 
-        IEnumerator Start()
+        private IEnumerator Start()
         {
-            while(!UserData.isDataLoaded) yield return new WaitForSeconds(0.5f);
-            if (!UserData.Data.Tried)
+            while(!_userData.isDataLoaded) yield return new WaitForSeconds(0.5f);
+            if (!_userData.Data.Tried)
             {
-                UserData.Data.SaveSlots[0] = null;
+                _userData.Data.SaveSlots[0] = null;
                 LoadSlot(0);
-                UserData.Data.Tried = true;
-                UserData.SaveData();
+                _userData.Data.Tried = true;
+                _userData.SaveData();
                 yield break;
             }
-            Canvas.ShowSlotSelector(this, UserData.Data);
+            _canvas.ShowSlotSelector(this, _userData.Data);
         }
         
         public void DeleteSlot(int ID, UI.Merge.SlotViewOnScene Shown)
         {
-            Canvas.RequestDeleteSlot(ID, ApplyDelete);
+            _canvas.RequestDeleteSlot(ID, ApplyDelete);
             
             void ApplyDelete()
             {
-                UserData.Data.SaveSlots[ID] = null;
-                UserData.SaveData();
-                Shown.RefreshSource(UserData.Data.SaveSlots[ID] , ID, this);
+                _userData.Data.SaveSlots[ID] = null;
+                _userData.SaveData();
+                Shown.RefreshSource(_userData.Data.SaveSlots[ID] , ID, this);
             }
         }
 
         public void LoadSlot(int number)
         {
-            SlotNumber = number;
-            SaveSlot = UserData.Data.SaveSlots[SlotNumber];
-            if (SaveSlot == null)
+            _slotNumber = number;
+            _saveSlot = _userData.Data.SaveSlots[_slotNumber];
+            if (_saveSlot == null)
             {
-                SelectedTheme = Content.ThemesConfig.Themes[0];
-                SelectedSize = Content.SizesConfig.Orientations[0];
-                SaveSlot = new SaveModel(Barrier.SizeType.Slim, SelectedTheme.BundlePath);
-                UserData.Data.SaveSlots[SlotNumber] = SaveSlot;
-                UserData.SaveData();
+                _selectedTheme = _content.ThemesConfig.Themes[0];
+                _selectedSize = _content.SizesConfig.Orientations[0];
+                _saveSlot = new SaveModel(SizeType.Slim, _selectedTheme.BundlePath);
+                _userData.Data.SaveSlots[_slotNumber] = _saveSlot;
+                _userData.SaveData();
             }
             else
             {
-                SelectedSize = Content.SizesConfig.Orientations.FirstOrDefault(h => h.Data == SaveSlot.FieldSize);
-                SelectedTheme = Content.ThemesConfig.Themes.FirstOrDefault(h => h.BundlePath == SaveSlot.BundlePath);
+                _selectedSize = _content.SizesConfig.Orientations.FirstOrDefault(h => h.Data == _saveSlot.FieldSize);
+                _selectedTheme = _content.ThemesConfig.Themes.FirstOrDefault(h => h.BundlePath == _saveSlot.BundlePath);
             }
             WaitLoadAndRun();
         }
         
-        void WaitLoadAndRun()
+        private void WaitLoadAndRun()
         {
-            Content.Processor.LoadTheme(SelectedTheme, StartAnimated);
+            _content.Processor.LoadTheme(_selectedTheme, StartAnimated);
             
             void StartAnimated()
             {
-                Field.ShowAnimated(SelectedTheme.Loaded, SaveSlot, 1.5f);
-                Field.GameOverRelative.Changed += TryDetectGameOver;
-                User.StartGameplayAndAnimate(1.5f);
-                Canvas.ShowIngame(SaveSlot, this, Field.GameOverRelative, SelectedSize.MinimalAspect, 1.5f);
-                allWrapped = false;
-                wasInGame = true;
+                _field.ShowAnimated(_selectedTheme.Loaded, _saveSlot, 1.5f);
+                _field.GameOverRelative.Changed += TryDetectGameOver;
+                _user.StartGameplayAndAnimate(1.5f);
+                _canvas.ShowIngame(_saveSlot, this, _field.GameOverRelative, _selectedSize.MinimalAspect, 1.5f);
+                _allWrapped = false;
+                _wasInGame = true;
             }
         }
 
         public void ConfigureSlot(int number)
         {
             Content.Merge.Selector.Request request = null;
-            request = new Content.Merge.Selector.Request(number, Content.SizesConfig, Content.ThemesConfig, ApplyRequest);
-            Canvas.ShowConfigurator(request, SubloadTheme);
+            request = new Content.Merge.Selector.Request(number, _content.SizesConfig, _content.ThemesConfig, ApplyRequest);
+            _canvas.ShowConfigurator(request, SubloadTheme);
             
             void ApplyRequest()
             {
-                SlotNumber = request.slotID;
-                SaveSlot = new SaveModel(request.selectedOrientation, request.selectedTheme);
-                UserData.Data.SaveSlots[SlotNumber] = SaveSlot;
-                UserData.SaveData();
-                SelectedTheme = Content.ThemesConfig.Themes.FirstOrDefault(h => h.BundlePath == SaveSlot.BundlePath);
-                SelectedSize = Content.SizesConfig.Orientations.FirstOrDefault(h => h.Data == SaveSlot.FieldSize);
+                _slotNumber = request.SlotID;
+                _saveSlot = new SaveModel(request.SelectedOrientation, request.SelectedTheme);
+                _userData.Data.SaveSlots[_slotNumber] = _saveSlot;
+                _userData.SaveData();
+                _selectedTheme = _content.ThemesConfig.Themes.FirstOrDefault(h => h.BundlePath == _saveSlot.BundlePath);
+                _selectedSize = _content.SizesConfig.Orientations.FirstOrDefault(h => h.Data == _saveSlot.FieldSize);
                 WaitLoadAndRun();
             }
             
             void SubloadTheme()
             {
-                Content.Processor.LoadTheme(Content.ThemesConfig.Themes.FirstOrDefault(h => h.BundlePath == request.selectedTheme), null);
+                _content.Processor.LoadTheme(_content.ThemesConfig.Themes.FirstOrDefault(h => h.BundlePath == request.SelectedTheme), null);
             }
         }
         
-        void TryDetectGameOver()
+        private void TryDetectGameOver()
         {
-            if (Field.GameOverRelative.Value < 1) return;
+            if (_field.GameOverRelative.Value < 1) return;
             ProcessPause();
-            Canvas.Hide(1f, false);
-            Field.Deactivate(1f);
-            Field.RequireSave = false;
-            User.StopGameplayAndAnimate(1f);
-            allWrapped = true;
-            Canvas.EndgameCanvas.Show(SaveSlot, Retry, Exit);
-            Field.GameOverRelative.Changed -= TryDetectGameOver;
+            _canvas.Hide(1f, false);
+            _field.Deactivate(1f);
+            _field.RequireSave = false;
+            _user.StopGameplayAndAnimate(1f);
+            _allWrapped = true;
+            _canvas.EndgameCanvas.Show(_saveSlot, Retry, Exit);
+            _field.GameOverRelative.Changed -= TryDetectGameOver;
             
             async void Retry()
             {
-                UserData.Data.SaveSlots[SlotNumber] = null;
-                UserData.SaveData();
+                _userData.Data.SaveSlots[_slotNumber] = null;
+                _userData.SaveData();
                 await Services.DI.Single<Services.Advertisements.Controller>().ShowInterstitial();
-                LoadSlot(SlotNumber);
+                LoadSlot(_slotNumber);
             }
             
             void Exit()
             {
-                UserData.Data.SaveSlots[SlotNumber] = null;
-                UserData.SaveData();
+                _userData.Data.SaveSlots[_slotNumber] = null;
+                _userData.SaveData();
                 gameplay.StopGameplay();
             }
         }
         
         public void SaveSelectedSlot()
         {
-            Field.SyncUnits(SaveSlot);
-            UserData.Data.SaveSlots[SlotNumber] = SaveSlot;
-            UserData.SaveData();
-            Field.RequireSave = false;
+            _field.SyncUnits(_saveSlot);
+            _userData.Data.SaveSlots[_slotNumber] = _saveSlot;
+            _userData.SaveData();
+            _field.RequireSave = false;
         }
 
-        public override void ProcessGameplayUpdate()
+        public override void ProcessGameplayUpdate() { }
+
+        public void CloseByUser()
         {
-            /*if (Save)
-            {
-                Save = false;
-                IsSaveSlotSuccess();
-            }*/
+            gameplay.StopGameplay();
         }
-
-        internal void CloseByUser() => gameplay.StopGameplay();
 
         public override async Task Dispose()
         {
             ProcessPause();
-            if (allWrapped) return;
+            if (_allWrapped) return;
             bool UserInAnimate = true;
-            User.StopGameplayAndAnimate(1f, () => UserInAnimate = false);
+            _user.StopGameplayAndAnimate(1f, () => UserInAnimate = false);
             
             bool CanvasInAnimate = true;
             System.Action CanvasDeactivate = () => CanvasInAnimate = false;
-            if (Field.RequireSave)
+            if (_field.RequireSave)
             {
                 SaveSelectedSlot();
-                Canvas.ShowSaveAndTurnOff(1f, 3f, CanvasDeactivate);
+                _canvas.ShowSaveAndTurnOff(1f, 3f, CanvasDeactivate);
             }
             else
             {
-                Canvas.Hide(1f, true, CanvasDeactivate);
+                _canvas.Hide(1f, true, CanvasDeactivate);
             }
             
-            Field.GameOverRelative.Changed -= TryDetectGameOver;
-            Field.Deactivate(1f);
+            _field.GameOverRelative.Changed -= TryDetectGameOver;
+            _field.Deactivate(1f);
             
-            if (wasInGame) await Services.DI.Single<Services.Advertisements.Controller>().ShowInterstitial();
+            if (_wasInGame) await Services.DI.Single<Services.Advertisements.Controller>().ShowInterstitial();
             while (UserInAnimate || CanvasInAnimate) await Utilities.Wait();
         }
         
         public System.Action IsBuyBombSuccess(int bombCost)
         {
-            if (SaveSlot.Money.Value < bombCost) return null;
-            SaveSlot.Money.Value -= bombCost;
-            return User.UseBomb;
+            if (_saveSlot.Money.Value < bombCost) return null;
+            _saveSlot.Money.Value -= bombCost;
+            return _user.UseBomb;
         }
 
         public System.Action IsBuyShakerSuccess(int shakerCost)
         {
-            if (SaveSlot.Money.Value < shakerCost) return null;
-            SaveSlot.Money.Value -= shakerCost;
+            if (_saveSlot.Money.Value < shakerCost) return null;
+            _saveSlot.Money.Value -= shakerCost;
             return ProcessShaker;
             
             void ProcessShaker()
             {
-                User.FastTurnOff();
-                Field.RunShaker(User.FastTurnOn);
+                _user.FastTurnOff();
+                _field.RunShaker(_user.FastTurnOn);
             }
         }
 

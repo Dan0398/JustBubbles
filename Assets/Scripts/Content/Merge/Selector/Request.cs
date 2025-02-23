@@ -1,33 +1,26 @@
-using System;
-
 namespace Content.Merge.Selector
 {
     public class Request
     {
-        public readonly int slotID;
+        public readonly int SlotID;
         public readonly SizeSelector Size;
         public readonly ThemeSelector Theme;
-        public readonly System.Action onDone;
+        public readonly System.Action OnDone;
         
-        public Gameplay.Merge.Barrier.SizeType selectedOrientation  { get; private set; }
-        public bool ShowAds                                         { get; private set; }
-        public string selectedTheme                                 { get; private set; }
+        public Gameplay.Merge.SizeType SelectedOrientation  { get; private set; }
+        public bool ShowAds                                 { get; private set; }
+        public string SelectedTheme                         { get; private set; }
         
-        public Request(int SlotID, SizesList OrientationCfg, ThemesList ThemeCfg, System.Action OnDone)
+        public Request(int slotID, SizesList orientationCfg, ThemesList themeCfg, System.Action onDone)
         {
-            slotID = SlotID;
-            onDone = OnDone;
-            Size = new SizeSelector(OrientationCfg, (s) => selectedOrientation = s);
-            Theme = new ThemeSelector(ThemeCfg, (name, useAds) => 
+            SlotID = slotID;
+            OnDone = onDone;
+            Size = new SizeSelector(orientationCfg, (s) => SelectedOrientation = s);
+            Theme = new ThemeSelector(themeCfg, (name, useAds) => 
             {
-                selectedTheme = name;
+                SelectedTheme = name;
                 ShowAds = useAds;
             });
-        }
-
-        internal void Dispose()
-        {
-            
         }
     }
 }

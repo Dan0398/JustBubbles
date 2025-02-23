@@ -5,152 +5,96 @@ namespace Services.Audio
 {
     public class AudioClient : MonoBehaviour
     {
-        [System.Serializable]
-        enum AudioType
-        {
-            Sound,
-            Music
-        }
-        [SerializeField] AudioType MyAudioType;
-        bool isStarted = false;
-        Data.SettingsController Reference;
-        bool Subscribed = false;
-        SoundPair[] Pairs;
-        System.Action onDestroy;
+        [SerializeField] private AudioType _myAudioType;
+        private Data.SettingsController _reference;
+        private SoundPair[] _pairs;
+        private bool _subscribed;
+        private bool _isStarted;
         
-        void Start()
+        private void Start()
         {
             FindStarts();
-            if (!Subscribed) StartCoroutine(Subscribe());
-            isStarted = true;
+            if (!_subscribed) StartCoroutine(Subscribe());
+            _isStarted = true;
         }
         
-        void FindStarts()
+        private void FindStarts()
         {
             var Sources = gameObject.GetComponents<AudioSource>();
             if (Sources == null || Sources.Length == 0) return;
-            Pairs = new SoundPair[Sources.Length];
+            _pairs = new SoundPair[Sources.Length];
             for (int i=0; i < Sources.Length; i++)
             {
-                Pairs[i] = new SoundPair(Sources[i]);
+                _pairs[i] = new SoundPair(Sources[i]);
             }
         }
         
-        void OnEnable()
+        private void OnEnable()
         {
-            if (!isStarted) return;
-            if (!Subscribed) StartCoroutine(Subscribe());
+            if (!_isStarted) return;
+            if (!_subscribed) StartCoroutine(Subscribe());
         }
         
-        IEnumerator Subscribe()
+        private IEnumerator Subscribe()
         {
             var Wait = new WaitForFixedUpdate();
-            Subscribed = true;
-            if (Reference == null)
-            {
-                Reference = Services.DI.Single<Data.SettingsController>();    
-            }
-            while (!Reference.isDataLoaded) yield return Wait;
+            _subscribed = true;
+            _reference ??= Services.DI.Single<Data.SettingsController>();
+            while (!_reference.isDataLoaded) yield return Wait;
             System.Action RefreshScale = null;
-            if (MyAudioType == AudioType.Music)
+            if (_myAudioType == AudioType.Music)
             {
-                RefreshScale = () => RefreshVolumes(Reference.Data.MusicLevel.Value);
-                Reference.Data.MusicLevel.Changed += RefreshScale;
-                onDestroy += () => Reference.Data.MusicLevel.Changed -= RefreshScale;
+                RefreshScale = () => RefreshVolumes(_reference.Data.MusicLevel.Value);
+                _reference.Data.MusicLevel.Changed += RefreshScale;
             }
             else 
             {
-                RefreshScale = () => RefreshVolumes(Reference.Data.SoundLevel.Value);
-                Reference.Data.SoundLevel.Changed += RefreshScale;
-                onDestroy += () => Reference.Data.SoundLevel.Changed -= RefreshScale;
+                RefreshScale = () => RefreshVolumes(_reference.Data.SoundLevel.Value);
+                _reference.Data.SoundLevel.Changed += RefreshScale;
             }
             RefreshScale?.Invoke();
-            //Services.DI.Single<Services.Pause>().OnPauseChanges += ApplyPauseState;
         }
         
-        void RefreshVolumes(float Multiplier)
+        private void RefreshVolumes(float Multiplier)
         {
-            foreach(var Pair in Pairs)
+            foreach(var Pair in _pairs)
             {
                 Pair.SetVolumeMultiplier(Multiplier);
             }
         }
         
-        /*
-        void ApplyPauseState(Services.Pause.PauseType Type)
+        private class SoundPair
         {
-            foreach(var Sound in Pairs)
-                {
-                if (Type == Services.Pause.PauseType.Hard)
-                {
-                    Sound.PauseByMenu();
-                }
-                else
-                {
-                    Sound.RestoreFromPause();
-                }
-            }
-        }
-        */
-
-        void OnDisable()
-        {
-            if (gameObject == null) return;
-            //if (Subscribed) StartCoroutine(UnSubscribe());
-        }
-        
-        void OnDestroy()
-        {
-            if (gameObject == null) return;
-            //if (Subscribed) StartCoroutine(UnSubscribe());
-        }
-        
-        IEnumerator UnSubscribe()
-        {
-            var Wait = new WaitForFixedUpdate();
-            if (Reference == null)
-            {
-                Reference = Services.DI.Single<Data.SettingsController>();    
-            }
-            while (!Reference.isDataLoaded) yield return Wait;
-            onDestroy?.Invoke();
-            onDestroy = null;
-            //Services.DI.Single<Services.Pause>().OnPauseChanges -= ApplyPauseState;
-            Subscribed = false;
-        }
-        
-        class SoundPair
-        {
-            AudioSource MySource;
-            float DefaultVolume;
-            bool PlayedBeforePause, isPausedByMenu;
+            private AudioSource _mySource;
+            private float _defaultVolume;
+            private bool _playedBeforePause, _isPausedByMenu;
             
             public SoundPair(AudioSource Source)
             {
-                MySource = Source;
-                DefaultVolume = MySource.volume;
+                _mySource = Source;
+                _defaultVolume = _mySource.volume;
             }
             
             public void SetVolumeMultiplier(float Multiplier)
             {
-                MySource.volume = DefaultVolume * Multiplier;
+                _mySource.volume = _defaultVolume * Multiplier;
             }
             
             public void PauseByMenu()
             {
-                if (isPausedByMenu) return;
-                isPausedByMenu = true;
-                PlayedBeforePause = MySource.isPlaying;
-                MySource.Pause();
+                if (_isPausedByMenu) return;
+                _isPausedByMenu = true;
+                _playedBeforePause = _mySource.isPlaying;
+                _mySource.Pause();
             }
             
             public void RestoreFromPause()
             {
-                if (!isPausedByMenu) return;
-                isPausedByMenu = false;
-                if (PlayedBeforePause)
+                if (!_isPausedByMenu) return;
+                _isPausedByMenu = false;
+                if (_playedBeforePause)
                 {
-                    MySource.Play();
+                    _mySource.Play();
                 }
             }
         }

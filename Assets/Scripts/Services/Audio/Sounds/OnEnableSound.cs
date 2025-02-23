@@ -4,18 +4,18 @@ namespace Services.Audio.Sounds
 {
     public class OnEnableSound: BaseRequest
     {
-        [SerializeField] SoundType PlayType;
-        [SerializeField] bool StopOnDisable;
+        [SerializeField] private SoundType _playType;
+        [SerializeField] private bool _stopOnDisable;
         
-        void OnEnable()
+        private void OnEnable()
         {
-            TryPlaySound(PlayType);
+            TryPlaySound(_playType);
         }
         
-        void OnDisable()
+        private void OnDisable()
         {
-            if (!StopOnDisable) return;
-            TryStopSound(PlayType);
+            if (!_stopOnDisable) return;
+            TryStopSound(_playType);
         }
     }
 }

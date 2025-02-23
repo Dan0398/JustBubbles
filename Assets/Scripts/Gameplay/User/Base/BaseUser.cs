@@ -4,11 +4,22 @@ namespace Gameplay.User
 {
     public abstract partial class BaseUser<TField> : MonoBehaviour, IPausableUser where TField:IField
     {
-        [SerializeField] Camera Cam;
+        [SerializeField] private Camera _camera;
         
-        public Ray GetScreenRayAtCursor() => Cam.ScreenPointToRay(MouseScreenPos);
-        public Vector3 WorldToScreen(Vector3 source) => Cam.WorldToScreenPoint(source);
-        protected Vector3 ScreenToWorld(Vector3 input) => Cam.ScreenToWorldPoint(input, Camera.MonoOrStereoscopicEye.Mono);
+        public Ray GetScreenRayAtCursor()
+        {
+            return _camera.ScreenPointToRay(MouseScreenPos);
+        }
+        
+        public Vector3 WorldToScreen(Vector3 source)
+        {
+            return _camera.WorldToScreenPoint(source);
+        }
+        
+        protected Vector3 ScreenToWorld(Vector3 input)
+        {
+            return _camera.ScreenToWorldPoint(input, Camera.MonoOrStereoscopicEye.Mono);
+        }
         
         protected virtual void Start()
         {

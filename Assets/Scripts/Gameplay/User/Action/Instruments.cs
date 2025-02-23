@@ -6,8 +6,8 @@ namespace Gameplay.User
 {
     public partial class Action: BaseUser<Field.BubbleField>
     {
-        Counts instrumentsUseCount;
-        bool instrumentInUse = false;
+        private Counts _instrumentsUseCount;
+        private bool _instrumentInUse;
         
         public void PeekInstrument(WorkType type)
         {
@@ -19,98 +19,98 @@ namespace Gameplay.User
         
         public void UseBomb()
         {
-            if (instrumentInUse) return;
+            if (_instrumentInUse) return;
             if (IsDecrementPairFail(WorkType.Bomb)) return;
             WrapCircleAndUseInstrument(WorkType.Bomb);
         }
         
         public void UseSniperShot()
         {
-            if (instrumentInUse) return;
+            if (_instrumentInUse) return;
             if (IsDecrementPairFail(WorkType.Sniper)) return;
             WrapCircleAndUseInstrument(WorkType.Sniper);
         }
         
         public void UseLaser()
         {
-            if (instrumentInUse) return;
+            if (_instrumentInUse) return;
             if (IsDecrementPairFail(WorkType.Laser)) return;
             WrapCircleAndUseInstrument(WorkType.Laser);
         }
         
         public void UseMultiBall()
         {
-            if (instrumentInUse) return;
-            if (bubble.MultiBallUsed) return;
-            if (IsDecrementPairFail(Content.Instrument.WorkType.MultiBall)) return;
-            bubble.UseMultiBall();
+            if (_instrumentInUse) return;
+            if (_bubble.MultiBallUsed) return;
+            if (IsDecrementPairFail(WorkType.MultiBall)) return;
+            _bubble.UseMultiBall();
         }
         
-        bool IsDecrementPairFail(Content.Instrument.WorkType type)
+        private bool IsDecrementPairFail(WorkType type)
         {
-            var Pair = instrumentsUseCount.GetPair(type);
+            var Pair = _instrumentsUseCount.GetPair(type);
             if(Pair.Count.Value < 1)
             {
-                instrumentsUseCount.OnFailUseInstrument?.Invoke(type);
-                InGameCanvas.AnimateFailUseInstrument(type);
+                _instrumentsUseCount.OnFailUseInstrument?.Invoke(type);
+                _inGameCanvas.AnimateFailUseInstrument(type);
                 return true;
             }
             Pair.Count.Value --;
             return false;
         }
         
-        void WrapCircleAndUseInstrument(Content.Instrument.WorkType type)
+        private void WrapCircleAndUseInstrument(WorkType type)
         {
-            instrumentInUse = true;
-            var OldSelected = SelectedInstrument;
+            _instrumentInUse = true;
+            var OldSelected = _selectedInstrument;
             var newSelected = GiveInstrumentByType(type);
             SwitchToNew(newSelected);
             newSelected.AfterUse = () => 
             {
                 SwitchToNew(OldSelected);
-                instrumentInUse = false;
+                _instrumentInUse = false;
             };
         }
         
-        BaseInstrument GiveInstrumentByType(Content.Instrument.WorkType type)
+        private BaseInstrument GiveInstrumentByType(WorkType type)
         {
-            if (type == Content.Instrument.WorkType.Bomb) return bomb;
-            else if (type == Content.Instrument.WorkType.Sniper) return sniperShot;
-            else if (type == Content.Instrument.WorkType.Laser) return laser;
+            if (type == WorkType.Bomb) return _bomb;
+            else if (type == WorkType.Sniper) return _sniperShot;
+            else if (type == WorkType.Laser) return _laser;
             else return null;
         }
         
-        void SwitchToNew(BaseInstrument instrument)
+        private void SwitchToNew(BaseInstrument instrument)
         {
-            SelectedInstrument.HideAnimated(0.4f, ()=>
+            _selectedInstrument.HideAnimated(0.4f, ()=>
             {
-                SelectedInstrument = instrument;
-                SelectedInstrument.ProcessAimVector(MouseWorldPos - (Vector2)transform.position);
-                SelectedInstrument.ShowAnimated(0.4f);
+                _selectedInstrument = instrument;
+                _selectedInstrument.ProcessAimVector(MouseWorldPos - (Vector2)transform.position);
+                _selectedInstrument.ShowAnimated(0.4f);
             });
         }
 
         public void ActivateInstruments(Counts instrumentsCount)
         {
-            instrumentsUseCount = instrumentsCount;
-            InGameCanvas.gameObject.SetActive(true);
-            InGameCanvas.BindWithCounts(instrumentsCount);
+            _instrumentsUseCount = instrumentsCount;
+            _inGameCanvas.gameObject.SetActive(true);
+            _inGameCanvas.BindWithCounts(instrumentsCount);
         }
 
-        internal void DeactivateInstruments()
+        public void DeactivateInstruments()
         {
-            InGameCanvas.Hide();
+            _inGameCanvas.Hide();
         }
 
-        internal void ChangeRayDistance(float userDistance)
+        public void ChangeRayDistance(float userDistance)
         {
-            if (RayBaseDistance == null)
+            if (_rayBaseDistance == null)
             {
-                RayBaseDistance = userDistance;
+                _rayBaseDistance = userDistance;
             }
             else
             {
-                RayBaseDistance.Value = userDistance;
+                _rayBaseDistance.Value = userDistance;
             }
         }
     }

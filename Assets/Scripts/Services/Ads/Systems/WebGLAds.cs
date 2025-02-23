@@ -28,12 +28,12 @@ namespace Services.Advertisements
             Application.ExternalCall("Banner hidden");
         }
         
-        void ApplyInterstitial(bool isSuccess)
+        private void ApplyInterstitial(bool isSuccess)
         {
             InterstitialStatus = isSuccess? AdStatus.Success : AdStatus.Failed;
         }
         
-        void ApplyRewarded(bool isSuccess)
+        private void ApplyRewarded(bool isSuccess)
         {
             RewardedStatus = isSuccess? AdStatus.Success : AdStatus.Failed;
         }

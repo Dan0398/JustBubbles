@@ -40,8 +40,6 @@ namespace Services.Web
             }
             Env.FeedbackAvailable.Value = Outer.FeedbackAvailable;
             Env.RequireSendGameplayStatus.Value = Outer.RequireSendGameplayStatus;
-            
-            //SendLoadingEnds();
         }
         
         public static void RequestOuterEnvironment()
@@ -49,7 +47,7 @@ namespace Services.Web
             Application.ExternalCall("SendEnvironmentToEngine");
         }
         
-        async UniTask<Services.Environment> GimmeEnvironment()
+        private async UniTask<Services.Environment> GimmeEnvironment()
         {
             var Env = Services.DI.Single<Services.Environment>();
             while (Env == null)

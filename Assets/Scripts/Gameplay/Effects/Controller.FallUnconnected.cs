@@ -6,7 +6,7 @@ namespace Gameplay.Effects
 {
     public partial class Controller : MonoBehaviour
     {
-        int FallAnimationsCount;
+        private int _fallAnimationsCount;
         
         public void AnimateFallUnconnectedBubbles(List<Bubble> Bubbles)
         {
@@ -16,17 +16,17 @@ namespace Gameplay.Effects
             }
             foreach(var Bubble in Bubbles)
             {
-                FallAnimationsCount++;
+                _fallAnimationsCount++;
                 Bubble.OnSceneAnimationEnds?.Invoke();
-                Bubble.MyTransform.SetParent(MovingParent);
+                Bubble.MyTransform.SetParent(_movingParent);
                 Bubble.MyRigid.isKinematic = false;
-                Bubble.MyRigid.AddForce(Vector2.right * FallenForceScale * Random.Range(-1f, 1f), ForceMode2D.Impulse);
-                Bubble.OnScene.layer = BackgroundLayer;
+                Bubble.MyRigid.AddForce(Vector2.right * _fallenForceScale * Random.Range(-1f, 1f), ForceMode2D.Impulse);
+                Bubble.OnScene.layer = _backgroundLayer;
             }
             StartCoroutine(SeekBubblesFall(Bubbles));
         }
         
-        IEnumerator SeekBubblesFall(List<Bubble> bubbles)
+        private IEnumerator SeekBubblesFall(List<Bubble> bubbles)
         {
             float SeekTime = 0;
             var Bubbles = new List<Bubble>(bubbles.Count);
@@ -38,10 +38,10 @@ namespace Gameplay.Effects
                     if (Bubbles[i].MyTransform.position.y < -10)
                     {
                         Bubbles[i].MyRigid.isKinematic = true;
-                        Bubbles[i].OnScene.layer = DefaultLayer;
-                        BubblesPool.Hide(Bubbles[i]);
+                        Bubbles[i].OnScene.layer = _defaultLayer;
+                        _bubblesPool.Hide(Bubbles[i]);
                         Bubbles.RemoveAt(i);
-                        FallAnimationsCount--;
+                        _fallAnimationsCount--;
                         i--;
                         continue;
                     }
@@ -49,14 +49,14 @@ namespace Gameplay.Effects
                     {
                         var Bubble =  Bubbles[i];
                         Bubble.MyRigid.isKinematic = true;
-                        Bubble.OnScene.layer = DefaultLayer;
-                        StartCoroutine(SoftHideBubble(Bubble, () => FallAnimationsCount--));
+                        Bubble.OnScene.layer = _defaultLayer;
+                        StartCoroutine(SoftHideBubble(Bubble, () => _fallAnimationsCount--));
                         Bubbles.RemoveAt(i);
                         i--;
                         continue;
                     }
                 }
-                yield return Wait;
+                yield return _wait;
                 SeekTime += Time.deltaTime;
             }
             TryResetMovingParent();

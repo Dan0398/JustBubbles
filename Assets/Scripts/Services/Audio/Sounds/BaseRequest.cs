@@ -5,7 +5,7 @@ namespace Services.Audio.Sounds
     public class BaseRequest : MonoBehaviour
     {
         protected Service parentalService;
-        bool serviceRequested;
+        private bool _serviceRequested;
         
         public void TryPlaySound(SoundType type)
         {
@@ -21,11 +21,11 @@ namespace Services.Audio.Sounds
             parentalService.Stop(type);
         }
         
-        void TryGetService()
+        private void TryGetService()
         {
-            if (serviceRequested) return;
+            if (_serviceRequested) return;
             parentalService = Services.DI.Single<Service>();
-            serviceRequested = true;
+            _serviceRequested = true;
         }
     }
 }

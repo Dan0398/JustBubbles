@@ -21,12 +21,12 @@ namespace Gameplay.GameType
         protected virtual float MaxFieldAspect      => 16/9f;
         protected virtual float FieldUpperOutstand  => 0f;
         protected virtual string Settings_ExitLangKey => "Menu";
-        IPausableUser pausableUser;
+        private IPausableUser _pausableUser;
         
         public BaseType(Gameplay.Controller Gameplay, IPausableUser User, UI.Settings.Settings Settings, InGameParents InGameParts)
         {
             gameplay = Gameplay;
-            pausableUser = User;
+            _pausableUser = User;
             settings = Settings;
             settings.GoToMenuAvailable = GoToMenuAvailable;
             settings.RefreshExitLabel(Settings_ExitLangKey);
@@ -56,13 +56,13 @@ namespace Gameplay.GameType
         public void ProcessPause()
         {
             Paused = true;
-            pausableUser?.Pause();
+            _pausableUser?.Pause();
         }
         
         public void ProcessUnpause()
         {
             Paused = false;
-            pausableUser?.Unpause();
+            _pausableUser?.Unpause();
         }
         
         public abstract Task Dispose();

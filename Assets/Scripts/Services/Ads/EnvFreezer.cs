@@ -4,58 +4,30 @@ namespace Services.Advertisements
 {
     public class EnvFreezer : Services.IService
     {
-        CursorLockMode OldLockMode;
-        bool OldCursorVisible;
-        Services.Audio.Music Music;
-        /*
-        Services.Pause PauseSystem;
-        Pause.PauseType OldPauseType;
-        */
+        private CursorLockMode _oldLockMode;
+        private bool _oldCursorVisible;
+        private Services.Audio.Music _music;
         
-        
-        public EnvFreezer()
-        {
-            //GetPauseAsync();
-        }
-        
-            /*
-        async void GetPauseAsync()
-        {
-            PauseSystem = Services.DI.Single<Services.Pause>();
-            while (PauseSystem == null)
-            {
-                if (await Utilities.IsWaitEndsFailure()) return;
-                PauseSystem = Services.DI.Single<Services.Pause>();
-            }
-        }
-            */
+        public EnvFreezer() { }
         
         public void RememberAndFreezeEnvironment()
         {
-            /*
-            OldPauseType = PauseSystem.CurrentPauseType;
-            PauseSystem.CallHardPause();
-            */
-            if (Music == null)
+            if (_music == null)
             {
-                Music = Services.DI.Single<Services.Audio.Music>();
+                _music = Services.DI.Single<Services.Audio.Music>();
             }
-            if (Music != null) Music.UserPaused = true;
-            OldLockMode = Cursor.lockState;
-            OldCursorVisible = Cursor.visible;
+            if (_music != null) _music.UserPaused = true;
+            _oldLockMode = Cursor.lockState;
+            _oldCursorVisible = Cursor.visible;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         } 
         
         public void RestoreEnvironment()
         {
-            Cursor.lockState = OldLockMode;
-            Cursor.visible = OldCursorVisible;
-            if (Music != null) Music.UserPaused = false;
-            /*
-            if (OldPauseType == Pause.PauseType.None) PauseSystem.ReleaseFromPause();
-            if (OldPauseType == Pause.PauseType.Soft) PauseSystem.CallInShopPause();
-            */
+            Cursor.lockState = _oldLockMode;
+            Cursor.visible = _oldCursorVisible;
+            if (_music != null) _music.UserPaused = false;
         }
     }
 }

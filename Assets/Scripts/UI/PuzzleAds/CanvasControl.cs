@@ -6,6 +6,8 @@ namespace UI.Settings
     {
         public void FinalizeHideWindow() => gameObject.SetActive(false);
         
+        #pragma warning disable CS0618 
         public void GoToGame() => Application.ExternalCall("GoToWorldOfPuzzles");
+        #pragma warning restore CS0618 
     }
 }

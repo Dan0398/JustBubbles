@@ -1,118 +1,125 @@
 using BrakelessGames.Localization;
+using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
-using System.Collections;
 
 namespace UI.Merge
 {
     public class SlotViewOnScene : MonoBehaviour
     {
-        [SerializeField] GameObject EmptyParent, DataParent;
-        [SerializeField] Image ThemePreview;
-        [SerializeField] TextTMPLocalized FieldSizeLabel, ThemeNameLabel, ScoreLabel, MoneyLabel;
-        [SerializeField] GameObject PhoneBlocker;
-        MergeMainWindow window;
-        Content.Merge.ThemesList.Theme actualView;
-        Gameplay.Merge.SaveModel data;
-        int number;
-        bool EnvTouchSubscribed, LangSubscribed, usingTouch;
-        Gameplay.GameType.Merge parent;
-        Coroutine PhoneBlockerRoutine;
-        WaitForFixedUpdate Wait;
+        [SerializeField] private GameObject _emptyParent;
+        [SerializeField] private GameObject _dataParent;
+        [SerializeField] private Image _themePreview;
+        [SerializeField] private TextTMPLocalized _fieldSizeLabel;
+        [SerializeField] private TextTMPLocalized _themeNameLabel;
+        [SerializeField] private TextTMPLocalized _scoreLabel;
+        [SerializeField] private TextTMPLocalized _moneyLabel;
+        [SerializeField] private GameObject _phoneBlocker;
+        private Content.Merge.ThemesList.Theme _actualView;
+        private Gameplay.Merge.SaveModel _data;
+        private int _number;
+        private bool _envTouchSubscribed, _langSubscribed, _usingTouch;
+        private Gameplay.GameType.Merge _parent;
+        private Coroutine _phoneBlockerRoutine;
+        private WaitForFixedUpdate _wait;
         
-        bool PhoneBlocked => usingTouch && data.FieldSize != Gameplay.Merge.Barrier.SizeType.Slim;
-        
-        public void Init(MergeMainWindow parent)
-        {
-            window = parent;
-        }
+        private bool PhoneBlocked => _usingTouch && _data.FieldSize != Gameplay.Merge.SizeType.Slim;
         
         public void RefreshSource(Gameplay.Merge.SaveModel Data, int ID, Gameplay.GameType.Merge Parent)
         {
-            data = Data;
-            number = ID;
-            parent = Parent;
+            _data = Data;
+            _number = ID;
+            _parent = Parent;
             TrySubscribeTouch();
             TrySubscribeLangs();
-            RefreshViewItem(parent.Views);
+            RefreshViewItem(_parent.Views);
             RefreshView();
         }
 
-        void TrySubscribeTouch()
+        private void TrySubscribeTouch()
         {
-            if (EnvTouchSubscribed) return;
+            if (_envTouchSubscribed) return;
             var Env = Services.DI.Single<Services.Environment>();
             System.Action Refresh = () => 
             {
-                usingTouch = Env.IsUsingTouch.Value;
+                _usingTouch = Env.IsUsingTouch.Value;
                 RefreshView();
             };
             Refresh.Invoke();
             Env.IsUsingTouch.Changed += Refresh;
-            EnvTouchSubscribed = true;
+            _envTouchSubscribed = true;
         }
         
-        void TrySubscribeLangs()
+        private void TrySubscribeLangs()
         {
-            if (LangSubscribed) return;
+            if (_langSubscribed) return;
             BrakelessGames.Localization.Controller.OnLanguageChange += RefreshView;
-            LangSubscribed = true;
+            _langSubscribed = true;
         }
 
-        void RefreshViewItem(Content.Merge.ThemesList Views)
+        private void RefreshViewItem(Content.Merge.ThemesList Views)
         {
-            actualView = null;
-            if (data == null) return;
+            _actualView = null;
+            if (_data == null) return;
             foreach(var item in Views.Themes)
             {
-                if (data.BundlePath == item.BundlePath)
+                if (_data.BundlePath == item.BundlePath)
                 {
-                    actualView = item;
+                    _actualView = item;
                     return;
                 }
             }
         }
         
-        void RefreshView()
+        private void RefreshView()
         {
-            EmptyParent.SetActive(data == null);
-            DataParent.SetActive(data != null);
-            if (data != null && actualView != null)
+            _emptyParent.SetActive(_data == null);
+            _dataParent.SetActive(_data != null);
+            if (_data != null && _actualView != null)
             {
-                PhoneBlocker.SetActive(PhoneBlocked);
-                ThemePreview.sprite = actualView.Sprite;
-                var SizeLocalized = BrakelessGames.Localization.Controller.GetValueByKey(System.Enum.GetName(typeof(Gameplay.Merge.Barrier.SizeType), data.FieldSize));
-                FieldSizeLabel.SetNewKeyFormatted("Merge_SizeName_Formatted", new string[] { SizeLocalized });
+                _phoneBlocker.SetActive(PhoneBlocked);
+                _themePreview.sprite = _actualView.Sprite;
+                var SizeLocalized = BrakelessGames.Localization.Controller.GetValueByKey(System.Enum.GetName(typeof(Gameplay.Merge.SizeType), _data.FieldSize));
+                _fieldSizeLabel.SetNewKeyFormatted("Merge_SizeName_Formatted", new string[] { SizeLocalized });
                 
-                var ThemeLocalized = BrakelessGames.Localization.Controller.GetValueByKey(actualView.NameLangKey);
-                ThemeNameLabel.SetNewKeyFormatted("Merge_ThemeName_Formatted", new string[] { ThemeLocalized });
-                ScoreLabel.SetNewKeyFormatted("Score_Formatted", new string[] { data.Points.Value.ToString() });
-                MoneyLabel.SetNewKeyFormatted("Money_Formatted", new string[] { data.Money.Value.ToString()});
+                var ThemeLocalized = BrakelessGames.Localization.Controller.GetValueByKey(_actualView.NameLangKey);
+                _themeNameLabel.SetNewKeyFormatted("Merge_ThemeName_Formatted", new string[] { ThemeLocalized });
+                _scoreLabel.SetNewKeyFormatted("Score_Formatted", new string[] { _data.Points.Value.ToString() });
+                _moneyLabel.SetNewKeyFormatted("Money_Formatted", new string[] { _data.Money.Value.ToString()});
             }
         }     
 
-        public void DeleteSlot() => parent.DeleteSlot(number, this);
+        public void DeleteSlot()
+        {
+            _parent.DeleteSlot(_number, this);
+        }
         
-        public void StartNewGameFast() => parent.LoadSlot(number); 
+        public void StartNewGameFast()
+        {
+            _parent.LoadSlot(_number); 
+        }
         
-        public void ConfigureAndStartGame() => parent.ConfigureSlot(number);
+        public void ConfigureAndStartGame()
+        {
+            _parent.ConfigureSlot(_number);
+        }
         
         public void SelectSlot()
         {
             if (PhoneBlocked)
             {
-                if (PhoneBlockerRoutine != null) StopCoroutine(PhoneBlockerRoutine);
-                PhoneBlockerRoutine = StartCoroutine(AnimatePhoneBlocker());
+                if (_phoneBlockerRoutine != null) StopCoroutine(_phoneBlockerRoutine);
+                _phoneBlockerRoutine = StartCoroutine(AnimatePhoneBlocker());
                 Services.DI.Single<Services.Audio.Sounds.Service>().Play(Services.Audio.Sounds.SoundType.InstrumentFail);
                 return;
             }
-            parent.LoadSlot(number);
+            _parent.LoadSlot(_number);
         } 
         
-        IEnumerator AnimatePhoneBlocker()
+        private IEnumerator AnimatePhoneBlocker()
         {
-            Wait ??= new();
-            var Target = PhoneBlocker.GetComponent<RectTransform>();
+            _wait ??= new();
+            var Target = _phoneBlocker.GetComponent<RectTransform>();
             var offsetMin = Target.offsetMin;
             var offsetMax = Target.offsetMax;
             for (int i = 0; i <= 25; i++)
@@ -120,7 +127,7 @@ namespace UI.Merge
                 var Lerp = Mathf.Sin(i/25f * 1440 * Mathf.Deg2Rad) * 10 * Vector2.right;
                 Target.offsetMin = offsetMin + Lerp;
                 Target.offsetMax = offsetMax + Lerp;
-                yield return Wait;
+                yield return _wait;
             }
         }
     }

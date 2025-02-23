@@ -10,31 +10,31 @@ namespace Gameplay.Instruments.Bubble
             gameObject.SetActive(true);
             RefreshBubblesInCircle();
             
-            UserHelp.ReactOnEnvironment(!User.UsingTouch);
+            _userHelp.ReactOnEnvironment(!User.UsingTouch);
             ReInitTrajectory();
             RefreshTrajectory();
             
-            UserHelp.TryShowHelpAnimated(Duration);
+            _userHelp.TryShowHelpAnimated(Duration);
             StartCoroutine(AnimateShow(Duration, OnAnimationEnds));
             
             void RefreshBubblesInCircle()
             {
-                bubblesInCircle??= new System.Collections.Generic.List<Gameplay.User.ICircleObject>(usualBubbleCount);
-                while (bubbleCount < usualBubbleCount)
+                _bubblesInCircle??= new System.Collections.Generic.List<Gameplay.User.ICircleObject>(usualBubbleCount);
+                while (_bubbleCount < usualBubbleCount)
                 {
-                    bubblesInCircle.Add(GiveAndSetupBubble());
-                    bubbleCount ++;
+                    _bubblesInCircle.Add(GiveAndSetupBubble());
+                    _bubbleCount ++;
                 }
                 PlaceBubblesAndRecolorTrajectory();
             }
             
             void OnAnimationEnds()
             {
-                instrumentShown = true;
+                InstrumentShown = true;
             }
         }
         
-        Gameplay.Bubble GiveAndSetupBubble()
+        private Gameplay.Bubble GiveAndSetupBubble()
         {
             var Result = Field.GiveAndPrepareBubble();
             Result.MyTransform.SetParent(User.transform);
@@ -42,17 +42,17 @@ namespace Gameplay.Instruments.Bubble
             return Result;
         }
         
-        IEnumerator AnimateShow(float Duration, System.Action OnEnd, bool isInverted = false)
+        private IEnumerator AnimateShow(float Duration, System.Action OnEnd, bool isInverted = false)
         {
             int Steps = Mathf.RoundToInt(Duration / Time.fixedDeltaTime);
             float Lerp = 0;
             
-            var SwitchCircleView = BubbleSwitchButton.GetComponent<SpriteRenderer>();
+            var SwitchCircleView = _bubbleSwitchButton.GetComponent<SpriteRenderer>();
             var SwitchCircleColor = Color.black * 0.8f;
             
-            var StepAngle = 360 / bubblesInCircle.Count;
+            var StepAngle = 360 / _bubblesInCircle.Count;
             
-            StartCoroutine(RecolorTrajectory(() => Color.clear, bubblesInCircle[0].TrajectoryColor, Steps, !isInverted));
+            StartCoroutine(RecolorTrajectory(() => Color.clear, _bubblesInCircle[0].TrajectoryColor, Steps, !isInverted));
             
             for (int Step = 0; Step <= Steps; Step++)
             {
@@ -61,10 +61,10 @@ namespace Gameplay.Instruments.Bubble
                 
                 SwitchCircleView.color = SwitchCircleColor * Lerp;
                 
-                for (int i = 0; i < bubblesInCircle.Count; i++)
+                for (int i = 0; i < _bubblesInCircle.Count; i++)
                 {
                     var Angle = Mathf.Repeat(StepAngle * i, 360);
-                    bubblesInCircle[i].MyTransform.localPosition = Angle2LocalPos(Angle);
+                    _bubblesInCircle[i].MyTransform.localPosition = Angle2LocalPos(Angle);
                 }
                 yield return Wait;
             }
@@ -73,19 +73,19 @@ namespace Gameplay.Instruments.Bubble
 
         public override void HideAnimated(float Duration = 1, System.Action OnEnd = null)
         {
-            instrumentShown = false;
-            UserHelp.HideNonSwitched(Duration);
+            InstrumentShown = false;
+            _userHelp.HideNonSwitched(Duration);
             StartCoroutine(AnimateShow(Duration, OnAnimationEnd, true));
             
             void OnAnimationEnd()
             {
-                for (int i = 0; i < bubblesInCircle.Count; i++)
+                for (int i = 0; i < _bubblesInCircle.Count; i++)
                 {
-                    if (bubblesInCircle[i] is Gameplay.Bubble bubble)
+                    if (_bubblesInCircle[i] is Gameplay.Bubble bubble)
                     {
-                        BubblePool.Hide(bubble);
-                        bubblesInCircle.RemoveAt(i);
-                        bubbleCount--;
+                        _bubblePool.Hide(bubble);
+                        _bubblesInCircle.RemoveAt(i);
+                        _bubbleCount--;
                         i--;
                     }
                 }

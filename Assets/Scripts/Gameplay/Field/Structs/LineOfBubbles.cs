@@ -7,34 +7,34 @@ namespace Gameplay.Field
     public class LineOfBubbles
     {
         [field:SerializeField] public Transform OnScene { get; private set; }
-        Bubble[] Bubbles;
         public bool Shifted     { get; private set; }
         public int MaxCapacity  { get; private set; }
-        int Capacity;
+        private Bubble[] _bubbles;
+        private int _capacity;
         
         public Bubble this[int ID]
         {
-            get => Bubbles[ID];
+            get => _bubbles[ID];
             set
             {
-                if (value != null && Bubbles[ID] != null)
+                if (value != null && _bubbles[ID] != null)
                 {
                     throw new System.Exception("Bubble not null!");
                 }
-                if (value == null && Bubbles[ID] == null)
+                if (value == null && _bubbles[ID] == null)
                 {
                     throw new System.Exception("Try to clean place where bubble not exist! Place Id is " + ID);
                 }
-                Bubbles[ID] = value;
+                _bubbles[ID] = value;
                 value?.PlaceInLine(OnScene, ID);
             }
         }
         
         public bool RequireToClean()
         {
-            for (int i=0; i< Capacity; i++)
+            for (int i=0; i< _capacity; i++)
             {
-                if (Bubbles[i] != null) return false;
+                if (_bubbles[i] != null) return false;
             }
             return true;
         }
@@ -44,24 +44,24 @@ namespace Gameplay.Field
             var Obj = new GameObject("Bubble line");
             OnScene = Obj.transform;
             OnScene.SetParent(Parent);
-            Capacity = CurrCapacity;
+            _capacity = CurrCapacity;
             MaxCapacity = CurrCapacity;
-            Bubbles = new Bubble[CurrCapacity];
+            _bubbles = new Bubble[CurrCapacity];
             this.Shifted = Shifted;
         }
         
         public List<Bubble> CleanLineAndGetCount(Pools.BubblePool BubblesPool)
         {
             List<Bubble> Result = new List<Bubble>(1);
-            for (int i = 0; i < Bubbles.Length; i ++)
+            for (int i = 0; i < _bubbles.Length; i ++)
             {
-                if (Bubbles[i] == null) continue;
-                BubblesPool.Hide(Bubbles[i]);
-                if (i < Capacity)
+                if (_bubbles[i] == null) continue;
+                BubblesPool.Hide(_bubbles[i]);
+                if (i < _capacity)
                 {
-                    Result.Add(Bubbles[i]);
+                    Result.Add(_bubbles[i]);
                 }
-                Bubbles[i] = null;
+                _bubbles[i] = null;
             }
             Object.Destroy(OnScene.gameObject);
             return Result;
@@ -69,13 +69,13 @@ namespace Gameplay.Field
         
         public void ExtendOverMax(ref Bubble[] newBubbles)
         {
-            var Mine = Bubbles.Length;
+            var Mine = _bubbles.Length;
             MaxCapacity = Mine + newBubbles.Length;
-            System.Array.Resize(ref Bubbles, MaxCapacity);
-            for (int Gain = 0; Mine < MaxCapacity; Gain++, Mine++, Capacity++)
+            System.Array.Resize(ref _bubbles, MaxCapacity);
+            for (int Gain = 0; Mine < MaxCapacity; Gain++, Mine++, _capacity++)
             {
-                Bubbles[Mine] = newBubbles[Gain];
-                Bubbles[Mine].PlaceInLine(OnScene, Mine);
+                _bubbles[Mine] = newBubbles[Gain];
+                _bubbles[Mine].PlaceInLine(OnScene, Mine);
             }
         }
         
@@ -88,26 +88,26 @@ namespace Gameplay.Field
             bool Extended = false;
             List<Bubble> Result = new(1);
             int BubbleShift = 0;
-            while (Capacity < NewCapacity)
+            while (_capacity < NewCapacity)
             {
                 Extended = true;
-                if (Bubbles[Capacity] != null && !Bubbles[Capacity].OnScene.activeInHierarchy)
+                if (_bubbles[_capacity] != null && !_bubbles[_capacity].OnScene.activeInHierarchy)
                 {
-                    Bubbles[Capacity].OnScene.SetActive(true);
-                    Result.Add(Bubbles[Capacity]);
+                    _bubbles[_capacity].OnScene.SetActive(true);
+                    Result.Add(_bubbles[_capacity]);
                     BubbleShift++;
                 }
-                Capacity++;
+                _capacity++;
             }
-            while (Capacity > NewCapacity)
+            while (_capacity > NewCapacity)
             {
-                if (Bubbles[Capacity-1] != null && Bubbles[Capacity-1].OnScene.activeInHierarchy)
+                if (_bubbles[_capacity-1] != null && _bubbles[_capacity-1].OnScene.activeInHierarchy)
                 {
-                    Result.Add(Bubbles[Capacity-1]);
-                    Bubbles[Capacity-1].OnScene.SetActive(false);
+                    Result.Add(_bubbles[_capacity-1]);
+                    _bubbles[_capacity-1].OnScene.SetActive(false);
                     BubbleShift--;
                 }
-                Capacity--;
+                _capacity--;
             }
             return new ResizeResult(){Added = Result, Extended = Extended};
         }

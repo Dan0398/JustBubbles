@@ -7,23 +7,23 @@ namespace Gameplay.Field
     {
         public void ShowViews()
         {
-            if (ViewsAnimation != null)
+            if (_viewsAnimation != null)
             {
-                StopCoroutine(ViewsAnimation);
+                StopCoroutine(_viewsAnimation);
             }
-            ViewsAnimation = StartCoroutine(AnimateViews(true));
+            _viewsAnimation = StartCoroutine(AnimateViews(true));
         }
         
         public void HideViews()
         {
-            if (ViewsAnimation != null)
+            if (_viewsAnimation != null)
             {
-                StopCoroutine(ViewsAnimation);
+                StopCoroutine(_viewsAnimation);
             }
-            ViewsAnimation = StartCoroutine(AnimateViews(false));
+            _viewsAnimation = StartCoroutine(AnimateViews(false));
         }
         
-        IEnumerator AnimateViews(bool IsShown)
+        private IEnumerator AnimateViews(bool IsShown)
         {
             float Lerp = 0;
             Color color = Color.clear;
@@ -31,13 +31,13 @@ namespace Gameplay.Field
             {
                 Lerp = Mathf.Sin(i/60f * 90 * Mathf.Deg2Rad);
                 if (!IsShown) Lerp = 1 - Lerp;
-                foreach(var renderer in FieldRenderers)
+                foreach(var renderer in _fieldRenderers)
                 {
                     color = renderer.color;
                     color.a = Lerp;
                     renderer.color = color;
                 }
-                yield return Wait;
+                yield return _wait;
             }
         }
     }

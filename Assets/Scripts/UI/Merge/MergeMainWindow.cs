@@ -6,36 +6,34 @@ namespace UI.Merge
 {
     public class MergeMainWindow : BaseAnimatedWindow
     {
-        const bool AdsAllowed = true;
-        const string HeaderLang_Slots = "SaveSlots";
-        const string HeaderLang_Themes = "Themes";
-        const string HeaderLang_Sizes = "Sizes";
+        private const bool AdsAllowed = true;
+        private const string HeaderLang_Slots = "SaveSlots";
+        private const string HeaderLang_Themes = "Themes";
+        private const string HeaderLang_Sizes = "Sizes";
         
         [field:Header("Merge окно")]
         [field:SerializeField] public SlotViewOnScene[] SaveSlots { get; private set; }
-        [SerializeField] ThemeConfigView Theme;
-        [SerializeField] SizeConfigView Size;
-        Gameplay.GameType.Merge lastKnownGameType;
+        [SerializeField] private ThemeConfigView _theme;
+        [SerializeField] private SizeConfigView _size;
+        private Gameplay.GameType.Merge _lastKnownGameType;
+        private Coroutine _configuratorRoutine;
+        private Content.Merge.Selector.Request _processedRequest;
+        private Stage _stage;
         
-        enum Stage{ Hidden, InGame, Slots, Configurator }
-        Stage stage;
+        private enum Stage{ Hidden, InGame, Slots, Configurator }
         
-        public bool Shown => stage == Stage.Slots || stage == Stage.Configurator;
+        public bool Shown => _stage == Stage.Slots || _stage == Stage.Configurator;
         
-        void Start()
+        private void Start()
         {
-            Size.Init();
-            Theme.Init();
-            for (int i = 0; i < SaveSlots.Length; i++)
-            {
-                SaveSlots[i].Init(this);
-            }
+            _size.Init();
+            _theme.Init();
         }
         
         public void ShowSlotSelector(Gameplay.GameType.Merge merge, Data.Merge data)
         {
             gameObject.SetActive(true);
-            lastKnownGameType = merge;
+            _lastKnownGameType = merge;
             if (merge != null && data != null)
             {
                 for (int i = 0; i < SaveSlots.Length; i++)
@@ -46,7 +44,7 @@ namespace UI.Merge
             StartCoroutine(FirstShowSlots());
         }
         
-        IEnumerator FirstShowSlots()
+        private IEnumerator FirstShowSlots()
         {
             SetTurnOffStatus(false);
             FastTurnOffHeaderColor();
@@ -58,30 +56,31 @@ namespace UI.Merge
             
             void FastTurnOffHeaderColor()
             {
-                var M = Header.GetComponent<MaskableGraphic>();//.color; = Color.white - Color.black;
+                var M = Header.GetComponent<MaskableGraphic>();
                 var Color =  M.color;
                 Color.a = 0;
                 M.color = Color;
             }
         }
 
-        IEnumerator ShowSlotsWindow()
+        private IEnumerator ShowSlotsWindow()
         {
-            Theme.Hide();
-            Size.Hide();
-            stage = Stage.Slots;
+            _theme.Hide();
+            _size.Hide();
+            _stage = Stage.Slots;
             yield return AnimateUnwrapWindow(.8f);
-            Theme.Hide();
-            Size.Hide();
+            _theme.Hide();
+            _size.Hide();
             SetTurnOffStatus(true);
         }
 
-        internal void Hide(float Duration)
+        public void Hide(float Duration)
         {
             StartCoroutine(HideWindow(Duration));
-            stage = Stage.Hidden;
+            _stage = Stage.Hidden;
         }
-        IEnumerator HideWindow(float Duration = 1.5f)
+        
+        private IEnumerator HideWindow(float Duration = 1.5f)
         {
             SetTurnOffStatus(false);
             var Step = (Duration-0.1f) / 2f;
@@ -92,17 +91,14 @@ namespace UI.Merge
             gameObject.SetActive(false);
         }
         
-        Coroutine ConfiguratorRoutine;
-        Content.Merge.Selector.Request processedRequest;
-        
         public void ShowConfigurator(Content.Merge.Selector.Request request, System.Action subloadTheme)
         {
-            stage = Stage.Configurator;
-            processedRequest = request;
-            ConfiguratorRoutine = StartCoroutine(AnimateConfigurator(subloadTheme));
+            _stage = Stage.Configurator;
+            _processedRequest = request;
+            _configuratorRoutine = StartCoroutine(AnimateConfigurator(subloadTheme));
         }
         
-        IEnumerator AnimateConfigurator(System.Action subloadTheme)
+        private IEnumerator AnimateConfigurator(System.Action subloadTheme)
         {
             const float WindowUnwrapTime = 0.8f;
             
@@ -115,13 +111,13 @@ namespace UI.Merge
             yield return ChangeHeaderTextAnimated(HeaderLang_Themes, 0.3f); //Поменял заголовок
             yield return new WaitForSeconds(0.3f);
             blocked = true;
-            Theme.Show(processedRequest.Theme, AdsAllowed, Unblocker);//Настроил темы
+            _theme.Show(_processedRequest.Theme, AdsAllowed, Unblocker);//Настроил темы
             
             yield return AnimateUnwrapWindow(WindowUnwrapTime, false);//развернул
             SetTurnOffStatus(true);
             while(blocked) yield return Wait;//Ждём юзера
             subloadTheme.Invoke();
-            if (processedRequest.ShowAds && AdsAllowed)
+            if (_processedRequest.ShowAds && AdsAllowed)
             {
                 blocked = true;
                 ShowAds(Unblocker);
@@ -132,17 +128,17 @@ namespace UI.Merge
             yield return AnimateUnwrapWindow(WindowUnwrapTime, true);//Свернул
             yield return ChangeHeaderTextAnimated(HeaderLang_Sizes, 0.3f);//Поменял заголовок
             yield return new WaitForSeconds(0.3f);
-            Theme.Hide();
+            _theme.Hide();
             blocked = true;
-            Size.Show(processedRequest.Size, Unblocker);//Настроил размеры
+            _size.Show(_processedRequest.Size, Unblocker);//Настроил размеры
             
             yield return AnimateUnwrapWindow(WindowUnwrapTime, false);//развернул
             SetTurnOffStatus(true);
             while(blocked) yield return Wait;//Ждём юзера
             
-            processedRequest.onDone.Invoke();
-            
-            async void ShowAds(System.Action onEnd)
+            _processedRequest.OnDone.Invoke();
+
+            static async void ShowAds(System.Action onEnd)
             {
                 if (await Services.DI.Single<Services.Advertisements.Controller>().IsRewardAdSuccess())
                 {
@@ -151,7 +147,7 @@ namespace UI.Merge
             }
         }
         
-        IEnumerator ChangeHeaderTextAnimated(string LangKey, float Duration)
+        private IEnumerator ChangeHeaderTextAnimated(string LangKey, float Duration)
         {
             yield return AnimateHeaderColor(Duration/3f, true);
             Header.SetNewKey(LangKey);
@@ -160,26 +156,24 @@ namespace UI.Merge
         
         public void TryCloseByUser()
         {
-            if (stage == Stage.InGame || stage == Stage.Hidden) return;
-            if (stage == Stage.Slots)
+            if (_stage == Stage.InGame || _stage == Stage.Hidden) return;
+            if (_stage == Stage.Slots)
             {
-                lastKnownGameType.CloseByUser();
+                _lastKnownGameType.CloseByUser();
             }
-            if (stage == Stage.Configurator)
+            if (_stage == Stage.Configurator)
             {
                 SetTurnOffStatus(false);
-                StopCoroutine(ConfiguratorRoutine);
-                processedRequest.Dispose();
+                StopCoroutine(_configuratorRoutine);
                 StartCoroutine(AnimateToSlots());
             }
         }
         
-        IEnumerator AnimateToSlots()
+        private IEnumerator AnimateToSlots()
         {
             StartCoroutine(ChangeHeaderTextAnimated(HeaderLang_Slots, 0.3f));
             yield return AnimateUnwrapWindow(0.8f, true);
             yield return ShowSlotsWindow();
         }
-        
     }
 }

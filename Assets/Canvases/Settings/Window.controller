@@ -56,9 +56,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fced18124427fc4c987ed13c6480196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  When: 1
-  Message: FinalizeHideWindow
-  Direct: 0
+  _when: 1
+  _message: FinalizeHideWindow
+  _direct: 0
 --- !u!1101 &-6093116908685689800
 AnimatorStateTransition:
   m_ObjectHideFlags: 1

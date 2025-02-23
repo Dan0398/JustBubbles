@@ -30,11 +30,10 @@ namespace Services
             var RawData = await GetDataInJSON(RealName);
             if (RawData == null) return (TResult)default; 
             var JsonData = System.Text.Encoding.UTF8.GetString(RawData);
-            //await Task.Delay(3000);
             return (TResult) JsonConvert.DeserializeObject<TResult>(JsonData);
         }
         
-        async static Task<byte[]> GetDataInJSON(string Name)
+        private async static Task<byte[]> GetDataInJSON(string Name)
         {
             string Path = GetFullPath(Name);
             if (!File.Exists(Path))
@@ -58,7 +57,7 @@ namespace Services
             WriteData(Serialized.GetType().Name, JsonString);
         }
             
-        static async void WriteData(string Name, string Data)
+        private static async void WriteData(string Name, string Data)
         {
             var RawData = System.Text.Encoding.UTF8.GetBytes(Data);
             string Path = GetFullPath(Name);
@@ -70,7 +69,10 @@ namespace Services
             }
         }
         
-        static string GetFullPath(string FileName) => Application.persistentDataPath + "/" + FileName + ".json";
+        private static string GetFullPath(string FileName)
+        {
+            return Application.persistentDataPath + "/" + FileName + ".json";
+        }
     #endif
     }
 }

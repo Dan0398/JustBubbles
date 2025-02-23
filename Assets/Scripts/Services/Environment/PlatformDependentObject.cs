@@ -3,24 +3,25 @@ using UnityEngine;
 namespace Services.Env {
     public class PlatformDependentObject : MonoBehaviour
     {
-        [SerializeField] GameObject[] PCObjects, TouchObjects;
+        [SerializeField] private GameObject[] _pcObjects;
+        [SerializeField] private GameObject[] _touchObjects;
         
-        void Start()
+        private void Start()
         {
             var Env = Services.DI.Single<Services.Environment>();
             RefreshActivity(Env.IsUsingTouch.Value);
             Env.IsUsingTouch.Changed += () => RefreshActivity(Env.IsUsingTouch.Value);
         }
         
-        void RefreshActivity(bool IsTouch)
+        private void RefreshActivity(bool IsTouch)
         {
-            for (int i=0; i< PCObjects.Length; i++)
+            for (int i=0; i< _pcObjects.Length; i++)
             {
-                PCObjects[i].SetActive(!IsTouch);
+                _pcObjects[i].SetActive(!IsTouch);
             }
-            for (int i=0; i< TouchObjects.Length; i++)
+            for (int i=0; i< _touchObjects.Length; i++)
             {
-                TouchObjects[i].SetActive(IsTouch);
+                _touchObjects[i].SetActive(IsTouch);
             }
         }
     }

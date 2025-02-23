@@ -11,7 +11,7 @@ namespace Content.Merge
         [System.Serializable]
         public class Item
         {
-            [SerializeField] string Name;
+            [SerializeField] private string _name;
             [field:SerializeField] public GameObject Sample     { get; private set; }
         }
     }

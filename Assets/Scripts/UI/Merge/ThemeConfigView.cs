@@ -7,55 +7,60 @@ namespace UI.Merge
     [System.Serializable]
     public class ThemeConfigView
     {
-        [SerializeField] GameObject Parent;
-        [SerializeField] Image Preview;
-        [SerializeField] TextTMPLocalized NameLocalized;
-        [SerializeField] Button Prev, Next;
-        [SerializeField] Button Select;
-        [SerializeField] GameObject UsualSelect, ForAdsSelect;
-        bool adsAllowed;
-        System.Action onClick;
-        Content.Merge.Selector.ThemeSelector Selector;
+        [SerializeField] private GameObject _parent;
+        [SerializeField] private Image _preview;
+        [SerializeField] private TextTMPLocalized _nameLocalized;
+        [SerializeField] private Button _prev;
+        [SerializeField] private Button _next;
+        [SerializeField] private Button _select;
+        [SerializeField] private GameObject _usualSelect;
+        [SerializeField] private GameObject _forAdsSelect;
+        private bool _adsAllowed;
+        private System.Action _onClick;
+        private Content.Merge.Selector.ThemeSelector _selector;
         
         public void Init()
         {
-            Next.onClick.AddListener(() =>
+            _next.onClick.AddListener(() =>
             {
-                if (Selector == null) return;
-                Selector.GoToNext();
+                if (_selector == null) return;
+                _selector.GoToNext();
                 Refresh();
             });
-            Prev.onClick.AddListener(()=>
+            _prev.onClick.AddListener(()=>
             {
-                if (Selector == null) return;
-                Selector.GoToPrev();
+                if (_selector == null) return;
+                _selector.GoToPrev();
                 Refresh();
             });
-            Select.onClick.AddListener( () =>
+            _select.onClick.AddListener( () =>
             {
-                Selector.Select();
-                onClick.Invoke();
+                _selector.Select();
+                _onClick.Invoke();
             });
         }
 
-        internal void Show(Content.Merge.Selector.ThemeSelector theme, bool AdsAllowed, System.Action OnSelect)
+        public void Show(Content.Merge.Selector.ThemeSelector theme, bool AdsAllowed, System.Action OnSelect)
         {
-            Selector = theme;
-            adsAllowed = AdsAllowed;
-            onClick = OnSelect;
+            _selector = theme;
+            _adsAllowed = AdsAllowed;
+            _onClick = OnSelect;
             Refresh();
-            Parent.SetActive(true);
+            _parent.SetActive(true);
         }
 
-        void Refresh()
+        private void Refresh()
         {
-            var Target = Selector.Selected;
-            Preview.sprite = Target.Sprite;
-            NameLocalized.SetNewKey(Target.NameLangKey);
-            UsualSelect.SetActive(!(Target.AdsRequired && adsAllowed));
-            ForAdsSelect.SetActive(Target.AdsRequired && adsAllowed);
+            var Target = _selector.Selected;
+            _preview.sprite = Target.Sprite;
+            _nameLocalized.SetNewKey(Target.NameLangKey);
+            _usualSelect.SetActive(!(Target.AdsRequired && _adsAllowed));
+            _forAdsSelect.SetActive(Target.AdsRequired && _adsAllowed);
         }
         
-        public void Hide() => Parent.SetActive(false);
+        public void Hide()
+        {
+            _parent.SetActive(false);
+        }
     }
 }

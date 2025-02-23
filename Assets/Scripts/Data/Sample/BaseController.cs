@@ -10,15 +10,15 @@ namespace Data
     {
         public bool isDataLoaded    {get; private set;}
         public T Data               {get; protected set;}
-        bool savingInvoked, changesSubscribed, isNewData;
+        private bool _savingInvoked, _changesSubscribed, _isNewData;
         
         public BaseController()
         {
-            savingInvoked = false;
+            _savingInvoked = false;
             PreloadData();
         }
         
-        async void PreloadData()
+        private async void PreloadData()
         {
             await LoadData();
             TrySubscribeOnChanges();
@@ -28,8 +28,8 @@ namespace Data
         protected async Task LoadData()
         {
             Data = await Services.IO.LoadData<T>();
-            isNewData = Data == null || Data.Equals(default(T));
-            if (isNewData)
+            _isNewData = Data == null || Data.Equals(default(T));
+            if (_isNewData)
             {
                 UnityEngine.Debug.Log("Found new data. Type:" + typeof(T).ToString());
                 Data = System.Activator.CreateInstance<T>();
@@ -38,19 +38,18 @@ namespace Data
             }
         }
         
-        public /*async*/ void SaveData()
+        public void SaveData()
         {
-            if (savingInvoked) return;
-            savingInvoked = true;
-            //await Task.Delay(3000);
+            if (_savingInvoked) return;
+            _savingInvoked = true;
             Services.IO.SaveData(Data);
-            savingInvoked = false;
+            _savingInvoked = false;
         }
         
-        void TrySubscribeOnChanges()
+        private void TrySubscribeOnChanges()
         {
-            if (changesSubscribed) return;
-            changesSubscribed = true;
+            if (_changesSubscribed) return;
+            _changesSubscribed = true;
             SubscribeOnChanges();
         }
         

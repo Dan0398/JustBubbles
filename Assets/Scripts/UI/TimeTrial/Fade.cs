@@ -11,11 +11,10 @@ namespace UI.Survival
     [System.Serializable]
     public class Fade: MonoBehaviour
     {
-        const float FinalAlphaScale = 0.7f;
-        const int AnimationSteps = 30;
-        [SerializeField] Image FadeView;
-        WaitForEndOfFrame Wait = new WaitForEndOfFrame();
-        int Step = 0;
+        private const float FinalAlphaScale = 0.7f;
+        private const int AnimationSteps = 30;
+        [SerializeField] private Image _fadeView;
+        private int _step = 0;
         
         public void Show()
         {
@@ -28,27 +27,27 @@ namespace UI.Survival
             AnimateFade(false);
         }
         
-        async void AnimateFade(bool isShowFade)
+        private async void AnimateFade(bool isShowFade)
         {
             float Lerp = 0;
-            if (isShowFade) FadeView.enabled = true;
+            if (isShowFade) _fadeView.enabled = true;
             while(true)
             {
-                Lerp = Mathf.Sin(90 * (Step / (float) AnimationSteps) * Mathf.Deg2Rad);
-                FadeView.color = Color.black * FinalAlphaScale * Lerp;
+                Lerp = Mathf.Sin(90 * (_step / (float) AnimationSteps) * Mathf.Deg2Rad);
+                _fadeView.color = Color.black * FinalAlphaScale * Lerp;
                 if (isShowFade)
                 {
-                    if (Step == AnimationSteps) break;
-                    Step ++;
+                    if (_step == AnimationSteps) break;
+                    _step ++;
                 }
                 else 
                 {
-                    if (Step == 0) break;
-                    Step--;
+                    if (_step == 0) break;
+                    _step--;
                 }
                 await Task.Yield();
             }
-            if (!isShowFade) FadeView.enabled = false;
+            if (!isShowFade) _fadeView.enabled = false;
         }
     }
 }

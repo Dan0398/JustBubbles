@@ -15,20 +15,20 @@ namespace Gameplay.GameType
     [System.Serializable]
     public class Strategy : BubbleBaseType
     {
-        const string LeaderBoardName = "StrategyBestScore";
-        const int PopMaxCount = 5;
-        [SerializeField] int SetCounts = 2;
-        [SerializeField] int CountUntilAppend;
-        [SerializeField] int userClicks;
-        [SerializeField] int AppendLinesCount;
-        [SerializeField] int PopCombo;
-        [SerializeField] float ttt;
-        bool GameInProcess;
+        private const string LeaderBoardName = "StrategyBestScore";
+        private const int PopMaxCount = 5;
+        
+        [SerializeField] private int _setCounts = 2;
+        [SerializeField] private int _countUntilAppend;
+        [SerializeField] private int _userClicks;
+        [SerializeField] private int _appendLinesCount;
+        [SerializeField] private int _popCombo;
+        private bool _gameInProcess;
         #if UNITY_EDITOR
-        [SerializeField] bool ForceEnd;
+        [SerializeField] private bool _forceEnd;
         #endif
-        StrategyCanvas strategyCanvas;
-        float checkTimer;
+        private StrategyCanvas _strategyCanvas;
+        private float _checkTimer;
 
         protected override bool IsFieldAspectDynamic => false;
         protected override float FieldUpperOutstand => 0.07f;
@@ -42,100 +42,99 @@ namespace Gameplay.GameType
         public Strategy(Gameplay.Controller gameplay, Settings Settings, InGameParents InGameParts, BubbleField Field, Action User, StrategyCanvas Canvas)
                 :base(gameplay, Settings, InGameParts, Field, User)
         {
-            strategyCanvas = Canvas;
+            _strategyCanvas = Canvas;
             CustomEnterToType();
         }
         
-        void CustomEnterToType()
+        private void CustomEnterToType()
         {
-            field.Difficulty = 1;
-            field.ShowViews();
+            Field.Difficulty = 1;
+            Field.ShowViews();
             StartNewGame();
             
-            strategyCanvas.Show(this, 1f);
+            _strategyCanvas.Show(this, 1f);
             
-            field.ColorStats.ColorsCount.Changed += CalculateAppendLinesCount; 
-            field.ColorStats.OnColorRemove += ReactOnColorRemove;
-            user.StartGameplayAndAnimate();
+            Field.ColorStats.ColorsCount.Changed += CalculateAppendLinesCount; 
+            Field.ColorStats.OnColorRemove += ReactOnColorRemove;
+            User.StartGameplayAndAnimate();
         }
         
-        void ReactOnColorRemove(List<Bubble.BubbleColor> s)
+        private void ReactOnColorRemove(List<Bubble.BubbleColor> s)
         {
-            if (!GameInProcess) return;
-            strategyCanvas.ReactOnColorRemove(s);
+            if (!_gameInProcess) return;
+            _strategyCanvas.ReactOnColorRemove(s);
         }
         
-        void StartNewGame()
+        private void StartNewGame()
         {
-            GameInProcess = true;
-            field.SetColorConfig(5, true);
+            _gameInProcess = true;
+            Field.SetColorConfig(5, true);
             CalculateAppendLinesCount();
-            CountUntilAppend = SetCounts;
-            strategyCanvas.RefreshCountUntilAppend(CountUntilAppend);
+            _countUntilAppend = _setCounts;
+            _strategyCanvas.RefreshCountUntilAppend(_countUntilAppend);
             
-            userClicks = 0;
-            strategyCanvas.RefreshClicks(userClicks);
+            _userClicks = 0;
+            _strategyCanvas.RefreshClicks(_userClicks);
             
-            PopCombo = 0;
-            strategyCanvas.RefreshPopCombo(PopCombo);
+            _popCombo = 0;
+            _strategyCanvas.RefreshPopCombo(_popCombo);
 #if UNITY_EDITOR
-            field.AppendLinesAndAnimate(3, 1f, ProcessUnpause);
+            Field.AppendLinesAndAnimate(3, 1f, ProcessUnpause);
 #else
-            field.AppendLinesAndAnimate(8, 1f, ProcessUnpause);
+            Field.AppendLinesAndAnimate(8, 1f, ProcessUnpause);
 #endif
         }
         
-        void CalculateAppendLinesCount()
+        private void CalculateAppendLinesCount()
         {
 #if UNITY_EDITOR
-            AppendLinesCount = 1;
-            SetCounts = 2;
-            strategyCanvas.RefreshAppendLinesCount(AppendLinesCount);
+            _appendLinesCount = 1;
+            _setCounts = 2;
+            _strategyCanvas.RefreshAppendLinesCount(_appendLinesCount);
 #else
-            var count = field.ColorStats.ColorsCount.Value;
+            var count = Field.ColorStats.ColorsCount.Value;
             if (count == 5) 
             {
-                AppendLinesCount = 1;
-                SetCounts = 2;
+                _appendLinesCount = 1;
+                _setCounts = 2;
             }
             else if (count == 4)
             {
-                AppendLinesCount = 2;
-                SetCounts = 2;
+                _appendLinesCount = 2;
+                _setCounts = 2;
             }
             else if (count == 3)
             {
-                AppendLinesCount = 2;
-                SetCounts = 1;
+                _appendLinesCount = 2;
+                _setCounts = 1;
             }
             else if (count == 2) 
             {
-                AppendLinesCount = 7;
-                SetCounts = 1;
+                _appendLinesCount = 7;
+                _setCounts = 1;
             }
             else if (count == 1) 
             {
-                AppendLinesCount = 1;
-                SetCounts = 1;
+                _appendLinesCount = 1;
+                _setCounts = 1;
             }
-            strategyCanvas.RefreshAppendLinesCount(AppendLinesCount);
+            _strategyCanvas.RefreshAppendLinesCount(_appendLinesCount);
 #endif
         }
 
         public override void ProcessGameplayUpdate()
         {
-            if (Paused || !GameInProcess) return;
+            if (Paused || !_gameInProcess) return;
 #if UNITY_EDITOR
-            if (ForceEnd)
+            if (_forceEnd)
             {
                 FinalizeSession(true);
-                ForceEnd = false;
+                _forceEnd = false;
             }
 #endif
-            if (checkTimer <= 0) return;
-            checkTimer -= Time.fixedDeltaTime;
-            ttt = field.GetDistanceToFieldEdge();
-            if (field.IsLowerLineUnderFieldEdge())
+            if (_checkTimer <= 0) return;
+            _checkTimer -= Time.fixedDeltaTime;
+            if (Field.IsLowerLineUnderFieldEdge())
             {
                 FinalizeSession(false);
                 return;
@@ -144,72 +143,72 @@ namespace Gameplay.GameType
 
         public override void ReactOnUserBubbleSet(List<Place> PopByUser, List<Place> Fallen, System.Type InstrumentType)
         {
-            if (field.BubblesCountOnScene == 0)
+            if (Field.BubblesCountOnScene == 0)
             {
                 FinalizeSession(true);
                 return;
             }
-            userClicks++;
-            strategyCanvas.RefreshClicks(userClicks);
-            if (field.IsLowerLineUnderFieldEdge())
+            _userClicks++;
+            _strategyCanvas.RefreshClicks(_userClicks);
+            if (Field.IsLowerLineUnderFieldEdge())
             {
                 FinalizeSession(false);
             }
             if (PopByUser.Count >= 3)
             {
-                PopCombo++;
-                if (PopCombo == PopMaxCount)
+                _popCombo++;
+                if (_popCombo == PopMaxCount)
                 {
-                    strategyCanvas.RefreshPopCombo(1, DecrementUntilAppend);
-                    PopCombo = 0;
+                    _strategyCanvas.RefreshPopCombo(1, DecrementUntilAppend);
+                    _popCombo = 0;
                 }
                 else
                 {
-                    strategyCanvas.RefreshPopCombo(PopCombo / (float) PopMaxCount);
+                    _strategyCanvas.RefreshPopCombo(_popCombo / (float) PopMaxCount);
                 }
             }
             else
             {
-                PopCombo = 0;
-                strategyCanvas.RefreshPopCombo(0);
+                _popCombo = 0;
+                _strategyCanvas.RefreshPopCombo(0);
                 DecrementUntilAppend();
             }
             
             void DecrementUntilAppend()
             {
-                CountUntilAppend--;
-                if (CountUntilAppend == 0)
+                _countUntilAppend--;
+                if (_countUntilAppend == 0)
                 {
-                    field.AppendLinesAndAnimate(AppendLinesCount, 0.5f);
-                    checkTimer = 0.5f;
-                    CountUntilAppend = SetCounts;
+                    Field.AppendLinesAndAnimate(_appendLinesCount, 0.5f);
+                    _checkTimer = 0.5f;
+                    _countUntilAppend = _setCounts;
                 }
-                strategyCanvas.RefreshCountUntilAppend(CountUntilAppend);
+                _strategyCanvas.RefreshCountUntilAppend(_countUntilAppend);
             }
         }
         
-        void FinalizeSession(bool isSuccess)
+        private void FinalizeSession(bool isSuccess)
         {
-            GameInProcess = false;
-            field.FullCleanupAnimated(1f);
+            _gameInProcess = false;
+            Field.FullCleanupAnimated(1f);
             ProcessPause();
             
             var Saved = Services.DI.Single<Data.UserController>();
             var oldHigh = Saved.Data.StrategyBestScore;
-            var isHigh = isSuccess && (oldHigh == 0 || userClicks < oldHigh);
+            var isHigh = isSuccess && (oldHigh == 0 || _userClicks < oldHigh);
             if (isHigh)
             {
-                Saved.Data.StrategyBestScore = userClicks;
+                Saved.Data.StrategyBestScore = _userClicks;
                 Saved.SaveData();
 #if UNITY_WEBGL
-                var LeaderboardWrite = new Services.Leaderboards.ScoreWrite(LeaderBoardName, userClicks);
+                var LeaderboardWrite = new Services.Leaderboards.ScoreWrite(LeaderBoardName, _userClicks);
                 Services.Web.Catcher.SetNewScoreInLeaderboards(LeaderboardWrite);
 #endif
             }
             var Result = new Result()
             {
-                SessionResult = userClicks,
-                BestResult = isHigh? userClicks : Saved.Data.StrategyBestScore,
+                SessionResult = _userClicks,
+                BestResult = isHigh? _userClicks : Saved.Data.StrategyBestScore,
                 IsNewHighScore = isHigh,
                 IsSuccess = isSuccess,
                 LeaderBoardName = Strategy.LeaderBoardName,
@@ -217,23 +216,23 @@ namespace Gameplay.GameType
                 OnEnd =     () => gameplay.StopGameplay(),
                 OnRetry =   () => StartNewGame()
             };
-            strategyCanvas.ShowEndgame(Result);
+            _strategyCanvas.ShowEndgame(Result);
         }
 
         public override async Task Dispose()
         {
             ProcessPause();
             
-            field.ColorStats.FullCount.Changed -= CalculateAppendLinesCount; 
-            field.ColorStats.OnColorRemove -= ReactOnColorRemove;
-            field.HideViews();
+            Field.ColorStats.FullCount.Changed -= CalculateAppendLinesCount; 
+            Field.ColorStats.OnColorRemove -= ReactOnColorRemove;
+            Field.HideViews();
             
             bool FieldReady = false;
-            field.FullCleanupAnimated(1f, () => FieldReady = true);
+            Field.FullCleanupAnimated(1f, () => FieldReady = true);
             
             bool UserReady = false;
-            user.StopGameplayAndAnimate(1f, () => UserReady = true);
-            strategyCanvas.Hide(1f);
+            User.StopGameplayAndAnimate(1f, () => UserReady = true);
+            _strategyCanvas.Hide(1f);
             
             while(!FieldReady || !UserReady) await Utilities.Wait();
         }

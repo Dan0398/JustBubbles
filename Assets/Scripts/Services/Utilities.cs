@@ -48,34 +48,4 @@ public static class Utilities
         }
         return Builder.ToString();
     }
-    
-    /*
-    public static Services.SurfaceTypes GetSurfaceByTag(RaycastHit HitData)
-    {
-        if (HitData.collider == null)
-        {
-            return Services.SurfaceTypes.None;
-        }
-        var Tag = HitData.collider.tag;
-        if (!System.Enum.TryParse(Tag, out Services.SurfaceTypes Returned))
-        {
-            return Services.SurfaceTypes.None;
-        } 
-        return Returned;
-    }
-    
-    public static Services.SurfaceTypes GetSurfaceByTag(ContactPoint HitData)
-    {
-        if (HitData.otherCollider == null)
-        {
-            return Services.SurfaceTypes.None;
-        }
-        var Tag = HitData.otherCollider.tag;
-        if (!System.Enum.TryParse(Tag, out Services.SurfaceTypes Returned))
-        {
-            return Services.SurfaceTypes.None;
-        } 
-        return Returned;
-    }
-    */
 }

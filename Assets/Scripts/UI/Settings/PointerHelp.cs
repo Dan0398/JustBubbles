@@ -1,5 +1,5 @@
-using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine;
 
 namespace UI.Settings
 {
@@ -12,7 +12,7 @@ namespace UI.Settings
             PointerDown?.Invoke();
         }
 
-        void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
+        public void OnPointerUp(PointerEventData eventData)
         {
             PointerUp?.Invoke();
         }

@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Gameplay.GameType;
 using UnityEngine;
 
@@ -7,7 +6,7 @@ namespace UI.Survival
     public class SurvivalCanvas : MonoBehaviour
     {
         public AnimationCurve MoveDynamic;
-        [SerializeField] float ShowAnimationSpeed;
+        [SerializeField] private float _showAnimationSpeed;
         [field: SerializeField] public ScoreView Score                  { get; private set; }
         [field: SerializeField] public ComboView Combo                  { get; private set; }
         [field: SerializeField] public Progress Progress                { get; private set; }
@@ -15,19 +14,20 @@ namespace UI.Survival
         [field: SerializeField] public GameOver GameOver                { get; private set; }
         [field: SerializeField] public BonusView ReceivedBonus          { get; private set; }
         [Header("Stage Data")]
-        [SerializeField] TMPro.TMP_Text ColorsCount;
-        [SerializeField] TMPro.TMP_Text LevelAnchor;
+        [SerializeField] private TMPro.TMP_Text _colorsCount;
+        [SerializeField] private TMPro.TMP_Text _levelAnchor;
         [Space(19)]
-        [SerializeField] Animator HelpWindow;
-        [SerializeField] GameObject EndgameObj, HeaderObj;
-        [SerializeField] GameObject[] FunctionalButtonsInHeader;
-        Gameplay.GameType.Survival GameType;
-        bool started, turnedOn, requireDisableGameObject;
+        [SerializeField] private Animator _helpWindow;
+        [SerializeField] private GameObject _endgameObj;
+        [SerializeField] private GameObject _headerObj;
+        [SerializeField] private GameObject[] _functionalButtonsInHeader;
+        private Gameplay.GameType.Survival _gameType;
+        private bool _started, _turnedOn, _requireDisableGameObject;
         
-        void Start()
+        private void Start()
         {
-            if (started) return;
-            started =  true;
+            if (_started) return;
+            _started =  true;
             Progress.Init(this);
             FallenBubblesView.Init(this);
         }
@@ -35,54 +35,57 @@ namespace UI.Survival
         #region  Window
         public void Show(Gameplay.GameType.Survival parent, float Duration = 1f)
         {
-            if (!started) Start();
-            GameType = parent;
+            if (!_started) Start();
+            _gameType = parent;
             gameObject.SetActive(true);
-            HeaderObj.SetActive(true);
-            turnedOn = true;
-            GetComponent<Animator>().SetFloat("Speed", ShowAnimationSpeed / Duration);
+            _headerObj.SetActive(true);
+            _turnedOn = true;
+            GetComponent<Animator>().SetFloat("Speed", _showAnimationSpeed / Duration);
             GetComponent<Animator>().SetTrigger("Show");
         }
         
         public void Hide(float Duration = 1f, bool RequireTurnOff = true)
         {
-            requireDisableGameObject = RequireTurnOff;
-            if (turnedOn)
+            _requireDisableGameObject = RequireTurnOff;
+            if (_turnedOn)
             {
-                GetComponent<Animator>().SetFloat("Speed", ShowAnimationSpeed / Duration);
+                GetComponent<Animator>().SetFloat("Speed", _showAnimationSpeed / Duration);
                 GetComponent<Animator>().SetTrigger("Hide");
             }
             else
             {
                 Invoke("RegisterHideFromAnimator", Duration);
             }
-            turnedOn = false;
+            _turnedOn = false;
         }
         
         public void RegisterHideFromAnimator()
         {
-            if (requireDisableGameObject)
+            if (_requireDisableGameObject)
             {
                 gameObject.SetActive(false);
-                EndgameObj.SetActive(false);
+                _endgameObj.SetActive(false);
             }
-            HeaderObj.SetActive(false);
+            _headerObj.SetActive(false);
         }
         #endregion
         
         #region Help
         public void ShowHelp()
         {
-            GameType?.ProcessPause();
-            HelpWindow.gameObject.SetActive(true);
+            _gameType?.ProcessPause();
+            _helpWindow.gameObject.SetActive(true);
         }
         
-        public void HideHelp() => HelpWindow.SetTrigger("Hide");
+        public void HideHelp()
+        {
+            _helpWindow.SetTrigger("Hide");
+        }
         
         public void FinalizeHideInfo()
         {
-            HelpWindow.gameObject.SetActive(false);
-            GameType?.ProcessUnpause();
+            _helpWindow.gameObject.SetActive(false);
+            _gameType?.ProcessUnpause();
         }
         #endregion
         
@@ -93,16 +96,19 @@ namespace UI.Survival
         
         public void ReceiveNewGameStage(SurvivalStage stage)
         {
-            ColorsCount.text = stage.SceneColors.ToString();
-            LevelAnchor.text = stage.RewardByComboCount.ToString();
+            _colorsCount.text = stage.SceneColors.ToString();
+            _levelAnchor.text = stage.RewardByComboCount.ToString();
             Progress.ResetToZero();
         }
         
-        public void CallPause() => GameType.CallSettings();
+        public void CallPause()
+        {
+            _gameType.CallSettings();
+        }
         
         public void SwitchFunctionalButtons(bool enabled)
         {
-            foreach(var button in FunctionalButtonsInHeader)
+            foreach(var button in _functionalButtonsInHeader)
             {
                 button.SetActive(enabled);
             }

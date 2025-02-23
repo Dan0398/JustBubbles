@@ -6,28 +6,28 @@ namespace UI.Survival
     [System.Serializable]
     public class FallenBubbles
     {
-        [SerializeField] TMPro.TMP_Text FallenText;
-        SurvivalCanvas parent;
-        Coroutine FallenAnimation;
-        WaitForFixedUpdate Wait;
+        [SerializeField] private TMPro.TMP_Text _fallenText;
+        private SurvivalCanvas _parent;
+        private Coroutine _fallenAnimation;
+        private WaitForFixedUpdate _wait;
         
         public void Init(SurvivalCanvas Parent)
         {
-            parent = Parent;
-            Wait = new WaitForFixedUpdate();
+            _parent = Parent;
+            _wait = new WaitForFixedUpdate();
         }
         
         public void ShowAnimated(int Count, int ScorePer, Vector3 MidPosOfAll, System.Func<Vector3, Vector3> ConvertSpaces)
         {
-            FallenText.text = $"{Count}x{ScorePer}\n={Count*ScorePer}";
-            if (FallenAnimation!= null)
+            _fallenText.text = $"{Count}x{ScorePer}\n={Count*ScorePer}";
+            if (_fallenAnimation!= null)
             {
-                parent.StopCoroutine(FallenAnimation);
+                _parent.StopCoroutine(_fallenAnimation);
             }
-            FallenAnimation = parent.StartCoroutine(AnimateText(FallenText, MidPosOfAll, ConvertSpaces));
+            _fallenAnimation = _parent.StartCoroutine(AnimateText(_fallenText, MidPosOfAll, ConvertSpaces));
         }
         
-        IEnumerator AnimateText(TMPro.TMP_Text Target, Vector3 StartPos, System.Func<Vector3, Vector3> ConvertSpaces)
+        private IEnumerator AnimateText(TMPro.TMP_Text Target, Vector3 StartPos, System.Func<Vector3, Vector3> ConvertSpaces)
         {
             StartPos += Vector3.down;
             RectTransform Rect = Target.rectTransform;
@@ -42,7 +42,7 @@ namespace UI.Survival
                 {
                     Target.color = new Color(1,1,1, 1 - (i-35)/5f);
                 }
-                yield return Wait;
+                yield return _wait;
             }
         }
     }

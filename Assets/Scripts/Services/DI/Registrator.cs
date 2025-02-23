@@ -6,7 +6,7 @@ namespace Services
     public class Registrator : MonoBehaviour
     {
         [RuntimeInitializeOnLoadMethod]
-        static void RegisterAllSystems()
+        private static void RegisterAllSystems()
         {
             var Runner = CoroutineRunner.CreateCoroutineRunner();
             DIService.Register<CoroutineRunner>(Runner);

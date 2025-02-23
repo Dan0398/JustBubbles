@@ -5,19 +5,19 @@ namespace UI.Settings
     [System.Serializable]
     public class SkinsSettings: IInitiable
     {
-        [SerializeField] GameObject Blocker;
-        [SerializeField] BubbleSkinChange BubbleSkin;
-        [SerializeField] BackgroundSkinChange BackgroundSkin;
+        [SerializeField] private GameObject _blocker;
+        [SerializeField] private BubbleSkinChange _bubbleSkin;
+        [SerializeField] private BackgroundSkinChange _backgroundSkin;
         
         public void Init(Settings Parent)
         {
-            BubbleSkin.Init(Parent);
-            BackgroundSkin.Init(Parent);
+            _bubbleSkin.Init(Parent);
+            _backgroundSkin.Init(Parent);
         }
         
         public void SetTurnedOnStatus(bool Activated)
         {
-            Blocker.SetActive(!Activated);
+            _blocker.SetActive(!Activated);
         }
     }
 }

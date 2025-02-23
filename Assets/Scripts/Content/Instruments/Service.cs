@@ -11,7 +11,7 @@ namespace Content.Instrument
             LoadConfig();
         }
         
-        async void LoadConfig()
+        private async void LoadConfig()
         {
             var LoadRequest = Resources.LoadAsync<Config>("Config/Instruments");
             while (LoadRequest.isDone) await Utilities.Wait();

@@ -91,7 +91,7 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -142,9 +142,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fced18124427fc4c987ed13c6480196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  When: 1
-  Message: FinalizeHide
-  Direct: 1
+  _when: 1
+  _message: FinalizeHide
+  _direct: 1
 --- !u!1102 &5163290250488166905
 AnimatorState:
   serializedVersion: 6

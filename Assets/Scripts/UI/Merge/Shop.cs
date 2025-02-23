@@ -8,12 +8,14 @@ namespace UI.Merge
     public class Shop : BaseAnimatedWindow
     {
         [Header("Shop components")]
-        [SerializeField] TMP_Text MoneyText;
-        [SerializeField] RectTransform BombBuyButton, ShakerBuyButton;
-        [SerializeField] int BombCost, ShakerCost;
-        Gameplay.GameType.Merge gameMode;
-        Services.Audio.Sounds.Service sounds;
-        System.Action OnUnbind;
+        [SerializeField] private TMP_Text _moneyText;
+        [SerializeField] private RectTransform _bombBuyButton;
+        [SerializeField] private RectTransform _shakerBuyButton;
+        [SerializeField] private int _bombCost;
+        [SerializeField] private int _shakerCost;
+        private Gameplay.GameType.Merge _gameMode;
+        private Services.Audio.Sounds.Service _sounds;
+        private System.Action _onUnbind;
         
         public void Show()
         {
@@ -21,9 +23,9 @@ namespace UI.Merge
             StartCoroutine(AnimateShow());
         } 
         
-        IEnumerator AnimateShow()
+        private IEnumerator AnimateShow()
         {
-            gameMode.ProcessPause();
+            _gameMode.ProcessPause();
             SetTurnOffStatus(false);
             StartCoroutine(AnimateFade(.5f));
             StartCoroutine(AnimateHeaderColor(.2f));
@@ -33,18 +35,24 @@ namespace UI.Merge
             SetTurnOffStatus(true);
         }
         
-        public void Hide() => Hide(false, null);
+        public void Hide()
+        {
+            Hide(false, null);
+        }
         
-        public void Hide(bool fast, System.Action AfterEnd) => StartCoroutine(AnimateHide(fast, AfterEnd));
+        public void Hide(bool fast, System.Action AfterEnd)
+        {
+            StartCoroutine(AnimateHide(fast, AfterEnd));
+        }
         
-        IEnumerator AnimateHide(bool fast, System.Action AfterEnd = null)
+        private IEnumerator AnimateHide(bool fast, System.Action AfterEnd = null)
         {
             float HeaderTime = fast? .4f: 0.8f;
             
             SetTurnOffStatus(false);
             yield return AnimateUnwrapWindow(HeaderTime, true);
             if (!fast) yield return new WaitForSecondsRealtime(.2f);
-            gameMode.ProcessUnpause();
+            _gameMode.ProcessUnpause();
             AfterEnd?.Invoke();
             
             StartCoroutine(AnimateHeaderColor(HeaderTime, true));
@@ -54,26 +62,26 @@ namespace UI.Merge
             gameObject.SetActive(false);
         }
 
-        internal void Bind(SaveModel selectedSaveSlot, Gameplay.GameType.Merge merge)
+        public void Bind(SaveModel selectedSaveSlot, Gameplay.GameType.Merge merge)
         {
-            gameMode = merge;
-            OnUnbind?.Invoke();
-            OnUnbind = null;
+            _gameMode = merge;
+            _onUnbind?.Invoke();
+            _onUnbind = null;
             
-            System.Action RefreshMoney = () => MoneyText.text = selectedSaveSlot.Money.Value.ToString() + '$';
+            System.Action RefreshMoney = () => _moneyText.text = selectedSaveSlot.Money.Value.ToString() + '$';
             RefreshMoney.Invoke();
             selectedSaveSlot.Money.Changed += RefreshMoney;
-            OnUnbind += () => selectedSaveSlot.Money.Changed -= RefreshMoney;
+            _onUnbind += () => selectedSaveSlot.Money.Changed -= RefreshMoney;
         }
         
         public void TryBuyBomb()
         {
-            var SuccessLogic = gameMode.IsBuyBombSuccess(BombCost);
+            var SuccessLogic = _gameMode.IsBuyBombSuccess(_bombCost);
             if (SuccessLogic == null)
             {
-                StartCoroutine(AnimateFailureButton(BombBuyButton));
-                sounds ??= Services.DI.Single<Services.Audio.Sounds.Service>();
-                sounds.Play(Services.Audio.Sounds.SoundType.InstrumentFail);
+                StartCoroutine(AnimateFailureButton(_bombBuyButton));
+                _sounds ??= Services.DI.Single<Services.Audio.Sounds.Service>();
+                _sounds.Play(Services.Audio.Sounds.SoundType.InstrumentFail);
             }
             else
             {
@@ -81,11 +89,11 @@ namespace UI.Merge
             }
         }
 
-        IEnumerator AnimateFailureButton(RectTransform target)
+        private IEnumerator AnimateFailureButton(RectTransform target)
         {
             var Wait = new WaitForFixedUpdate();
             var offserMin = target.offsetMin;
-            var offsetMax = BombBuyButton.offsetMax;
+            var offsetMax = _bombBuyButton.offsetMax;
             for(int i = 0; i <= 50; i++)
             {
                 float Lerp = Mathf.Sin(i/50f * 2880f * Mathf.Deg2Rad);
@@ -98,12 +106,12 @@ namespace UI.Merge
 
         public void TryBuyShaker()
         {
-            var SuccessLogic = gameMode.IsBuyShakerSuccess(ShakerCost);
+            var SuccessLogic = _gameMode.IsBuyShakerSuccess(_shakerCost);
             if (SuccessLogic == null)
             {
-                StartCoroutine(AnimateFailureButton(ShakerBuyButton));
-                sounds ??= Services.DI.Single<Services.Audio.Sounds.Service>();
-                sounds.Play(Services.Audio.Sounds.SoundType.InstrumentFail);
+                StartCoroutine(AnimateFailureButton(_shakerBuyButton));
+                _sounds ??= Services.DI.Single<Services.Audio.Sounds.Service>();
+                _sounds.Play(Services.Audio.Sounds.SoundType.InstrumentFail);
             }
             else
             {

@@ -7,23 +7,30 @@ namespace Services.Audio
     [RequireComponent(typeof(AudioSource))]
     public class Music : MonoBehaviour, Services.IService
     {
-        const int MusicCount = 13;
-        [SerializeField] MusicModel[] Musics;
-        AudioSource Source;
-        int CurrentCompositionNumber;
+        private const int MusicCount = 13;
         public bool UserPaused = false;
-        [SerializeField] bool MusicAllowed = true, ContentDelivering, PlatformAvailable = true;
-        [SerializeField] bool MusicPaused, turnedOn;
-        int[] ShuffledNumbers;
-        float TimeOnUnfocus;
-        bool SafetyDelayNow, AppInFocus;
-        WaitForFixedUpdate Wait;
         
-        int NextCompositionsNumber => (CurrentCompositionNumber == (Musics.Length - 1))? 0 : (CurrentCompositionNumber+1);
+        [SerializeField] private MusicModel[] _musics;
+        [SerializeField] private bool _musicAllowed = true;
+        [SerializeField] private bool _contentDelivering;
+        [SerializeField] private bool _platformAvailable = true;
+        [SerializeField] private bool _musicPaused;
+        [SerializeField] private bool _turnedOn;
+        private AudioSource _source;
+        private int _currentCompositionNumber;
+        private int[] _shuffledNumbers;
+        private float _timeOnUnfocus;
+        private bool _safetyDelayNow, _appInFocus;
+        private WaitForFixedUpdate _wait;
         
-        bool PauseRequired => UserPaused || !MusicAllowed || !AppInFocus;
+        private int NextCompositionsNumber => (_currentCompositionNumber == (_musics.Length - 1))? 0 : (_currentCompositionNumber+1);
         
-        string GimmePathByNumber(int ID) => UnityEngine.Application.streamingAssetsPath + "/music/" + ID;
+        private bool PauseRequired => UserPaused || !_musicAllowed || !_appInFocus;
+        
+        private string GimmePathByNumber(int ID)
+        {
+            return UnityEngine.Application.streamingAssetsPath + "/music/" + ID;
+        }
         
         public static Music CreateInstance()
         {
@@ -32,20 +39,19 @@ namespace Services.Audio
             return obj.AddComponent<Music>();
         }
         
-        void Start()
+        private void Start()
         {
-            Wait = new WaitForFixedUpdate();
-            Source = GetComponent<AudioSource>();
-            Source.reverbZoneMix = 0;
+            _wait = new WaitForFixedUpdate();
+            _source = GetComponent<AudioSource>();
+            _source.reverbZoneMix = 0;
             PrepareShuffle();
             PrepareCompositions();
             StartCoroutine(BindWithSettings());
             BindAppFocus();
-            turnedOn = true;
-            //StartCoroutine(TurnOnDelayed());
+            _turnedOn = true;
         }
         
-        void PrepareShuffle()
+        private void PrepareShuffle()
         {
             List<int> AllNumbers = new List<int>(MusicCount);
             for (int i = 0; i < MusicCount; i++) 
@@ -60,84 +66,78 @@ namespace Services.Audio
                 ShuffledList.Add(AllNumbers[ID]);
                 AllNumbers.RemoveAt(ID);
             }
-            ShuffledNumbers = ShuffledList.ToArray();
+            _shuffledNumbers = ShuffledList.ToArray();
         }
         
-        void PrepareCompositions()
+        private void PrepareCompositions()
         {
-            CurrentCompositionNumber = 0;
-            Musics = new MusicModel[MusicCount];
+            _currentCompositionNumber = 0;
+            _musics = new MusicModel[MusicCount];
             for (int i=0; i< MusicCount; i++)
             {
-                Musics[i] = new MusicModel();
+                _musics[i] = new MusicModel();
             }
         }
         
-        IEnumerator BindWithSettings()
+        private IEnumerator BindWithSettings()
         {
             ApplyNewSoundScale(0);
             var RefData = Services.DI.Single<Data.SettingsController>();
-            while(!RefData.isDataLoaded) yield return Wait;
+            while(!RefData.isDataLoaded) yield return _wait;
             ApplyNewSoundScale(RefData.Data.MusicLevel.Value);
             RefData.Data.MusicLevel.Changed += () => ApplyNewSoundScale(RefData.Data.MusicLevel.Value);
         }
         
-        void ApplyNewSoundScale(float NewScale)
+        private void ApplyNewSoundScale(float NewScale)
         {
-            Source.volume = NewScale;
+            _source.volume = NewScale;
         }
         
-        void BindAppFocus()
+        private void BindAppFocus()
         {
             ReceiveFocus(Application.isFocused);
             Application.focusChanged += ReceiveFocus;
         }
         
-        void ReceiveFocus(bool inFocus)
+        private void ReceiveFocus(bool inFocus)
         {
-            if (!Application.isPlaying || Source == null)
+            if (!Application.isPlaying || _source == null)
             {
                 UnbindAppFocus();
                 return;
             }
-            AppInFocus = inFocus;
-            if (inFocus) Source.time = TimeOnUnfocus;
-            else TimeOnUnfocus = Source.time;
+            _appInFocus = inFocus;
+            if (inFocus) _source.time = _timeOnUnfocus;
+            else _timeOnUnfocus = _source.time;
             ProcessPauseState();
         }
         
-        void UnbindAppFocus()
+        private void UnbindAppFocus()
         {
             Application.focusChanged -= ReceiveFocus;
         }
         
-        IEnumerator TurnOnDelayed()
-        {
-            yield return new WaitForSeconds(3f);
-            turnedOn = true;
-        }
-        
         public void SetEnvironmentStatus(bool MusicAllowed)
         {
-            this.MusicAllowed = MusicAllowed;
+            this._musicAllowed = MusicAllowed;
         }
         
-        void Update()
+        private void Update()
         {
-            if (!turnedOn) return;
-            if (!PlatformAvailable) return;
+            if (!_turnedOn) return;
+            if (!_platformAvailable) return;
             ProcessPauseState();
             CheckEndOfComposition();
         }
         
-        void ProcessPauseState()
+        private void ProcessPauseState()
         {
-            if (MusicPaused != PauseRequired)
+            if (_musicPaused != PauseRequired)
             {
-                MusicPaused = PauseRequired;
-                if (MusicPaused)
+                _musicPaused = PauseRequired;
+                if (_musicPaused)
                 {
-                    Source.Pause();
+                    _source.Pause();
                 }
                 else 
                 {
@@ -146,100 +146,100 @@ namespace Services.Audio
             }
         }
         
-        IEnumerator PlaySourceSafety()
+        private IEnumerator PlaySourceSafety()
         {
-            SafetyDelayNow = true;
-            Source.Play();
-            yield return Wait;
-            while(PauseRequired) yield return Wait;
-            if (!Source.isPlaying)
+            _safetyDelayNow = true;
+            _source.Play();
+            yield return _wait;
+            while(PauseRequired) yield return _wait;
+            if (!_source.isPlaying)
             {
                 Debug.Log("Environment didnt support music");
-                PlatformAvailable = false;
+                _platformAvailable = false;
                 FullDispose();
             }
-            SafetyDelayNow =  false;
+            _safetyDelayNow =  false;
         }
         
-        void FullDispose()
+        private void FullDispose()
         {
-            Source.Stop();
-            for (int i = Musics.Length-1; i>=0; i--)
+            _source.Stop();
+            for (int i = _musics.Length-1; i>=0; i--)
             {
-                if (Musics[i] == null) continue;
-                if (Musics[i].Clip != null)
+                if (_musics[i] == null) continue;
+                if (_musics[i].Clip != null)
                 {
-                    Musics[i].Clip.UnloadAudioData();
-                    Musics[i].Clip = null;
+                    _musics[i].Clip.UnloadAudioData();
+                    _musics[i].Clip = null;
                 }
-                if (Musics[i].Request != null)
+                if (_musics[i].Request != null)
                 {
-                    Services.DI.Single<Services.Bundles.Agent>().ReleaseContentUsage(Musics[i].Request, this);
+                    Services.DI.Single<Services.Bundles.Agent>().ReleaseContentUsage(_musics[i].Request, this);
                 }
-                Musics[i] = null;
+                _musics[i] = null;
             }
-            Musics = null;
-            Source.clip = null;
+            _musics = null;
+            _source.clip = null;
         }
         
-        void CheckEndOfComposition()
+        private void CheckEndOfComposition()
         {
-            if (ContentDelivering) return;
-            if (SafetyDelayNow) return;
-            if (Source == null) return;
-            if (Source.isPlaying) return;
-            if (MusicPaused) return;
-            if (!AppInFocus) return;
+            if (_contentDelivering) return;
+            if (_safetyDelayNow) return;
+            if (_source == null) return;
+            if (_source.isPlaying) return;
+            if (_musicPaused) return;
+            if (!_appInFocus) return;
             SetNextCompositionAndLoad();
         }
         
-        void SetNextCompositionAndLoad()
+        private void SetNextCompositionAndLoad()
         {
-            Source.Stop();
-            Source.clip  = null;
-            Source.time = 0;
-            CurrentCompositionNumber = NextCompositionsNumber;
-            ContentDelivering = true;
-            if (!PlatformAvailable)  return; 
+            _source.Stop();
+            _source.clip  = null;
+            _source.time = 0;
+            _currentCompositionNumber = NextCompositionsNumber;
+            _contentDelivering = true;
+            if (!_platformAvailable)  return; 
             CheckCompositions(PlayCurrent);
             
             void PlayCurrent()
             {
-                Source.clip = Musics[CurrentCompositionNumber].Clip;
-                if (!MusicPaused)
+                _source.clip = _musics[_currentCompositionNumber].Clip;
+                if (!_musicPaused)
                 {
                     StartCoroutine(PlaySourceSafety());
                 }
             }
         }
         
-        void CheckCompositions(System.Action OnCurrentLoad)
+        private void CheckCompositions(System.Action OnCurrentLoad)
         {
-            ContentDelivering = true;
+            _contentDelivering = true;
             System.Action OnCurrentEnd = () => 
             {
                 OnCurrentLoad?.Invoke();
-                ContentDelivering = false;
+                _contentDelivering = false;
                 StartCoroutine(CheckContentExistence(NextCompositionsNumber));
             };
-            StartCoroutine(CheckContentExistence(CurrentCompositionNumber, OnCurrentEnd));
+            StartCoroutine(CheckContentExistence(_currentCompositionNumber, OnCurrentEnd));
             
         }
         
-        IEnumerator CheckContentExistence(int Number, System.Action OnEnds = null)
+        private IEnumerator CheckContentExistence(int Number, System.Action OnEnds = null)
         {
-            if (Musics[Number].Clip == null)
+            if (_musics[Number].Clip == null)
             {
-                if (Musics[Number].Request == null)
+                if (_musics[Number].Request == null)
                 {
                     var bundles = Services.DI.Single<Services.Bundles.Agent>();
-                    Musics[Number].Request = bundles.GiveMeContent(GimmePathByNumber(ShuffledNumbers[Number]), this);
+                    _musics[Number].Request = bundles.GiveMeContent(GimmePathByNumber(_shuffledNumbers[Number]), this);
                 }
-                if (Musics[Number].Request == null) yield break;
-                while(Musics[Number].Request != null && !Musics[Number].Request.IsReady) yield return Wait;
-                var unpackRequest = Musics[Number].Request.BundleInMemory.LoadAllAssetsAsync<AudioClip>();
-                while(!unpackRequest.isDone) yield return Wait;
-                Musics[Number].Clip = (AudioClip)unpackRequest.allAssets[0];
+                if (_musics[Number].Request == null) yield break;
+                while(_musics[Number].Request != null && !_musics[Number].Request.IsReady) yield return _wait;
+                var unpackRequest = _musics[Number].Request.BundleInMemory.LoadAllAssetsAsync<AudioClip>();
+                while(!unpackRequest.isDone) yield return _wait;
+                _musics[Number].Clip = (AudioClip)unpackRequest.allAssets[0];
             }
             OnEnds?.Invoke();
         }

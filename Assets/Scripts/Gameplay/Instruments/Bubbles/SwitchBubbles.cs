@@ -5,37 +5,38 @@ namespace Gameplay.Instruments.Bubble
 {
     public partial class Circle : BaseInstrument
     {
-        void RotateBubbleCircle()
+        private Coroutine _multiColorTrajectoryRoutine;
+        
+        private void RotateBubbleCircle()
         {
             LastToFirst();
-            if (CircleRotateAnimation != null)
+            if (_circleRotateAnimation != null)
             {
-                User.StopCoroutine(CircleRotateAnimation);
+                User.StopCoroutine(_circleRotateAnimation);
             }
-            CircleRotateAnimation = User.StartCoroutine(AnimateCircleRotation());
-            UserHelp.ReceiveUserSwitched();
+            _circleRotateAnimation = User.StartCoroutine(AnimateCircleRotation());
+            _userHelp.ReceiveUserSwitched();
             Sounds.Play(Services.Audio.Sounds.SoundType.CircleBubbleSwitch);
         }
         
-        void LastToFirst()
+        private void LastToFirst()
         {
-            var first = bubblesInCircle[bubblesInCircle.Count-1];
-            bubblesInCircle.RemoveAt(bubblesInCircle.Count-1);
-            bubblesInCircle.Insert(0, first);
+            var first = _bubblesInCircle[_bubblesInCircle.Count-1];
+            _bubblesInCircle.RemoveAt(_bubblesInCircle.Count-1);
+            _bubblesInCircle.Insert(0, first);
         }
         
-        IEnumerator AnimateCircleRotation()
+        private IEnumerator AnimateCircleRotation()
         {
             const int Steps = 20;
             
-            var AngleStep = 360 / bubblesInCircle.Count;
-            BubblePack[] Bubbles = new BubblePack[bubblesInCircle.Count];
-            for (int i = 0; i < bubblesInCircle.Count; i++)
+            var AngleStep = 360 / _bubblesInCircle.Count;
+            var Bubbles = new BubblePack[_bubblesInCircle.Count];
+            for (int i = 0; i < _bubblesInCircle.Count; i++)
             {
-                //Bubbles[i] = new BubblePack(bubblesInCircle[i], LocalPosToAngle(bubblesInCircle[i]), i * AngleStep);
-                Bubbles[i] = new BubblePack(bubblesInCircle[i], (i - 1) * AngleStep, i * AngleStep);
+                Bubbles[i] = new BubblePack(_bubblesInCircle[i], (i - 1) * AngleStep, i * AngleStep);
             }
-            StartCoroutine(RecolorTrajectory(bubblesInCircle[1].TrajectoryColor, bubblesInCircle[0].TrajectoryColor, Steps));
+            StartCoroutine(RecolorTrajectory(_bubblesInCircle[1].TrajectoryColor, _bubblesInCircle[0].TrajectoryColor, Steps));
             
             for (int step = 1; step < Steps; step ++)
             {
@@ -48,12 +49,12 @@ namespace Gameplay.Instruments.Bubble
                 yield return Wait;
             }
             PlaceBubblesAndRecolorTrajectory();
-            CircleRotateAnimation = null;
+            _circleRotateAnimation = null;
         }
         
-        IEnumerator RecolorTrajectory(System.Func<Color> Old, System.Func<Color> New, int Steps, bool ActivateAnims = true)
+        private IEnumerator RecolorTrajectory(System.Func<Color> Old, System.Func<Color> New, int Steps, bool ActivateAnims = true)
         {
-            if (MultiColorTrajectoryRoutine != null) StopCoroutine(MultiColorTrajectoryRoutine);
+            if (_multiColorTrajectoryRoutine != null) StopCoroutine(_multiColorTrajectoryRoutine);
             for (int step = 1; step < Steps; step ++)
             {
                 Trajectory.ChangeColor(Color.Lerp(Old.Invoke(), New.Invoke(), step/(float) Steps));
@@ -62,18 +63,16 @@ namespace Gameplay.Instruments.Bubble
             if (ActivateAnims) TryActivateTrajectoryRecolor();
         }
         
-        Coroutine MultiColorTrajectoryRoutine;
-        
         void TryActivateTrajectoryRecolor()
         {
-            if (MultiColorTrajectoryRoutine != null) StopCoroutine(MultiColorTrajectoryRoutine);
-            if (bubblesInCircle[0] is MultiBall ball)
+            if (_multiColorTrajectoryRoutine != null) StopCoroutine(_multiColorTrajectoryRoutine);
+            if (_bubblesInCircle[0] is MultiBall ball)
             {
-                MultiColorTrajectoryRoutine = StartCoroutine(AnimateMultiColorTrajectory(ball));
+                _multiColorTrajectoryRoutine = StartCoroutine(AnimateMultiColorTrajectory(ball));
             }
         }
         
-        IEnumerator AnimateMultiColorTrajectory(MultiBall target)
+        private IEnumerator AnimateMultiColorTrajectory(MultiBall target)
         {
             while(true)
             {
@@ -82,28 +81,14 @@ namespace Gameplay.Instruments.Bubble
             }
         }
         
-        class BubblePack
+        private Vector2 Angle2LocalPos(float Angle)
         {
-            public readonly Gameplay.User.ICircleObject Bubble;
-            public readonly float OldAngle;
-            public readonly float NewAngle;
-            
-            public BubblePack(Gameplay.User.ICircleObject bubble, float oldAngle, float newAngle)
-            {
-                Bubble = bubble;
-                OldAngle = oldAngle;
-                NewAngle = newAngle;
-            }
+            return new Vector2(Mathf.Sin(Angle * Mathf.Deg2Rad), Mathf.Cos(Angle * Mathf.Deg2Rad) - 1) * _rotateRadius;
         }
         
-        Vector2 Angle2LocalPos(float Angle)
+        private float ObjToAngle(Gameplay.User.ICircleObject obj)
         {
-            return new Vector2(Mathf.Sin(Angle * Mathf.Deg2Rad), Mathf.Cos(Angle * Mathf.Deg2Rad) - 1) * RotateRadius;
-        }
-        
-        float ObjToAngle(Gameplay.User.ICircleObject obj)
-        {
-            var Angle = Vector2.Angle(obj.MyTransform.localPosition + Vector3.up * RotateRadius, Vector2.up);
+            var Angle = Vector2.Angle(obj.MyTransform.localPosition + Vector3.up * _rotateRadius, Vector2.up);
             Angle *= Mathf.Sign(obj.MyTransform.localPosition.x);
             Angle = Mathf.Repeat(Angle, 360);
             return Angle;

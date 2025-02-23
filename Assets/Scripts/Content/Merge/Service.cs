@@ -15,14 +15,14 @@ namespace Content.Merge
             Processor = new Processor();
         }
         
-        async void LoadThemes()
+        private async void LoadThemes()
         {
             var LoadRequest = Resources.LoadAsync<ThemesList>("Config/MergeThemes");
             while (LoadRequest.isDone) await Utilities.Wait();
             ThemesConfig = (ThemesList) LoadRequest.asset;
         }
         
-        async void LoadSizes()
+        private async void LoadSizes()
         {
             var LoadRequest = Resources.LoadAsync<SizesList>("Config/MergeSizes");
             while (LoadRequest.isDone) await Utilities.Wait();

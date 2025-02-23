@@ -6,20 +6,20 @@ namespace Gameplay.Instruments
     public class Counts
     {
         public System.Action<Content.Instrument.WorkType> OnFailUseInstrument;
-        Pair[] pairs;
+        private Pair[] _pairs;
         
         public Counts(Content.Instrument.Config config)
         {
-            pairs = new Pair[config.Instruments.Length];
-            for (int i = 0; i < pairs.Length; i++)
+            _pairs = new Pair[config.Instruments.Length];
+            for (int i = 0; i < _pairs.Length; i++)
             {
-                pairs[i] = new Pair(config.Instruments[i]);
+                _pairs[i] = new Pair(config.Instruments[i]);
             }
         }
         
         public Pair GetPair(Content.Instrument.WorkType type)
         {
-            foreach(var pair in pairs)
+            foreach(var pair in _pairs)
             {
                 if (pair.WorkType == type) return pair;
             }
@@ -30,15 +30,16 @@ namespace Gameplay.Instruments
         public class Pair
         {
             public ObsInt Count { get; private set; }
-            Content.Instrument.Config.InstrumentView source;
+            private Content.Instrument.Config.InstrumentView _source;
 
-            public int IncreaseCount => source.IncreaseCount;
-            public Content.Instrument.WorkType WorkType => source.Type;
+            public int IncreaseCount => _source.IncreaseCount;
+            
+            public Content.Instrument.WorkType WorkType => _source.Type;
             
             public Pair(Content.Instrument.Config.InstrumentView source)
             {
+                _source = source;
                 Count = 0;
-                this.source = source;
             }
         }
     }

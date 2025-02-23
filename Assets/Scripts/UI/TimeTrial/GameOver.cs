@@ -1,41 +1,40 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
-using Gameplay.Effects;
 
 namespace UI.Survival
 {
     public class GameOver : MonoBehaviour
     {
-        [SerializeField] Fade fade;
-        [SerializeField] TMPro.TMP_Text LivesCountLabel;
-        [SerializeField] GameObject ReviveParent;
-        [SerializeField] Image CountdownMask;
-        [SerializeField] GameObject SkipCountdownButton;
-        [SerializeField] UI.Strategy.Endgame Final;
         public System.Action OnGiveUp;
-        WaitForEndOfFrame Wait;
-        int WaitStepsCount;
-        bool RevivedSuccessfully;
-        bool CountdownInProcess, WatchAdsInProcess;
-        UI.Strategy.Result Result;
-        Services.Audio.Sounds.Service Sound;
+        [SerializeField] private Fade _fade;
+        [SerializeField] private TMPro.TMP_Text _livesCountLabel;
+        [SerializeField] private GameObject _reviveParent;
+        [SerializeField] private Image _countdownMask;
+        [SerializeField] private GameObject _skipCountdownButton;
+        [SerializeField] private UI.Strategy.Endgame _final;
+        private WaitForEndOfFrame _wait;
+        private int _waitStepsCount;
+        private bool _revivedSuccessfully;
+        private bool _countdownInProcess, _watchAdsInProcess;
+        private UI.Strategy.Result _result;
+        private Services.Audio.Sounds.Service _sound;
         
-        void Start()
+        private void Start()
         {
-            Wait = new WaitForEndOfFrame();
-            WaitStepsCount = Mathf.RoundToInt(1f / Time.fixedDeltaTime);
-            Sound = Services.DI.Single<Services.Audio.Sounds.Service>();
+            _wait = new WaitForEndOfFrame();
+            _waitStepsCount = Mathf.RoundToInt(1f / Time.fixedDeltaTime);
+            _sound = Services.DI.Single<Services.Audio.Sounds.Service>();
         }
         
         public void ProcessEnd(UI.Strategy.Result result, int LivesCount, System.Action OnRevive = null)
         {
-            Result = result;
-            fade.Show();
-            result.OnEnd += () => fade.Hide();
-            result.OnRetry += () => fade.Hide();
-            LivesCountLabel.text = "x" + LivesCount;
-            RevivedSuccessfully = false;
+            _result = result;
+            _fade.Show();
+            result.OnEnd += () => _fade.Hide();
+            result.OnRetry += () => _fade.Hide();
+            _livesCountLabel.text = "x" + LivesCount;
+            _revivedSuccessfully = false;
             if (LivesCount > 0)
             {
                 TurnToCountdown(OnRevive);
@@ -46,77 +45,82 @@ namespace UI.Survival
             }
         }
         
-        void TurnToCountdown(System.Action OnRevive)
+        private void TurnToCountdown(System.Action OnRevive)
         {
-            CountdownMask.fillAmount = 1;
-            WatchAdsInProcess = false;
-            SkipCountdownButton.SetActive(false);
-            var But = CountdownMask.GetComponentInChildren<Button>();
+            _countdownMask.fillAmount = 1;
+            _watchAdsInProcess = false;
+            _skipCountdownButton.SetActive(false);
+            var But = _countdownMask.GetComponentInChildren<Button>();
             But.onClick.RemoveAllListeners();
             But.onClick.AddListener(() => ShowRewarded(OnRevive));
-            ReviveParent.SetActive(true);
+            _reviveParent.SetActive(true);
         }
         
         public async void ShowRewarded(System.Action OnRevive)
         {
-            Sound.Stop(Services.Audio.Sounds.SoundType.Revive_TickTack);
-            WatchAdsInProcess = true;
+            _sound.Stop(Services.Audio.Sounds.SoundType.Revive_TickTack);
+            _watchAdsInProcess = true;
             var Ads = Services.DI.Single<Services.Advertisements.Controller>();
-            RevivedSuccessfully = await Ads.IsRewardAdSuccess();
-            WatchAdsInProcess = false;
-            if (RevivedSuccessfully)
+            _revivedSuccessfully = await Ads.IsRewardAdSuccess();
+            _watchAdsInProcess = false;
+            if (_revivedSuccessfully)
             {
                 SkipCountDown();
-                fade.Hide();
+                _fade.Hide();
                 OnRevive?.Invoke();
             }
             else 
             {
-                Sound.Play(Services.Audio.Sounds.SoundType.Revive_TickTack);
+                _sound.Play(Services.Audio.Sounds.SoundType.Revive_TickTack);
             }
         } 
         
-        public void ProcessAdsCountDown() => StartCoroutine(AnimateCountDown()); 
-        
-        public void SkipCountDown() => CountdownInProcess = false;
-        
-        IEnumerator AnimateCountDown()
+        public void ProcessAdsCountDown()
         {
-            CountdownInProcess = true;
-            for (int i = 0; i < WaitStepsCount; i++)
+            StartCoroutine(AnimateCountDown()); 
+        }
+        
+        public void SkipCountDown()
+        {
+            _countdownInProcess = false;
+        }
+        
+        private IEnumerator AnimateCountDown()
+        {
+            _countdownInProcess = true;
+            for (int i = 0; i < _waitStepsCount; i++)
             {
-                while(WatchAdsInProcess) yield return Wait;
-                if (!CountdownInProcess) break;
-                yield return Wait;
+                while(_watchAdsInProcess) yield return _wait;
+                if (!_countdownInProcess) break;
+                yield return _wait;
             }
-            //yield return WaitSeconds;
-            if (CountdownInProcess)
+            if (_countdownInProcess)
             {
-                Sound.Play(Services.Audio.Sounds.SoundType.Revive_TickTack);
+                _sound.Play(Services.Audio.Sounds.SoundType.Revive_TickTack);
                 for (int i=300; i>0; i--)
                 {
-                    while(WatchAdsInProcess) yield return Wait;
-                    if (!CountdownInProcess) break;
-                    CountdownMask.fillAmount = i/300f;
+                    while(_watchAdsInProcess) yield return _wait;
+                    if (!_countdownInProcess) break;
+                    _countdownMask.fillAmount = i/300f;
                     if (i == 220)
                     {
-                        SkipCountdownButton.SetActive(true);
+                        _skipCountdownButton.SetActive(true);
                     }
-                    yield return Wait;
+                    yield return _wait;
                 }
-                Sound.Stop(Services.Audio.Sounds.SoundType.Revive_TickTack);
-                CountdownMask.fillAmount = 0;
+                _sound.Stop(Services.Audio.Sounds.SoundType.Revive_TickTack);
+                _countdownMask.fillAmount = 0;
             }
-            ReviveParent.GetComponent<Animator>().SetTrigger("Hide");
+            _reviveParent.GetComponent<Animator>().SetTrigger("Hide");
         }
         
         public void TurnToOver()
         {
-            ReviveParent.SetActive(false);
-            if (!RevivedSuccessfully)
+            _reviveParent.SetActive(false);
+            if (!_revivedSuccessfully)
             {
                 OnGiveUp?.Invoke();
-                Final.ShowEndgame(Result);   
+                _final.ShowEndgame(_result);   
             }
         }
     }

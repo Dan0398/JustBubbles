@@ -1,41 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine;
 
 namespace UI.Player.Sessions
 {
     [ExecuteAlways]
     public class HighlightMaskController : MonoBehaviour
     {
-        [SerializeField, Range(0.0f, 1.0f)] float Size, Range;
-        float oldSize, oldRange;
-        Material mat;
-        [SerializeField] bool ClearMat;
+        [SerializeField, Range(0.0f, 1.0f)] private float _size;
+        [SerializeField, Range(0.0f, 1.0f)] private float _range;
+        [SerializeField] private bool _clearMat;
+        private float _oldSize, _oldRange;
+        private Material _mat;
         
-        void OnValidate()
+        private void OnValidate()
         {
-            if (mat == null)
+            if (_mat == null)
             {
-                mat = GetComponent<RawImage>().materialForRendering;
+                _mat = GetComponent<RawImage>().materialForRendering;
             }
-            mat.SetFloat("_USize", Size);
-            mat.SetFloat("_Range", Range);
+            _mat.SetFloat("_USize", _size);
+            _mat.SetFloat("_Range", _range);
         }
         
-        void Update()
+        private void Update()
         {
-            if (oldSize != Size || oldRange != Range)
+            if (_oldSize != _size || _oldRange != _range)
             {
-                oldSize = Size;
-                oldRange = Range;
+                _oldSize = _size;
+                _oldRange = _range;
                 OnValidate();
             }
-            if (ClearMat)
+            if (_clearMat)
             {
-                mat = null;
+                _mat = null;
                 OnValidate();
-                ClearMat = false;
+                _clearMat = false;
             }
         }
     }

@@ -17,7 +17,7 @@ namespace Content
         
         protected override void ReactOnDeselect(int id)
         {
-            AvailableContent[id].gameObject.SetActive(false);
+            AvailableContent[id].SetActive(false);
         }
 
         protected override void SubscribeToUser()

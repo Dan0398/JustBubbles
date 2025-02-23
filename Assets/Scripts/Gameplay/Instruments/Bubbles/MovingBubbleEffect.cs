@@ -5,10 +5,10 @@ namespace Gameplay.Instruments.Bubble
     [System.Serializable]
     public class MovingBubbleEffect
     {
-        [SerializeField] Field.BubbleField Field;
-        [SerializeField] ParticleSystem BubbleParticle;
-        Transform BubbleParticleTransform;
-        TrailRenderer BubbleTrail;
+        [SerializeField] private Field.BubbleField _field;
+        [SerializeField] private ParticleSystem _bubbleParticle;
+        private Transform _bubbleParticleTransform;
+        private TrailRenderer _bubbleTrail;
         
         public void ApplyParticleToMovingBubble(Gameplay.User.ICircleObject Target)
         {
@@ -18,53 +18,50 @@ namespace Gameplay.Instruments.Bubble
             
             void CheckComponents()
             {
-                if (BubbleParticleTransform == null)
+                if (_bubbleParticleTransform == null)
                 {
-                    BubbleParticleTransform = BubbleParticle.transform;
-                    BubbleTrail = BubbleParticle.GetComponent<TrailRenderer>();
+                    _bubbleParticleTransform = _bubbleParticle.transform;
+                    _bubbleTrail = _bubbleParticle.GetComponent<TrailRenderer>();
                 }
-                BubbleTrail.emitting = false;
-                BubbleTrail.Clear();
+                _bubbleTrail.emitting = false;
+                _bubbleTrail.Clear();
             }
             
             void Replace()
             {
-                BubbleParticleTransform.SetParent(Target.MyTransform);
-                BubbleParticleTransform.localPosition = Vector3.zero;
-                BubbleParticleTransform.localScale = Vector3.one;
+                _bubbleParticleTransform.SetParent(Target.MyTransform);
+                _bubbleParticleTransform.localPosition = Vector3.zero;
+                _bubbleParticleTransform.localScale = Vector3.one;
             }
             
             void ApplyEffects()
             {
                 var Color = ColorPicker.GetColorByEnum(Target.MyColor);
                 
-                if (Field != null)
+                if (_field != null)
                 {
-                    var shape = BubbleParticle.shape;
-                    shape.radius = Field.BubbleSize * 0.5f * 1.2f;
-                    BubbleTrail.widthMultiplier = Field.BubbleSize * 0.5f;
+                    var shape = _bubbleParticle.shape;
+                    shape.radius = _field.BubbleSize * 0.5f * 1.2f;
+                    _bubbleTrail.widthMultiplier = _field.BubbleSize * 0.5f;
                 }
                 
                 #pragma warning disable CS0618
-                BubbleParticle.startColor = Color;
+                _bubbleParticle.startColor = Color;
                 #pragma warning restore CS0618
-                BubbleParticle.Play();
+                _bubbleParticle.Play();
                 
                 Color -= Color.black * 0.5f;
-                BubbleTrail.startColor = Color;
+                _bubbleTrail.startColor = Color;
                 Color -= Color.black * 0.5f;
-                BubbleTrail.endColor = Color;
-                BubbleTrail.Clear();
-                BubbleTrail.emitting = true;
+                _bubbleTrail.endColor = Color;
+                _bubbleTrail.Clear();
+                _bubbleTrail.emitting = true;
             }
         }
         
         public void DisableBubbleParticle()
         {
-            BubbleParticle.Stop();
-            //BubbleParticleTransform.SetParent(transform);
-            //BubbleParticleTransform.localScale = Vector3.one;
+            _bubbleParticle.Stop();
         }
-    
     }
 }

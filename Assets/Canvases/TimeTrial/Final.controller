@@ -140,9 +140,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fced18124427fc4c987ed13c6480196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  When: 1
-  Message: ProcessAdsCountDown
-  Direct: 0
+  _when: 1
+  _message: ProcessAdsCountDown
+  _direct: 0
 --- !u!1102 &-2119446394994283674
 AnimatorState:
   serializedVersion: 6
@@ -185,7 +185,7 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: TryRevive
@@ -264,6 +264,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fced18124427fc4c987ed13c6480196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  When: 1
-  Message: TurnToOver
-  Direct: 0
+  _when: 1
+  _message: TurnToOver
+  _direct: 0

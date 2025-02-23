@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,10 +5,9 @@ namespace Gameplay.Field
 {
     public partial class BubbleField: MonoBehaviour, IField
     {
+        private List<Place> _rootChank, _nonRootChank;
         
-        List<Place> RootChank, NonRootChank;
-        
-        void SeekNonConnectedToRoot(List<Place> SameColor = null)
+        private void SeekNonConnectedToRoot(List<Place> SameColor = null)
         {
             PrepareLists();
             ProcessRootChank();
@@ -17,27 +15,27 @@ namespace Gameplay.Field
             
             void PrepareLists()
             {
-                if (NeighborPlaces == null)
+                if (_neighborPlaces == null)
                 {
-                    NeighborPlaces = new Place[6];
-                    HelpPlaces = new Place[6];
-                    ShiftFXPlaces = new Place[RequireToGetAllNeighborPoses(OutlineFXShiftOnAppend)];
+                    _neighborPlaces = new Place[6];
+                    _helpPlaces = new Place[6];
+                    _shiftFXPlaces = new Place[RequireToGetAllNeighborPoses(OutlineFXShiftOnAppend)];
                 }
-                if (RootChank == null)
+                if (_rootChank == null)
                 {
-                    RootChank = new List<Place>(100);
+                    _rootChank = new List<Place>(100);
                 }
                 else 
                 {
-                    RootChank.Clear();
+                    _rootChank.Clear();
                 }
-                if (NonRootChank == null)
+                if (_nonRootChank == null)
                 {
-                    NonRootChank = new List<Place>(50);
+                    _nonRootChank = new List<Place>(50);
                 }
                 else
                 {
-                    NonRootChank.Clear();
+                    _nonRootChank.Clear();
                 }
             }
             
@@ -50,29 +48,29 @@ namespace Gameplay.Field
                 {
                     for (int i = 0; i < BubblesCountPerLine;i++)
                     {
-                        if (Lines[0][i] == null) continue;
+                        if (_lines[0][i] == null) continue;
                         if (InIgnoreList(0, i)) continue;
-                        RootChank.Add(new Place(0,i));
+                        _rootChank.Add(new Place(0,i));
                     }
                 }
                 
                 void GrowRootChunk()
                 {
-                    if (RootChank.Count == 0) return;
+                    if (_rootChank.Count == 0) return;
                     bool FoundNew = true;
-                    for(int i = 0; i < RootChank.Count; i++)
+                    for(int i = 0; i < _rootChank.Count; i++)
                     {
-                        var Count = GetNeighborPlaces(RootChank [i], 1, ref NeighborPlaces);
+                        var Count = GetNeighborPlaces(_rootChank [i], 1, ref _neighborPlaces);
                         for (int k = 0; k < Count; k ++)
                         {
-                            ValidatePlace(ref NeighborPlaces[k]);
-                            if (!NeighborPlaces[k].Valid) continue;
-                            if (!NeighborPlaces[k].Busy) continue;
-                            if (PlaceInIgnoreList(NeighborPlaces[k])) continue;
+                            ValidatePlace(ref _neighborPlaces[k]);
+                            if (!_neighborPlaces[k].Valid) continue;
+                            if (!_neighborPlaces[k].Busy) continue;
+                            if (PlaceInIgnoreList(_neighborPlaces[k])) continue;
                             FoundNew = true;
-                            for (int l = 0; l< RootChank.Count; l++)
+                            for (int l = 0; l< _rootChank.Count; l++)
                             {
-                                if (RootChank[l].Line == NeighborPlaces[k].Line && RootChank[l].Column == NeighborPlaces[k].Column)
+                                if (_rootChank[l].Line == _neighborPlaces[k].Line && _rootChank[l].Column == _neighborPlaces[k].Column)
                                 {
                                     FoundNew = false;
                                     break;
@@ -80,7 +78,7 @@ namespace Gameplay.Field
                             }
                             if (FoundNew)
                             {
-                                RootChank.Add(NeighborPlaces[k]);
+                                _rootChank.Add(_neighborPlaces[k]);
                             }
                         }
                     }
@@ -92,14 +90,14 @@ namespace Gameplay.Field
             void GetNonRootChankActivePlaces()
             {
                 bool NonRoot = true;
-                for (int Line = 1; Line < Lines.Count; Line++)
+                for (int Line = 1; Line < _lines.Count; Line++)
                 {
                     for (int Place = 0; Place < BubblesCountPerLine; Place++)
                     {
-                        if (Lines[Line][Place] == null) continue;
+                        if (_lines[Line][Place] == null) continue;
                         if (InIgnoreList(Line, Place)) continue;
                         NonRoot = true;
-                        foreach(var RootPlace in RootChank)
+                        foreach(var RootPlace in _rootChank)
                         {
                             if (RootPlace.Line == Line && RootPlace.Column == Place)
                             {
@@ -109,7 +107,7 @@ namespace Gameplay.Field
                         }
                         if (NonRoot)
                         {
-                            NonRootChank.Add(new Place(Line, Place));
+                            _nonRootChank.Add(new Place(Line, Place));
                         }
                     }
                 }

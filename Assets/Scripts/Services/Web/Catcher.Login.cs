@@ -1,21 +1,20 @@
 #pragma warning disable CS0618 
 #if UNITY_WEBGL
-using UnityEngine;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace Services.Web
 {
     public partial class Catcher : MonoBehaviour
     {
-        static bool LoginRequested, LoginSuccess;
+        private static bool _loginRequested, _loginSuccess;
         
         public static async UniTask<bool> IsRequestLogInSuccess()
         {
-            LoginSuccess = false;
-            //Services.DI.Single<Services.Pause>().CallHardPause();
+            _loginSuccess = false;
             Application.ExternalCall("TryLogin");
-            while (LoginRequested) await UniTask.Delay(100);
-            return LoginSuccess;
+            while (_loginRequested) await UniTask.Delay(100);
+            return _loginSuccess;
         }
     }
 }

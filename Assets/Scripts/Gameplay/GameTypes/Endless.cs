@@ -13,13 +13,13 @@ namespace Gameplay.GameType
     [System.Serializable]
     public class Endless : BubbleBaseType
     {
-        const int MinimumLines = 7;
-        UI.Endless.EndlessCanvas canvas;
-        float appendLinesTimer;
-        [SerializeField] float RewardRelative;
-        [SerializeField] int FallenToRewardMultiplier;
-        Content.Instrument.Config instrumentsConfig;
-        Instruments.Counts InstrumentsCount;
+        private const int MinimumLines = 7;
+        [SerializeField] private float _rewardRelative;
+        [SerializeField] private int _fallenToRewardMultiplier;
+        private UI.Endless.EndlessCanvas _canvas;
+        private float _appendLinesTimer;
+        private Content.Instrument.Config _instrumentsConfig;
+        private Instruments.Counts _instrumentsCount;
         
         protected override bool IsFieldAspectDynamic => true;
         protected override float UserDistance => 25f;
@@ -27,67 +27,47 @@ namespace Gameplay.GameType
         public Endless(Gameplay.Controller Gameplay, UI.Settings.Settings Settings, InGameParents InGameParts, BubbleField Field, Action User, UI.Endless.EndlessCanvas  canvas) 
                 : base(Gameplay, Settings, InGameParts, Field, User) 
         {
-            appendLinesTimer = 0;
-            RewardRelative = 0;
+            _appendLinesTimer = 0;
+            _rewardRelative = 0;
             #if UNITY_EDITOR
-            FallenToRewardMultiplier = 8;
+            _fallenToRewardMultiplier = 8;
             #else
             FallenToRewardMultiplier = 16;
             #endif
-            this.canvas = canvas;
+            this._canvas = canvas;
             CustomEnterToType();
         }
 
         void CustomEnterToType()
         {
-            field.Difficulty = 0.8f;
-            field.SetColorConfig(4, false);
-            field.ShowViews();
-            field.AppendLinesAndAnimate(MinimumLines + 1, 1f, ProcessUnpause);
+            Field.Difficulty = 0.8f;
+            Field.SetColorConfig(4, false);
+            Field.ShowViews();
+            Field.AppendLinesAndAnimate(MinimumLines + 1, 1f, ProcessUnpause);
             
-            canvas.Show(this);
+            _canvas.Show(this);
             
             GetAndProcessInstruments();
-            //SetupMiddleInterstitial();
             
-            user.StartGameplayAndAnimate(1f);
+            User.StartGameplayAndAnimate(1f);
         }
         
-        async void GetAndProcessInstruments()
+        private async void GetAndProcessInstruments()
         {
             var Service = Services.DI.Single<Content.Instrument.Service>();
             while (Service.Config == null) if (await Utilities.IsWaitEndsFailure()) return;
-            instrumentsConfig = Service.Config;
+            _instrumentsConfig = Service.Config;
             
-            InstrumentsCount = new Instruments.Counts(instrumentsConfig);
-            InstrumentsCount.GetPair(Content.Instrument.WorkType.Bomb).Count.Value = 5;
-            InstrumentsCount.OnFailUseInstrument += ReactOnFailUseInstrument;
-            user.ActivateInstruments(InstrumentsCount);
+            _instrumentsCount = new Instruments.Counts(_instrumentsConfig);
+            _instrumentsCount.GetPair(Content.Instrument.WorkType.Bomb).Count.Value = 5;
+            _instrumentsCount.OnFailUseInstrument += ReactOnFailUseInstrument;
+            User.ActivateInstruments(_instrumentsCount);
         }
         
-        /*
-        void SetupMiddleInterstitial()
-        {
-            #if UNITY_EDITOR
-            ads = new EndlessAds(this, 20f);
-            canvas.BindWithAds(ads);
-            #elif UNITY_WEBGL
-            Services.Web.Catcher.RequestInterstitialDelay(ReceiveTimer);
-            
-            void ReceiveTimer(int Time)
-            {
-                if (Time <= 0) return;
-                ads = new EndlessAds(this, Time);
-                canvas.BindWithAds(ads);
-            }
-            #endif
-        }
-        */
-        
-        void ReactOnFailUseInstrument(Content.Instrument.WorkType type)
+        private void ReactOnFailUseInstrument(Content.Instrument.WorkType type)
         {
             Content.Instrument.Config.InstrumentView Data = null;
-            foreach(var instrument in instrumentsConfig.Instruments)
+            foreach(var instrument in _instrumentsConfig.Instruments)
             {
                 if (instrument.Type == type)
                 {
@@ -95,16 +75,16 @@ namespace Gameplay.GameType
                     break;
                 }
             }
-            var Pair = InstrumentsCount.GetPair(type);
-            canvas.ReactOnFailUseInstrument(Data, OnIncrease);
+            var Pair = _instrumentsCount.GetPair(type);
+            _canvas.ReactOnFailUseInstrument(Data, OnIncrease);
             
             async void OnIncrease()
             {
                 if (await Services.DI.Single<Services.Advertisements.Controller>().IsRewardAdSuccess())
                 {
                     Pair.Count.Value += Data.IncreaseCount;
-                    canvas.HideAdsRequest();
-                    user.PeekInstrument(type);
+                    _canvas.HideAdsRequest();
+                    User.PeekInstrument(type);
                 }
             }
         }
@@ -112,20 +92,19 @@ namespace Gameplay.GameType
         public override void ProcessGameplayUpdate() 
         {
             if (Paused) return;
-            field.TryCheckAspectChange();
-            //ads?.ProcessFixedUpdate();
+            Field.TryCheckAspectChange();
             
-            if (appendLinesTimer <= 0) return;
-            appendLinesTimer -= Time.fixedDeltaTime;
+            if (_appendLinesTimer <= 0) return;
+            _appendLinesTimer -= Time.fixedDeltaTime;
             TryRefreshFieldIfOutOfEdge();
         }
         
-        void TryRefreshFieldIfOutOfEdge()
+        private void TryRefreshFieldIfOutOfEdge()
         {
-            if (!field.IsLowerLineUnderFieldEdge()) return;
+            if (!Field.IsLowerLineUnderFieldEdge()) return;
             ProcessPause();
-            field.FullCleanupAnimated(1f, () =>
-            field.AppendLinesAndAnimate(MinimumLines + 1, 0.5f, ProcessUnpause));
+            Field.FullCleanupAnimated(1f, () =>
+            Field.AppendLinesAndAnimate(MinimumLines + 1, 0.5f, ProcessUnpause));
         }
 
         public override void ReactOnUserBubbleSet(List<Place> PopByUser, List<Place> Fallen, System.Type InstrumentType)
@@ -136,27 +115,27 @@ namespace Gameplay.GameType
             void TryRegisterFallen()
             {
                 if (Fallen.Count == 0) return;
-                RewardRelative += Fallen.Count / (float)(field.BubblesCountPerLine * FallenToRewardMultiplier);
+                _rewardRelative += Fallen.Count / (float)(Field.BubblesCountPerLine * _fallenToRewardMultiplier);
                 System.Func<bool> AfterCircleFill = null;
-                if (RewardRelative >= 1)
+                if (_rewardRelative >= 1)
                 {
                     AfterCircleFill = () =>
                     {
-                        RewardRelative -= 1;
+                        _rewardRelative -= 1;
                         return IsClaimRewardFilled();
                     };
                 }
-                canvas.ShowRewardFill(Mathf.Clamp01(RewardRelative), AfterCircleFill, RewardRelative % 1);
+                _canvas.ShowRewardFill(Mathf.Clamp01(_rewardRelative), AfterCircleFill, _rewardRelative % 1);
             }
             
             void TryAppendLine()
             {
-                var MinimumBubblesCount = field.BubblesCountPerLine * MinimumLines;
-                if (field.BubblesCountOnScene < MinimumBubblesCount)
+                var MinimumBubblesCount = Field.BubblesCountPerLine * MinimumLines;
+                if (Field.BubblesCountOnScene < MinimumBubblesCount)
                 {
-                    int Count = Mathf.CeilToInt((MinimumBubblesCount - field.BubblesCountOnScene) / (float) field.BubblesCountPerLine);
-                    appendLinesTimer = 0.3f * Count;
-                    field.AppendLinesAndAnimate(Count, appendLinesTimer);
+                    int Count = Mathf.CeilToInt((MinimumBubblesCount - Field.BubblesCountOnScene) / (float) Field.BubblesCountPerLine);
+                    _appendLinesTimer = 0.3f * Count;
+                    Field.AppendLinesAndAnimate(Count, _appendLinesTimer);
                 }
                 else 
                 {
@@ -169,15 +148,15 @@ namespace Gameplay.GameType
                 var RewardTypes = System.Enum.GetValues(typeof(Content.Instrument.WorkType));
                 var RewardType = (Content.Instrument.WorkType) RewardTypes.GetValue(Random.Range(1, RewardTypes.Length));
                 Content.Instrument.Config.InstrumentView Shown = null;
-                foreach(var instrument in instrumentsConfig.Instruments)
+                foreach(var instrument in _instrumentsConfig.Instruments)
                 {
                     if (instrument.Type != RewardType) continue;
                     Shown = instrument;
                     break;
                 }
-                canvas.ShowClaimedReward(Shown);
+                _canvas.ShowClaimedReward(Shown);
                 
-                var Pair = InstrumentsCount.GetPair(RewardType);
+                var Pair = _instrumentsCount.GetPair(RewardType);
                 if (Pair == null) return false;
                 Pair.Count.Value += 1;
                 if (Pair.Count.Value <= 9) return false;
@@ -188,18 +167,17 @@ namespace Gameplay.GameType
 
         public override async Task Dispose()
         {
-            InstrumentsCount.OnFailUseInstrument -= ReactOnFailUseInstrument;
+            _instrumentsCount.OnFailUseInstrument -= ReactOnFailUseInstrument;
             ProcessPause();
-            field.HideViews();
-            user.DeactivateInstruments();
-            user.StopGameplayAndAnimate(0.5f);
+            Field.HideViews();
+            User.DeactivateInstruments();
+            User.StopGameplayAndAnimate(0.5f);
             
-            canvas.Dispose();
-            //ads?.Dispose();
-            canvas.Hide();
+            _canvas.Dispose();
+            _canvas.Hide();
             
             var RequireToWait = true;
-            field.FullCleanupAnimated(0.5f, () => RequireToWait = false);
+            Field.FullCleanupAnimated(0.5f, () => RequireToWait = false);
             while(RequireToWait) await Utilities.Wait();
         }
     }

@@ -1,5 +1,5 @@
-using System.Collections;
 using UnityEngine.Networking;
+using System.Collections;
 using Utils.Observables;
 
 namespace Services.Bundles
@@ -7,20 +7,20 @@ namespace Services.Bundles
     class Loader
     {
         public ObsBool IsBusy {get; private set;} = false;
-        Services.CoroutineRunner Runner;
+        private Services.CoroutineRunner _runner;
         
         public Loader(Services.CoroutineRunner Runner)
         {
-            this.Runner = Runner;
+            this._runner = Runner;
         }
         
         public void ProcessTicket(Request Source)
         {
             IsBusy.Value = true;
-            Runner.StartCoroutine(ProcessTicketInternal(Source));
+            _runner.StartCoroutine(ProcessTicketInternal(Source));
         }
         
-        IEnumerator ProcessTicketInternal(Request Source)
+        private IEnumerator ProcessTicketInternal(Request Source)
         {
             var DownloadRequest = UnityWebRequestAssetBundle.GetAssetBundle(Source.FullPathInStreamingAssets);
             yield return DownloadRequest.SendWebRequest();

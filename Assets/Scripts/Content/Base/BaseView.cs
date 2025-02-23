@@ -1,46 +1,24 @@
-using System.Collections;
-using UnityEngine;
 using Utils.Observables;
+using UnityEngine;
 
 namespace Content
 {
     public abstract class BaseView<TContent> : MonoBehaviour
     {
         [HideInInspector] public Observable<TContent> SelectedContent;
-        [SerializeField] Canvas MyView;
-        [SerializeField] BrakelessGames.Localization.TextTMPLocalized InfoOnCenter;
         [SerializeField] protected TContent[] AvailableContent;
+        [SerializeField] private Canvas _myView;
+        [SerializeField] private BrakelessGames.Localization.TextTMPLocalized _infoOnCenter;
         protected int SelectedID, ViewedID;
         protected Data.UserController User;
-        WaitForFixedUpdate Wait;
-        System.Action OnClose;
+        private System.Action _onClose;
         
-        bool SelectedIsOld => SelectedID == ViewedID;
+        private bool SelectedIsOld => SelectedID == ViewedID;
         
-        void Start()
+        private void Start()
         {
             SelectedContent = AvailableContent[0];
             ApplyAvailable();
-            Wait = new WaitForFixedUpdate();
-            //StartCoroutine(ReadOnStartup());
-            //MyView.enabled = false;
-        }
-        
-        IEnumerator ReadOnStartup()
-        {
-            User = Services.DI.Single<Data.UserController>();
-            while(User == null)
-            {
-                yield return Wait;
-                User = Services.DI.Single<Data.UserController>();
-            }
-            while (!User.isDataLoaded) 
-            {
-                yield return Wait;
-            }
-            SubscribeToUser();
-            ApplyAvailable();
-            SelectedContent.Value = AvailableContent[SelectedID];
         }
         
         protected abstract void ApplyAvailable();
@@ -51,10 +29,10 @@ namespace Content
         
         public void GoToSelector(System.Action OnClose)
         {
-            this.OnClose = OnClose;
+            this._onClose = OnClose;
             ViewedID = SelectedID;
             RefreshView();
-            MyView.enabled = true;
+            _myView.enabled = true;
         }
         
         public void SwitchToNext()
@@ -83,9 +61,9 @@ namespace Content
             ReactOnDeselect(Old);
         }
         
-        void RefreshView()
+        private void RefreshView()
         {
-            InfoOnCenter?.SetNewKey(SelectedIsOld? "Cancel" : "WatchAdsAndSelect");
+            if (_infoOnCenter != null) _infoOnCenter.SetNewKey(SelectedIsOld? "Cancel" : "WatchAdsAndSelect");
             SelectedContent.Value = AvailableContent[ViewedID];
         }
         
@@ -104,9 +82,9 @@ namespace Content
                 }
             }
             SelectedContent.Value = AvailableContent[SelectedID];
-            MyView.enabled = false;
-            OnClose?.Invoke();
-            OnClose = null;
+            _myView.enabled = false;
+            _onClose?.Invoke();
+            _onClose = null;
         }
     }
 }

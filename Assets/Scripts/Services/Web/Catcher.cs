@@ -6,7 +6,7 @@ namespace Services.Web
 {
     public partial class Catcher : MonoBehaviour
     {
-        static Catcher Instance;
+        private static Catcher _instance;
 		
         [RuntimeInitializeOnLoadMethod]
         public static void Init()
@@ -14,7 +14,7 @@ namespace Services.Web
             var ObjOnScene = new GameObject();
             ObjOnScene.name = "WebGLCatcher";
             GameObject.DontDestroyOnLoad(ObjOnScene);
-            Instance = ObjOnScene.AddComponent<Web.Catcher>();
+            _instance = ObjOnScene.AddComponent<Web.Catcher>();
         }
     }
 }

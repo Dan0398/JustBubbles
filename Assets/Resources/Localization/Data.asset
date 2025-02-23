@@ -94,6 +94,10 @@ MonoBehaviour:
   - Tool_MultiBall_Name
   - Tool_MultiBall_Descr
   - Deletion
+  - PuzzleAdsContent
+  - Follow
+  - Info
+  - EndlessInterstitial_Formatted
   Languages:
   - Fullname: English
     ISOCode: en
@@ -265,10 +269,20 @@ MonoBehaviour:
     - Multi-Ball
     - Bursts color groups next to 2 balls, regardless of the color.
     - Deletion
+    - "We have developed a new game with exciting puzzles that is perfect for you.\r\n  
+      Features of the new puzzle game:\r\r\n\r\n- Over 500 unique puzzles of varying
+      difficulty, from simple to complex\r\n- Beautiful, detailed images that will
+      be fun to collect\r\n- Regular updates with new puzzles\r\n- Intuitive interface
+      and easy operation\r\n\r\n   If you like to spend time with interesting puzzles,
+      then this game is just for you. Go right now by clicking the button below and
+      join the community of puzzle lovers!"
+    - Follow
+    - Info
+    - Advertising after {0} sec.
   - Fullname: "\u0420\u0443\u0441\u0441\u043A\u0438\u0439"
     ISOCode: ru
     Editor_TabWidth: 234
-    Editor_TabWrapped: 1
+    Editor_TabWrapped: 0
     Values:
     - "\u041F\u0440\u043E\u0441\u0442\u043E \u0428\u0430\u0440\u0438\u043A\u0438"
     - "\u0411\u0435\u0441\u043A\u043E\u043D\u0435\u0447\u043D\u043E"
@@ -482,10 +496,41 @@ MonoBehaviour:
       2 \u0448\u0430\u0440\u043E\u0432 \u0432\u043D\u0435 \u0437\u0430\u0432\u0438\u0441\u0438\u043C\u043E\u0441\u0442\u0438
       \u043E\u0442 \u0446\u0432\u0435\u0442\u0430."
     - "\u0423\u0434\u0430\u043B\u0435\u043D\u0438\u0435"
+    - "   \u041C\u044B \u0440\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u0430\u043B\u0438
+      \u043D\u043E\u0432\u0443\u044E \u0438\u0433\u0440\u0443 \u0441 \u0437\u0430\u0445\u0432\u0430\u0442\u044B\u0432\u0430\u044E\u0449\u0438\u043C\u0438
+      \u043F\u0430\u0437\u043B\u0430\u043C\u0438, \u043A\u043E\u0442\u043E\u0440\u0430\u044F
+      \u0438\u0434\u0435\u0430\u043B\u044C\u043D\u043E \u043F\u043E\u0434\u043E\u0439\u0434\u0435\u0442
+      \u0434\u043B\u044F \u0432\u0430\u0441.\r\n   \u041E\u0441\u043E\u0431\u0435\u043D\u043D\u043E\u0441\u0442\u0438
+      \u043D\u043E\u0432\u043E\u0439 \u0438\u0433\u0440\u044B \u0441 \u043F\u0430\u0437\u043B\u0430\u043C\u0438:\r\n\n\r-
+      \u0411\u043E\u043B\u0435\u0435 500 \u0443\u043D\u0438\u043A\u0430\u043B\u044C\u043D\u044B\u0445
+      \u043F\u0430\u0437\u043B\u043E\u0432 \u0440\u0430\u0437\u043D\u043E\u0439 \u0441\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u0438,
+      \u043E\u0442 \u043F\u0440\u043E\u0441\u0442\u044B\u0445 \u0434\u043E \u0441\u043B\u043E\u0436\u043D\u044B\u0445\r\n-
+      \u041A\u0440\u0430\u0441\u0438\u0432\u044B\u0435, \u0434\u0435\u0442\u0430\u043B\u0438\u0437\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u044B\u0435
+      \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F, \u043A\u043E\u0442\u043E\u0440\u044B\u0435
+      \u0431\u0443\u0434\u0435\u0442 \u0438\u043D\u0442\u0435\u0440\u0435\u0441\u043D\u043E
+      \u0441\u043E\u0431\u0438\u0440\u0430\u0442\u044C\r\n- \u0420\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u044B\u0435
+      \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u044F \u0441 \u043D\u043E\u0432\u044B\u043C\u0438
+      \u043F\u0430\u0437\u043B\u0430\u043C\u0438\r\n- \u0418\u043D\u0442\u0443\u0438\u0442\u0438\u0432\u043D\u043E
+      \u043F\u043E\u043D\u044F\u0442\u043D\u044B\u0439 \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441
+      \u0438 \u043F\u0440\u043E\u0441\u0442\u043E\u0435 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435\r\n\r\n  
+      \u0415\u0441\u043B\u0438 \u0432\u044B \u043B\u044E\u0431\u0438\u0442\u0435
+      \u043F\u0440\u043E\u0432\u043E\u0434\u0438\u0442\u044C \u0432\u0440\u0435\u043C\u044F
+      \u0437\u0430 \u0438\u043D\u0442\u0435\u0440\u0435\u0441\u043D\u044B\u043C\u0438
+      \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0430\u043C\u0438,
+      \u0442\u043E \u044D\u0442\u0430 \u0438\u0433\u0440\u0430 \u0442\u043E\u0447\u043D\u043E
+      \u0434\u043B\u044F \u0432\u0430\u0441. \u041F\u0435\u0440\u0435\u0445\u043E\u0434\u0438\u0442\u0435
+      \u043F\u0440\u044F\u043C\u043E \u0441\u0435\u0439\u0447\u0430\u0441, \u043D\u0430\u0436\u0430\u0432
+      \u043A\u043D\u043E\u043F\u043A\u0443 \u043D\u0438\u0436\u0435, \u0438 \u043F\u0440\u0438\u0441\u043E\u0435\u0434\u0438\u043D\u044F\u0439\u0442\u0435\u0441\u044C
+      \u043A \u0441\u043E\u043E\u0431\u0449\u0435\u0441\u0442\u0432\u0443 \u043B\u044E\u0431\u0438\u0442\u0435\u043B\u0435\u0439
+      \u043F\u0430\u0437\u043B\u043E\u0432! "
+    - "\u041F\u0435\u0440\u0435\u0439\u0442\u0438"
+    - "\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F"
+    - "\u0420\u0435\u043A\u043B\u0430\u043C\u0430 \u0447\u0435\u0440\u0435\u0437
+      {0} \u0441\u0435\u043A."
   - Fullname: "T\xFCrk"
     ISOCode: tr
     Editor_TabWidth: 218
-    Editor_TabWrapped: 1
+    Editor_TabWrapped: 0
     Values:
     - Sadece Toplar
     - Sonsuz
@@ -611,6 +656,10 @@ MonoBehaviour:
     - "\xC7oklu Top"
     - "Renk ne olursa olsun, 2 topun yan\u0131ndaki renk gruplar\u0131n\u0131 patlat\u0131r."
     - Silme
+    - 
+    - 
+    - 
+    - 
   - Fullname: "Espa\xF1ol"
     ISOCode: es
     Editor_TabWidth: 231
@@ -740,6 +789,10 @@ MonoBehaviour:
     - Multibola
     - Explota grupos de colores junto a 2 bolas, independientemente del color.
     - "Supresi\xF3n"
+    - 
+    - 
+    - 
+    - 
   - Fullname: Italiano
     ISOCode: it
     Editor_TabWidth: 342
@@ -876,6 +929,10 @@ MonoBehaviour:
     - Multipalla
     - Fa scoppiare gruppi di colori accanto a 2 palline, indipendentemente dal colore.
     - Cancellazione
+    - 
+    - 
+    - 
+    - 
   - Fullname: Deutsch
     ISOCode: de
     Editor_TabWidth: 232
@@ -1005,6 +1062,10 @@ MonoBehaviour:
     - Multiball
     - "Springt Farbgruppen neben 2 B\xE4llen auf, unabh\xE4ngig von der Farbe."
     - Streichung
+    - 
+    - 
+    - 
+    - 
   - Fullname: "Portugu\xEAs"
     ISOCode: pt
     Editor_TabWidth: 234.20001
@@ -1134,6 +1195,10 @@ MonoBehaviour:
     - Multi-bola
     - "Explode grupos de cores pr\xF3ximos a 2 bolas, independentemente da cor."
     - "Elimina\xE7\xE3o"
+    - 
+    - 
+    - 
+    - 
   - Fullname: "Fran\xE7ais"
     ISOCode: fr
     Editor_TabWidth: 255.40002
@@ -1264,3 +1329,7 @@ MonoBehaviour:
     - "\xC9clate les groupes de couleurs \xE0 c\xF4t\xE9 de 2 boules, quelle que
       soit la couleur."
     - Effacement
+    - 
+    - 
+    - 
+    - 

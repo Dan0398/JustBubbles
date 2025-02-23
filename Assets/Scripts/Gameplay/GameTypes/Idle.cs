@@ -3,9 +3,6 @@
 #else
     using Task = System.Threading.Tasks.Task;
 #endif
-using System.Collections.Generic;
-using Gameplay.Field;
-using Gameplay.User;
 using UnityEngine;
 
 namespace Gameplay.GameType
@@ -13,7 +10,7 @@ namespace Gameplay.GameType
     [System.Serializable]
     public class Idle : BaseType
     {
-        [SerializeField] UI.Menu.MainMenu MenuCanvas;
+        [SerializeField] private UI.Menu.MainMenu _menuCanvas;
 
         protected override bool GoToMenuAvailable => false;
         protected override bool IsFieldAspectDynamic => true;
@@ -21,14 +18,14 @@ namespace Gameplay.GameType
         public Idle(Gameplay.Controller Gameplay, UI.Settings.Settings Settings, InGameParents InGameParts, UI.Menu.MainMenu MenuCanvas) 
                 : base(Gameplay, null, Settings, InGameParts)
         {
-            this.MenuCanvas = MenuCanvas;
+            this._menuCanvas = MenuCanvas;
             CustomEnterToType();
         }
 
-        void CustomEnterToType()
+        private void CustomEnterToType()
         {
-            MenuCanvas.OnCallPause = CallSettings;
-            MenuCanvas.Show();
+            _menuCanvas.OnCallPause = CallSettings;
+            _menuCanvas.Show();
         }
 
         public override void ProcessGameplayUpdate() { }

@@ -6,32 +6,31 @@ namespace Gameplay.Effects
     [System.Serializable]
     public class Sounds
     {
-        bool serviceRequested;
-        Service SoundService;
-        float popPitch = 1;
+        private Service _soundService;
+        private bool _serviceRequested;
+        private float _popPitch = 1;
         
         public void PlayBubblePop()
         {
-            //BubblePop.time = 0;
-            popPitch = Mathf.Clamp(popPitch + Random.Range(-0.05f, 0.05f), 0.9f,1.3f);
+            _popPitch = Mathf.Clamp(_popPitch + Random.Range(-0.05f, 0.05f), 0.9f,1.3f);
             RequestService();
-            if (SoundService == null) return;
-            SoundService.Play(SoundType.BubblePop, popPitch);
+            if (_soundService == null) return;
+            _soundService.Play(SoundType.BubblePop, _popPitch);
         }
         
         public void PlayBubbleSet()
         {
             RequestService();
-            if (SoundService == null) return;
-            SoundService.Play(SoundType.BubbleSet);
+            if (_soundService == null) return;
+            _soundService.Play(SoundType.BubbleSet);
         }
         
-        void RequestService()
+        private void RequestService()
         {
-            if (!serviceRequested)
+            if (!_serviceRequested)
             {
-                SoundService = Services.DI.Single<Service>();
-                serviceRequested = true;
+                _soundService = Services.DI.Single<Service>();
+                _serviceRequested = true;
             }
         }
     }

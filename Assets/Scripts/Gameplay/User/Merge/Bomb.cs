@@ -7,29 +7,29 @@ namespace Gameplay.User
     {
         [field:SerializeField] public float PhysicalSize   { get; private set; }
         [field:SerializeField] public float ExplodeRadius  { get; private set; }
-        Rigidbody2D myRigid;
-        System.Action<Vector3> reactor;
+        private Rigidbody2D _myRigid;
+        private System.Action<Vector3> _reactor;
         
-        internal void Drop(Vector3 fallSpeed, System.Action<Vector3> reactOnDrop)
+        public void Drop(Vector3 fallSpeed, System.Action<Vector3> reactOnDrop)
         {
-            reactor = reactOnDrop;
-            myRigid.bodyType = RigidbodyType2D.Dynamic;
-            myRigid.velocity = fallSpeed;
+            _reactor = reactOnDrop;
+            _myRigid.bodyType = RigidbodyType2D.Dynamic;
+            _myRigid.velocity = fallSpeed;
         }
 
-        internal void WakeUpAndFreeze()
+        public void WakeUpAndFreeze()
         {
             gameObject.SetActive(true);
-            myRigid ??= GetComponent<Rigidbody2D>();
-            myRigid.bodyType = RigidbodyType2D.Kinematic;
+            if (_myRigid == null) _myRigid = GetComponent<Rigidbody2D>();
+            _myRigid.bodyType = RigidbodyType2D.Kinematic;
         }
         
-        void OnCollisionEnter2D(Collision2D col)
+        private void OnCollisionEnter2D(Collision2D col)
         {
-            if (reactor == null) return;
-            reactor.Invoke(transform.position);
+            if (_reactor == null) return;
+            _reactor.Invoke(transform.position);
             gameObject.SetActive(false);
-            reactor = null;
+            _reactor = null;
         }
     }
 }

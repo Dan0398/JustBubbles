@@ -1,33 +1,34 @@
 using Gameplay.Instruments;
+using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
-using System.Collections;
 
 namespace UI.InGame
 {
     [System.Serializable]
     public class Icon
     {
-        [SerializeField] string Name;
+        [SerializeField] private string _name;
         [field:SerializeField] public Content.Instrument.WorkType Type { get; private set; }
-        [SerializeField] Image Shown;
-        [SerializeField] AspectRatioFitter target;
-        [SerializeField] TMPro.TMP_Text UseCount;
-        [SerializeField] InstrumentPlace horizontal, vertical;
-        WaitForFixedUpdate Wait;
-        bool isUseHorizontal;
+        [SerializeField] private Image _shown;
+        [SerializeField] private AspectRatioFitter _target;
+        [SerializeField] private TMPro.TMP_Text _useCount;
+        [SerializeField] private InstrumentPlace _horizontal;
+        [SerializeField] private InstrumentPlace _vertical;
+        private WaitForFixedUpdate _wait;
+        private bool _isUseHorizontal;
         
         public void ApplyFieldStat(bool isHorizontal)
         {
-            if (isUseHorizontal == isHorizontal) return;
-            isUseHorizontal = isHorizontal;
+            if (_isUseHorizontal == isHorizontal) return;
+            _isUseHorizontal = isHorizontal;
             if (isHorizontal)
             {
-                horizontal.Apply(target);
+                _horizontal.Apply(_target);
             }
             else 
             {
-                vertical.Apply(target);
+                _vertical.Apply(_target);
             }
         }
         
@@ -36,12 +37,12 @@ namespace UI.InGame
             foreach(var item in config.Instruments)
             {
                 if (item.Type != Type) continue;
-                Shown.sprite = item.Sprite;
+                _shown.sprite = item.Sprite;
                 return;
             }
         }
 
-        internal System.Action BindWithCount(Counts.Pair pair)
+        public System.Action BindWithCount(Counts.Pair pair)
         {
             if (pair == null) return null; 
             else if (pair.Count == null)
@@ -50,7 +51,7 @@ namespace UI.InGame
             }
             System.Action Refresh = () => 
             {
-                UseCount.text = pair.Count.Value.ToString();
+                _useCount.text = pair.Count.Value.ToString();
             };
             Refresh.Invoke();
             pair.Count.Changed += Refresh;
@@ -63,21 +64,21 @@ namespace UI.InGame
             Coroutines.StartCoroutine(AnimateIconColor(Duration));
         }
         
-        IEnumerator MoveIconHorizontal(float Duration = 1f)
+        private IEnumerator MoveIconHorizontal(float Duration = 1f)
         {
             var Steps = Mathf.RoundToInt(Duration / Time.fixedDeltaTime);
-            var Rect = Shown.rectTransform;
+            var Rect = _shown.rectTransform;
             for (int i = 1; i <= Steps; i++)
             {
                 float Shift = Mathf.Sin(i/(float)Steps * 1440 * Mathf.Deg2Rad) * 0.1f;
                 Rect.anchorMin = Vector2.right * Shift;
                 Rect.anchorMax = new Vector2(1 + Shift, 1);
-                yield return Wait;
+                yield return _wait;
             }
             
         }
         
-        IEnumerator AnimateIconColor(float Duration = 1f)
+        private IEnumerator AnimateIconColor(float Duration = 1f)
         {
             var Steps = Mathf.RoundToInt(Duration / Time.fixedDeltaTime);
             var StartInd = Steps / 4;
@@ -86,13 +87,13 @@ namespace UI.InGame
             {
                         if (i <= StartInd)
                 {
-                    Shown.color = Color.Lerp(Color.white, Color.red, i / (float)StartInd);
+                    _shown.color = Color.Lerp(Color.white, Color.red, i / (float)StartInd);
                 }
                 else    if (i >= EndInd)
                 {
-                    Shown.color = Color.Lerp(Color.white, Color.red, 1 - i / (float)EndInd);
+                    _shown.color = Color.Lerp(Color.white, Color.red, 1 - i / (float)EndInd);
                 }
-                yield return Wait;
+                yield return _wait;
             }
         }
     }

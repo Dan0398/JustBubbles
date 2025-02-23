@@ -1,12 +1,13 @@
-using System.Collections;
+using BubbleColor = Gameplay.Bubble.BubbleColor;
 using System.Collections.Generic;
 using UnityEngine;
-using BubbleColor = Gameplay.Bubble.BubbleColor;
 
 namespace Gameplay
 {
     public static class ColorPicker
     {
+        private static BubbleColor _oldColor = BubbleColor.Red;
+        
         public static Color GetColorByEnum(BubbleColor RequiredColor)
         {
                  if (RequiredColor == BubbleColor.Red)      return Color.red;
@@ -24,19 +25,10 @@ namespace Gameplay
             {
                 if (Random.Range(0.0f, 1.0f) >= RandomizeFactor)
                 {
-                    return OldColor;
+                    return _oldColor;
                 }
             }
             return (BubbleColor) Random.Range(0, MaxID);
-            /*
-            BubbleColor newColor = OldColor;
-            while (newColor == OldColor)
-            {
-                newColor = (BubbleColor) Random.Range(0, MaxID);
-            }
-            OldColor = newColor;
-            return OldColor;
-            */
         }
         
         public static BubbleColor GetRandomColor(List<BubbleColor> Available, float RandomizeFactor = 1)
@@ -46,28 +38,25 @@ namespace Gameplay
             {
                 throw new System.Exception($"Available colors count is {Available.Count}. Require more");
             }
-            if (Available.Contains(OldColor) && RandomizeFactor<1)
+            if (Available.Contains(_oldColor) && RandomizeFactor<1)
             {
                 if (Random.Range(0.0f, 1.0f) >= RandomizeFactor)
                 {
-                    return OldColor;
+                    return _oldColor;
                 }
             }
-            //return Available[Random.Range(0, Available.Count)];// (BubbleColor) Random.Range(0, MaxID);
-            BubbleColor newColor = OldColor;
+            BubbleColor newColor = _oldColor;
             for (int i = 0; i < 2; i++)
             {
-                if (newColor != OldColor) break;
-                if (newColor == OldColor || !Available.Contains(newColor))
+                if (newColor != _oldColor) break;
+                if (newColor == _oldColor || !Available.Contains(newColor))
                 {
-                    newColor = Available[Random.Range(0, Available.Count)];// (BubbleColor) Random.Range(0, MaxID);
+                    newColor = Available[Random.Range(0, Available.Count)];
                 }
             }
-            OldColor = newColor;
-            return OldColor;
+            _oldColor = newColor;
+            return _oldColor;
         }
-        
-        static BubbleColor OldColor = BubbleColor.Red;
         
         public static List<BubbleColor> GiveColorsByCount(int Count)
         {

@@ -13,31 +13,38 @@ namespace Services.Advertisements
     {   
         public ObsInt BannerActualShift { get; private set; } = 0;
         public readonly Timed Timed;
-        EnvFreezer Freezer;
-        AdShell AdSystem;
+        private EnvFreezer _freezer;
+        private AdShell _adSystem;
         
         public Controller()
         {
-            Freezer = new EnvFreezer();
+            _freezer = new EnvFreezer();
             Timed = new();
             CreateAdSystem();
         }
         
-        public void ShowBanner() => AdSystem.ShowBanner();
-        public void HideBanner() => AdSystem.HideBanner();
+        public void ShowBanner()
+        {
+            _adSystem.ShowBanner();
+        }
+        
+        public void HideBanner()
+        {
+            _adSystem.HideBanner();
+        }
         
         public async Task ShowInterstitial() 
         {
-            Freezer.RememberAndFreezeEnvironment();
-            await AdSystem.ShowInterstitial();
-            Freezer.RestoreEnvironment();
+            _freezer.RememberAndFreezeEnvironment();
+            await _adSystem.ShowInterstitial();
+            _freezer.RestoreEnvironment();
         }
         
         public async TaskBool IsRewardAdSuccess() 
         { 
-            Freezer.RememberAndFreezeEnvironment();
-            var Result = await AdSystem.IsRewardedAdSuccess();
-            Freezer.RestoreEnvironment();
+            _freezer.RememberAndFreezeEnvironment();
+            var Result = await _adSystem.IsRewardedAdSuccess();
+            _freezer.RestoreEnvironment();
             return Result;
         }
     }

@@ -4,7 +4,7 @@ namespace Gameplay.Field
 {
     public partial class BubbleField: MonoBehaviour, IField
     {
-        int GetNeighborPlaces(Place Center, int Outline, ref Place[] TargetArray)
+        private int GetNeighborPlaces(Place Center, int Outline, ref Place[] TargetArray)
         {
             return GetNeighborPlaces(Center, Outline, ref TargetArray, 0);
             
@@ -120,11 +120,11 @@ namespace Gameplay.Field
             }
         }
         
-        int RequireToGetAllNeighborPoses(int Outline)
+        private int RequireToGetAllNeighborPoses(int Outline)
         {
             return Factorial(6, Outline);
-            
-            int Factorial(int Target ,int Outline)
+
+            static int Factorial(int Target ,int Outline)
             {
                 if (Outline > 1) return Target * Outline + Factorial(Target, Outline-1);
                 return Target*Outline;

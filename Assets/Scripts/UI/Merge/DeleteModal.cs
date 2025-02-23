@@ -4,23 +4,25 @@ using UnityEngine;
 
 public class DeleteModal : MonoBehaviour
 {
-    [SerializeField] TextTMPLocalized Description;
-    [SerializeField] RectTransform WindowRect;
-    [SerializeField] float WindowYMin, WindowYMax;
-    [SerializeField] RectTransform HeaderRect;
-    [SerializeField] float HeaderYMin, HeaderYMax;
-    [SerializeField] CanvasGroup Fader;
-    System.Action OnDelete;
-    WaitForFixedUpdate Wait;
+    [SerializeField] private TextTMPLocalized _description;
+    [SerializeField] private RectTransform _windowRect;
+    [SerializeField] private float _windowYMin;
+    [SerializeField] private float _windowYMax;
+    [SerializeField] private RectTransform _headerRect;
+    [SerializeField] private float _headerYMin;
+    [SerializeField] private float _headerYMax;
+    [SerializeField] private CanvasGroup _fader;
+    private System.Action _onDelete;
+    private WaitForFixedUpdate _wait;
     
     public void Delete()
     {
-        OnDelete.Invoke();
-        OnDelete = null;
+        _onDelete.Invoke();
+        _onDelete = null;
         StartCoroutine(ReturnDelayed());
     }
     
-    IEnumerator ReturnDelayed()
+    private IEnumerator ReturnDelayed()
     {
         yield return new WaitForSeconds(.3f);
         Return();
@@ -33,26 +35,26 @@ public class DeleteModal : MonoBehaviour
     
     public void ShowWindow(int Number, System.Action onDelete)
     {
-        Description.SetNewKeyFormatted("DeleteRequest_Formatted", new string[]{ Number.ToString() });
-        OnDelete = onDelete;
+        _description.SetNewKeyFormatted("DeleteRequest_Formatted", new string[]{ Number.ToString() });
+        _onDelete = onDelete;
         gameObject.SetActive(true);
         StartCoroutine(AnimateWindow());
     }
     
-    IEnumerator AnimateWindow(bool inverted = false, System.Action OnEnd = null)
+    private IEnumerator AnimateWindow(bool inverted = false, System.Action OnEnd = null)
     {
-        Wait ??= new();
+        _wait ??= new();
         for (int i = 1; i <= 25; i++)
         {
             float Lerp = EasingFunction.EaseOutSine(0,1, i/25f);
             if (inverted) Lerp = 1 - Lerp;
-            Fader.alpha = Lerp;
+            _fader.alpha = Lerp;
             float Outstand = (1 - Lerp) * .1f;
-            WindowRect.anchorMin = new Vector2(.5f, WindowYMin - Outstand);
-            WindowRect.anchorMax = new Vector2(.5f, WindowYMax - Outstand);
-            HeaderRect.anchorMin = new Vector2(.5f, HeaderYMin - Outstand);
-            HeaderRect.anchorMax = new Vector2(.5f, HeaderYMax - Outstand);
-            yield return Wait;
+            _windowRect.anchorMin = new Vector2(.5f, _windowYMin - Outstand);
+            _windowRect.anchorMax = new Vector2(.5f, _windowYMax - Outstand);
+            _headerRect.anchorMin = new Vector2(.5f, _headerYMin - Outstand);
+            _headerRect.anchorMax = new Vector2(.5f, _headerYMax - Outstand);
+            yield return _wait;
         }
         OnEnd?.Invoke();
     }

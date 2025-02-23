@@ -62,10 +62,4 @@ Q: Why is the project uploaded in a single commit?
 >
 >When I was first learning Git, I broke a couple of my projects midway through the development cycle. At that time, I decided to develop projects without Git, which seemed quite acceptable: I was developing alone and maintained backups on an external hard drive for safety.
 >
->With work experience came the need to interact with colleagues. Now I use Git (or any other VCS) comfortably, try to create branches for features, and resolve merge conflicts. 
-
-Q: I noticed that you don't like to write private in your code.
->A: Yes, I prefer to write like this in my own projects. But I want to emphasize that coding style is not crucial for me, I can easily adapt to the team's standards. 
-
-Q: There are sections with commented-out code. The code is not always written neatly.
->A: This is part of the charm of this project. I'm showing it exactly as it was developed for the market. I sincerely believe that this is more or less normal for projects at release. However, I'm not averse to striving for cleanliness. 
+>With work experience came the need to interact with colleagues. Now I use Git (or any other VCS) comfortably, try to create branches for features, and resolve merge conflicts.

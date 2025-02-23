@@ -4,17 +4,17 @@ namespace Services
 {
     public class CoroutineRunner : MonoBehaviour, IService
     {
-        static CoroutineRunner Instance;
+        private static CoroutineRunner _instance;
         
         public static CoroutineRunner CreateCoroutineRunner()
         {
-            if (Instance == null)
+            if (_instance == null)
             {
                 var OnScene = new GameObject("Coroutine Runner");
                 DontDestroyOnLoad(OnScene);
-                Instance = OnScene.AddComponent<CoroutineRunner>();
+                _instance = OnScene.AddComponent<CoroutineRunner>();
             }
-            return Instance;
+            return _instance;
         }
     }
 }

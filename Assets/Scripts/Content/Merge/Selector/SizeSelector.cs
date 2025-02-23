@@ -2,31 +2,31 @@ namespace Content.Merge.Selector
 {
     public class SizeSelector
     {
-        SizesList config;
-        System.Action<Gameplay.Merge.Barrier.SizeType> onSelect;
-        int selected;
+        private System.Action<Gameplay.Merge.SizeType> _onSelect;
+        private SizesList _config;
+        private int _selected;
         
-        public SizesList.Size Selected => config.Orientations[selected]; 
+        public SizesList.Size Selected => _config.Orientations[_selected]; 
         
-        public SizeSelector(SizesList cfg, System.Action<Gameplay.Merge.Barrier.SizeType> OnSelect)
+        public SizeSelector(SizesList cfg, System.Action<Gameplay.Merge.SizeType> OnSelect)
         {
-            selected = 0;
-            config = cfg;
-            onSelect = OnSelect;
+            _selected = 0;
+            _config = cfg;
+            _onSelect = OnSelect;
         }
         
         public void GoToNext()
         {
-            selected ++;
-            if (selected == config.Orientations.Length) selected = 0;
+            _selected ++;
+            if (_selected == _config.Orientations.Length) _selected = 0;
         }
         
         public void GoToPrev()
         {
-            selected --;
-            if (selected < 0) selected = config.Orientations.Length - 1;
+            _selected --;
+            if (_selected < 0) _selected = _config.Orientations.Length - 1;
         }
         
-        public void Select() => onSelect.Invoke(Selected.Data);
+        public void Select() => _onSelect.Invoke(Selected.Data);
     }
 }

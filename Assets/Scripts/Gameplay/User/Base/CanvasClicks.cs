@@ -6,10 +6,10 @@ namespace Gameplay.User
 {
     public abstract partial class BaseUser<TField> : MonoBehaviour, IPausableUser where TField:IField
     {
-        [SerializeField] EventSystem Events;
-        [SerializeField] UnityEngine.UI.GraphicRaycaster[] CanvasesForIgnore;
-        List<RaycastResult> CanvasResults;
-        PointerEventData m_PointerEventData;
+        [SerializeField] private EventSystem _events;
+        [SerializeField] private UnityEngine.UI.GraphicRaycaster[] _canvasesForIgnore;
+        private List<RaycastResult> _canvasResults;
+        private PointerEventData _pointerEventData;
         
         public bool IsClickedInGameField()
         {
@@ -20,7 +20,7 @@ namespace Gameplay.User
             
             bool IsClickedToCanvas()
             {
-                foreach(var Canvas in CanvasesForIgnore)
+                foreach(var Canvas in _canvasesForIgnore)
                 {
                     if (!Canvas.enabled) continue;
                     if (!Canvas.gameObject.activeInHierarchy) continue;
@@ -31,14 +31,14 @@ namespace Gameplay.User
             
             bool isClickedToCanvas(UnityEngine.UI.GraphicRaycaster Target)
             {
-                m_PointerEventData = new PointerEventData(Events)
+                _pointerEventData = new PointerEventData(_events)
                 {
                     position = MouseScreenPos
                 };
-                CanvasResults ??= new List<RaycastResult>();
-                CanvasResults.Clear();
-                Target.Raycast(m_PointerEventData, CanvasResults);
-                return CanvasResults.Count > 0;
+                _canvasResults ??= new List<RaycastResult>();
+                _canvasResults.Clear();
+                Target.Raycast(_pointerEventData, _canvasResults);
+                return _canvasResults.Count > 0;
             }
         }
     }

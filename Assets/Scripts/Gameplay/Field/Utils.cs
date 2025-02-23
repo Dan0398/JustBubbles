@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Gameplay.Field
@@ -7,9 +6,9 @@ namespace Gameplay.Field
     {
         public int BubblesCountOnScene => ColorStats.FullCount.Value;
         
-        public bool IsPlaceOnTopEmpty => Lines[0].OnScene.position.y <  StartPoint.y;//(StartPoint.y - FieldSize.y * UpperRelativePlace);
+        public bool IsPlaceOnTopEmpty => _lines[0].OnScene.position.y <  _startPoint.y;
         
-        public int LineCount => Lines.Count;
+        public int LineCount => _lines.Count;
         
         public void TryFilterColor(ref Bubble bubble)
         {
@@ -20,7 +19,7 @@ namespace Gameplay.Field
         
         public Bubble GiveAndPrepareBubble()
         {
-            var BubbleObj = Pool.GiveItem();
+            var BubbleObj = _pool.GiveItem();
             BubbleObj.SetSize(BubbleSize);
             BubbleObj.ActivateCollisions();
             BubbleObj.MyRigid.isKinematic = true;
@@ -31,31 +30,30 @@ namespace Gameplay.Field
         
         public bool IsPositionInsideField(Vector2 mouseWorldPos)
         {
-            Vector2 Min = new Vector2(transform.position.x - FieldSize.x*0.5f, transform.position.y + FieldSize.y * 0.5f - FieldUsableSpace);
-            Vector2 Max = (Vector2)transform.position + FieldSize * 0.5f;
+            Vector2 Min = new(transform.position.x - _fieldSize.x*0.5f, transform.position.y + _fieldSize.y * 0.5f - _fieldUsableSpace);
+            Vector2 Max = (Vector2)transform.position + _fieldSize * 0.5f;
             return  mouseWorldPos.x >= Min.x && 
                     mouseWorldPos.y >= Min.y && 
                     mouseWorldPos.x <= Max.x && 
                     mouseWorldPos.y <= Max.y;
         }
         
-        public User.CollisionType TryResponseCollision(Collider2D col) => barriers.TryResponseCollision(col);
+        public User.CollisionType TryResponseCollision(Collider2D col) => _barriers.TryResponseCollision(col);
         
         public float GetDistanceToFieldEdge()
         {
-            if (Lines.Count == 0) return 1;
-            var Result = Lines[Lines.Count-1].OnScene.position.y - StartPoint.y - FieldSize.y * UpperRelativePlace + FieldUsableSpace - BubbleSize;
-            //Result /= LineHeight;
+            if (_lines.Count == 0) return 1;
+            var Result = _lines[_lines.Count-1].OnScene.position.y - _startPoint.y - _fieldSize.y * UpperRelativePlace + _fieldUsableSpace - BubbleSize;
             return Result;
         }
         
-        public float GetRelativeDistanceToFieldEdge() => GetDistanceToFieldEdge()/ (FieldUsableSpace - FieldSize.y * UpperRelativePlace);
+        public float GetRelativeDistanceToFieldEdge() => GetDistanceToFieldEdge()/ (_fieldUsableSpace - _fieldSize.y * UpperRelativePlace);
         
         public bool IsLowerLineUnderFieldEdge() => GetDistanceToFieldEdge() < 0;
         
         public void SetColorConfig(int Count, bool RequireFilter)
         {
-            if (!Started) Start();
+            if (!_started) Start();
             ColorStats.RequireFilter = RequireFilter;
             ColorStats.AvailableColors = ColorPicker.GiveColorsByCount(Count);
         }

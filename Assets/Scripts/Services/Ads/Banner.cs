@@ -1,48 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace Services.Advertisements
 {
     public class Banner : Services.IService
     {
-        bool Paused 
-        {
-            get => paused;
-            set  { paused = value; RefreshView();}
-        }
-        bool IsMapTypeSuitable
-        {
-            get => isMapTypeSuitable;
-            set {isMapTypeSuitable = value; RefreshView();}
-        }
-        bool bannerShown, paused, isMapTypeSuitable;
+        private bool _bannerShown, _paused, _isMapTypeSuitable;
         
-        /*
-        public Banner()
+        private bool Paused 
         {
-            SubscribeToPause();
+            get => _paused;
+            set 
+            {
+                _paused = value;
+                RefreshView();
+            }
         }
-        
-        void SubscribeToPause()
+        private bool IsMapTypeSuitable
         {
-            var Pauser = Services.DI.Single<Services.Pause>();
-            System.Action<Services.Pause.PauseType> ReactToPause = (s) => Paused = s != Services.Pause.PauseType.None;
-            ReactToPause.Invoke(Pauser.CurrentPauseType);
-            Pauser.OnPauseChanges += ReactToPause;
+            get => _isMapTypeSuitable;
+            set
+            {
+                _isMapTypeSuitable = value;
+                RefreshView();
+            }
         }
-        */
         
         public void ApplyAvailableStatus(bool Available)
         {
             IsMapTypeSuitable = Available;
         }
         
-        void RefreshView()
+        private void RefreshView()
         {
             bool BannerAvailable = Paused || IsMapTypeSuitable;
-            if (BannerAvailable == bannerShown) return;
-            bannerShown = BannerAvailable;
+            if (BannerAvailable == _bannerShown) return;
+            _bannerShown = BannerAvailable;
             if (BannerAvailable)
             {
                 Services.DI.Single<Services.Advertisements.Controller>().ShowBanner();

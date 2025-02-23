@@ -5,10 +5,10 @@ namespace Gameplay.Instruments.Bubble
     [System.Serializable]
     public class CollisionEffect
     {
-        [SerializeField] ParticleSystem WallParticle;
-        [SerializeField] Effects.CameraShaker Shaker;
-        Transform WallParticleTransform;
-        Services.Audio.Sounds.Service Sounds;
+        [SerializeField] private ParticleSystem _wallParticle;
+        [SerializeField] private Effects.CameraShaker _shaker;
+        private Transform _wallParticleTransform;
+        private Services.Audio.Sounds.Service _sounds;
         
         public void ReactOnCollision(User.CollisionType Info, Vector3 CollisionPoint)
         {
@@ -16,8 +16,8 @@ namespace Gameplay.Instruments.Bubble
             {
                 bool IsLeft = Info == User.CollisionType.LeftBarrier;
                 PlayWallParticle(CollisionPoint, IsLeft);
-                Sounds ??= Services.DI.Single<Services.Audio.Sounds.Service>();
-                Sounds.Play(Services.Audio.Sounds.SoundType.BubbleWallHit);
+                _sounds ??= Services.DI.Single<Services.Audio.Sounds.Service>();
+                _sounds.Play(Services.Audio.Sounds.SoundType.BubbleWallHit);
                 Vector3 Direction = Vector3.right;
                 if (Info == User.CollisionType.LeftBarrier)
                 {
@@ -27,10 +27,10 @@ namespace Gameplay.Instruments.Bubble
                 {
                     Direction = Vector3.down;
                 }
-                Shaker.ApplyShake(Direction);
+                _shaker.ApplyShake(Direction);
             }
-            
-            bool IsBarrier(User.CollisionType Info)
+
+            static bool IsBarrier(User.CollisionType Info)
             {
                 return  Info == User.CollisionType.LeftBarrier 
                      || Info == User.CollisionType.RightBarrier
@@ -38,16 +38,16 @@ namespace Gameplay.Instruments.Bubble
             }
         }
         
-        void PlayWallParticle(Vector3 Point, bool isLeft)
+        private void PlayWallParticle(Vector3 Point, bool isLeft)
         {
             const int AngleShift = 15;
-            if (WallParticleTransform == null)
+            if (_wallParticleTransform == null)
             {
-                WallParticleTransform = WallParticle.transform;
+                _wallParticleTransform = _wallParticle.transform;
             }
-            WallParticleTransform.position = Point;
-            WallParticleTransform.eulerAngles = Vector3.forward * (AngleShift + 90 * (isLeft? -1 : 1));
-            WallParticle.Emit(30);
+            _wallParticleTransform.position = Point;
+            _wallParticleTransform.eulerAngles = Vector3.forward * (AngleShift + 90 * (isLeft? -1 : 1));
+            _wallParticle.Emit(30);
         }
     }
 }

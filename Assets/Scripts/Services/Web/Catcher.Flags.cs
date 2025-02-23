@@ -1,17 +1,15 @@
 #pragma warning disable CS0618 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Services.Web
 {
     public partial class Catcher : MonoBehaviour
     {
-        static System.Action<int> OnInterstitialDelay;
+        private static System.Action<int> _onInterstitialDelay;
         
         public static void RequestInterstitialDelay(System.Action<int> onResult)
         {
-            OnInterstitialDelay = onResult;
+            _onInterstitialDelay = onResult;
             Application.ExternalCall("GiveInterstitialDelayFlag");
         }
         
@@ -19,8 +17,8 @@ namespace Services.Web
         {
             if (int.TryParse(ComplexInJSON, out int result))
             {
-                OnInterstitialDelay?.Invoke(result);
-                OnInterstitialDelay = null;
+                _onInterstitialDelay?.Invoke(result);
+                _onInterstitialDelay = null;
             }
         }
     }

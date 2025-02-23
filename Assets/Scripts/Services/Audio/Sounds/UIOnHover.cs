@@ -8,7 +8,7 @@ namespace Services.Audio.Sounds
     {
         public void OnPointerEnter(PointerEventData eventData)
         {
-            //Debug.Log("Play Hover Sound");
+            Debug.Log("Play Hover Sound");
         }
     }
 }

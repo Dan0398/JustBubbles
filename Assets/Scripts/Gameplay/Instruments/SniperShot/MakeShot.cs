@@ -7,54 +7,54 @@ namespace Gameplay.Instruments
     {
         public override void ReactOnClickDown()
         {
-            userPressed = true;
+            _userPressed = true;
             RefreshLineStatus();
             if (!User.UsingTouch) ProcessShot();
         }
 
         public override void ReactOnClickUp()
         {
-            userPressed = false;
+            _userPressed = false;
             RefreshLineStatus();
             if (User.UsingTouch) ProcessShot();
         }
         
-        void RefreshLineStatus()
+        private void RefreshLineStatus()
         {
-            AimLine.SetActive(instrumentShown && !ShotProcessed && userPressed == User.UsingTouch);
+            _aimLine.SetActive(InstrumentShown && !_shotProcessed && _userPressed == User.UsingTouch);
         }
         
-        void ProcessShot()
+        private void ProcessShot()
         {
-            if (ShotProcessed) return;
-            if (!instrumentShown) return;
+            if (_shotProcessed) return;
+            if (!InstrumentShown) return;
             if (!User.IsClickedInGameField()) return;
             
-            if (!rifleParent) rifleParent = rifleOnScene.parent;
+            if (!_rifleParent) _rifleParent = _rifleOnScene.parent;
             
             Sounds.Play(Services.Audio.Sounds.SoundType.SniperShoot);
-            var Result = Field.ProcessSniperShot(rifleParent.position, mouseClampedDirection, 30);
+            var Result = Field.ProcessSniperShot(_rifleParent.position, MouseClampedDirection, 30);
             if (Result == null) return;
             StartCoroutine(AnimateBulletFly());
             
             IEnumerator AnimateBulletFly()
             {
-                BulletOnScene.gameObject.SetActive(true);
-                BulletOnScene.position = rifleParent.position;
-                BulletOnScene.rotation = rifleOnScene.rotation;
-                Vector3 BulletStep = mouseClampedDirection * BulletSpeed;
-                ShotProcessed = true;
+                _bulletOnScene.gameObject.SetActive(true);
+                _bulletOnScene.position = _rifleParent.position;
+                _bulletOnScene.rotation = _rifleOnScene.rotation;
+                Vector3 BulletStep = MouseClampedDirection * _bulletSpeed;
+                _shotProcessed = true;
                 RefreshLineStatus();
                 float DistanceSqrt = 0;
                 while(Result.RemoveBubbleByDistance(DistanceSqrt) > 0)
                 {
-                    BulletOnScene.position += BulletStep;
-                    DistanceSqrt += BulletSpeed;
+                    _bulletOnScene.position += BulletStep;
+                    DistanceSqrt += _bulletSpeed;
                     yield return Wait;
                 }
-                BulletOnScene.gameObject.SetActive(false);
+                _bulletOnScene.gameObject.SetActive(false);
                 Result.OnRequireCleanField.Invoke();
-                ShotProcessed = false;
+                _shotProcessed = false;
                 RefreshLineStatus();
                 AfterUse?.Invoke();
             }

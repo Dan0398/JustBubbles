@@ -7,9 +7,9 @@ namespace Gameplay.Field
     {
         const int OutlineFXShiftOnAppend = 2;
         
-        Place[] NeighborPlaces, HelpPlaces, ShiftFXPlaces;
-        Place Center;
-        List<Place> SameColor;
+        private Place[] _neighborPlaces, _helpPlaces, _shiftFXPlaces;
+        private Place _center;
+        private List<Place> _sameColor;
         
         public void PlaceUserBubble(Gameplay.User.ICircleObject NewBubble, Gameplay.User.Trajectory trajectory, bool isMulticolor)
         {
@@ -20,96 +20,96 @@ namespace Gameplay.Field
             CheckAndClearArrays();
             GetPosAndPlace();
             if (NewBubble == null) return;
-            if (!Center.Valid)
+            if (!_center.Valid)
             {
-                ReactOnBubbleSet.Invoke(SameColor, NonRootChank, typeof(Instruments.Bubble.Circle));
+                _reactOnBubbleSet.Invoke(_sameColor, _nonRootChank, typeof(Instruments.Bubble.Circle));
                 if (isMulticolor)
                 {
                 }
                 else
                 {
-                    Pool.Hide(usualBubble);
+                    _pool.Hide(usualBubble);
                     ColorStats.DecountByBubble(usualBubble);
                 }
                 return;
             }
             if (!isMulticolor) ColorStats.IncrementByBubble(usualBubble);
             CollectSameColored();
-            if ((!isMulticolor && SameColor.Count < 3) || (isMulticolor && SameColor.Count < 2))
+            if ((!isMulticolor && _sameColor.Count < 3) || (isMulticolor && _sameColor.Count < 2))
             {
-                ReactOnBubbleSet.Invoke(SameColor, NonRootChank, typeof(Instruments.Bubble.Circle));
+                _reactOnBubbleSet.Invoke(_sameColor, _nonRootChank, typeof(Instruments.Bubble.Circle));
                 PrepareAndShiftBubblesFX();
                 OnFieldRefreshed?.Invoke();
                 return;
             }
             
-            SeekNonConnectedToRoot(SameColor);
+            SeekNonConnectedToRoot(_sameColor);
             
-            if(isMulticolor) Effects.PlayPopEffectAt(NewBubble.MyTransform.position);
-            Effects.PopBubbles(CollectBubbles(SameColor));
-            if (NonRootChank.Count > 0)
+            if(isMulticolor) _effects.PlayPopEffectAt(NewBubble.MyTransform.position);
+            _effects.PopBubbles(CollectBubbles(_sameColor));
+            if (_nonRootChank.Count > 0)
             {
-                Effects.AnimateFallUnconnectedBubbles(CollectBubbles(NonRootChank));
+                _effects.AnimateFallUnconnectedBubbles(CollectBubbles(_nonRootChank));
             }
-            ReactOnBubbleSet.Invoke(SameColor, NonRootChank, typeof(Instruments.Bubble.Circle));
+            _reactOnBubbleSet.Invoke(_sameColor, _nonRootChank, typeof(Instruments.Bubble.Circle));
             CleanEmptyLines();
             OnFieldRefreshed?.Invoke();
             
             void CheckAndClearArrays()
             {
-                NeighborPlaces ??= new Place[6];
-                HelpPlaces ??= new Place[6];
-                ShiftFXPlaces ??= new Place[RequireToGetAllNeighborPoses(OutlineFXShiftOnAppend)];
-                NonRootChank ??= new List<Place>(20);
-                NonRootChank.Clear();
-                SameColor ??= new List<Place>(20);
-                SameColor.Clear();
+                _neighborPlaces ??= new Place[6];
+                _helpPlaces ??= new Place[6];
+                _shiftFXPlaces ??= new Place[RequireToGetAllNeighborPoses(OutlineFXShiftOnAppend)];
+                _nonRootChank ??= new List<Place>(20);
+                _nonRootChank.Clear();
+                _sameColor ??= new List<Place>(20);
+                _sameColor.Clear();
             }
             
             void GetPosAndPlace()
             {
-                Center.Line = GetLineNumberForPos(Pos);
-                if (Center.Line < 0)
+                _center.Line = GetLineNumberForPos(Pos);
+                if (_center.Line < 0)
                 {
-                    Center.Valid = false;
+                    _center.Valid = false;
                     return;
                 }
-                while (Center.Line >= Lines.Count) CreateLine();
-                Center.Column = GetPlaceNumberForPos(Pos, Lines[Center.Line].Shifted);
-                ValidatePlace(ref Center, true);
-                if (Center.Valid && !Center.Busy && NeighborsExists(ref Center))
+                while (_center.Line >= _lines.Count) CreateLine();
+                _center.Column = GetPlaceNumberForPos(Pos, _lines[_center.Line].Shifted);
+                ValidatePlace(ref _center, true);
+                if (_center.Valid && !_center.Busy && NeighborsExists(ref _center))
                 {
                     //Debug.Log("Catched!!");
                 }
                 else 
                 {
                     float Dist = float.MaxValue;
-                    var Count = GetNeighborPlaces(Center, 1, ref NeighborPlaces);
+                    var Count = GetNeighborPlaces(_center, 1, ref _neighborPlaces);
                     for(int i = 0; i < Count; i++)
                     {
-                        ValidatePlace(ref NeighborPlaces[i], true);
-                        if (!NeighborPlaces[i].Valid) continue;
-                        if (NeighborPlaces[i].Busy) continue;
-                        if (NeighborsExists(ref NeighborPlaces[i]))
+                        ValidatePlace(ref _neighborPlaces[i], true);
+                        if (!_neighborPlaces[i].Valid) continue;
+                        if (_neighborPlaces[i].Busy) continue;
+                        if (NeighborsExists(ref _neighborPlaces[i]))
                         {
-                            var NewDist = Vector3.Distance(Pos, PlaceToPos(NeighborPlaces[i]));
+                            var NewDist = Vector3.Distance(Pos, PlaceToPos(_neighborPlaces[i]));
                             if (NewDist < Dist)
                             {
                                 Dist = NewDist;
-                                Center.Line = NeighborPlaces[i].Line;
-                                Center.Column = NeighborPlaces[i].Column;
-                                Center.Valid = true;
+                                _center.Line = _neighborPlaces[i].Line;
+                                _center.Column = _neighborPlaces[i].Column;
+                                _center.Valid = true;
                             }
                         }
                     }
                 }
-                while (Center.Line >= Lines.Count) CreateLine();
-                ValidatePlace(ref Center, true);
-                if (!Center.Valid || Center.Busy)
+                while (_center.Line >= _lines.Count) CreateLine();
+                ValidatePlace(ref _center, true);
+                if (!_center.Valid || _center.Busy)
                 {
                     if (StepBacks == 20)
                     {
-                        Effects.AnimateFallUnconnectedBubbles(new List<Bubble>{usualBubble});
+                        _effects.AnimateFallUnconnectedBubbles(new List<Bubble>{usualBubble});
                         NewBubble = null;
                         return;
                     }
@@ -119,29 +119,29 @@ namespace Gameplay.Field
                     StepBacks++;
                     return;
                 }
-                if (!isMulticolor) Lines[Center.Line][Center.Column] = usualBubble;
+                if (!isMulticolor) _lines[_center.Line][_center.Column] = usualBubble;
             }
             
             void CreateLine()
             {
-                var Line = new LineOfBubbles(transform, !Lines[Lines.Count-1].Shifted, BubblesCountPerLine); 
-                var Point = new Vector3(StartPoint.x, Lines[0].OnScene.position.y);
-                Point += Vector3.down * LineHeight * (Lines.Count);
+                var Line = new LineOfBubbles(transform, !_lines[^1].Shifted, BubblesCountPerLine); 
+                var Point = new Vector3(_startPoint.x, _lines[0].OnScene.position.y);
+                Point += _lines.Count * _lineHeight * Vector3.down;
                 if (Line.Shifted)
                 {
-                    Point += Vector3.right * ShiftWidth;
+                    Point += Vector3.right * _shiftWidth;
                 }
                 Line.OnScene.position = Point;
-                Lines.Add(Line);
+                _lines.Add(Line);
             }
             
             bool NeighborsExists(ref Place Center)
             {
-                var Count = GetNeighborPlaces(Center, 1, ref HelpPlaces);
+                var Count = GetNeighborPlaces(Center, 1, ref _helpPlaces);
                 for(int i = 0; i < Count; i++)
                 {
-                    ValidatePlace(ref HelpPlaces[i]);
-                    if (HelpPlaces[i].Valid && HelpPlaces[i].Busy)
+                    ValidatePlace(ref _helpPlaces[i]);
+                    if (_helpPlaces[i].Valid && _helpPlaces[i].Busy)
                     {
                         return true;
                     }
@@ -167,20 +167,20 @@ namespace Gameplay.Field
                 }
                 foreach(var Color in Colors)
                 {
-                    List<Place> coloredPlaces = new(2) { Center };
+                    List<Place> coloredPlaces = new(2) { _center };
                     for (int i = 0; i < coloredPlaces.Count; i++)
                     {
-                        var Count = GetNeighborPlaces(coloredPlaces[i], 1, ref NeighborPlaces);
+                        var Count = GetNeighborPlaces(coloredPlaces[i], 1, ref _neighborPlaces);
                         for (int k = 0; k < Count; k++)
                         {
-                            ValidatePlace(ref NeighborPlaces[k]);
-                            if (!NeighborPlaces[k].Valid) continue;
-                            if (!NeighborPlaces[k].Busy) continue;
-                            if (Lines[NeighborPlaces[k].Line][NeighborPlaces[k].Column].MyColor != Color) continue;
+                            ValidatePlace(ref _neighborPlaces[k]);
+                            if (!_neighborPlaces[k].Valid) continue;
+                            if (!_neighborPlaces[k].Busy) continue;
+                            if (_lines[_neighborPlaces[k].Line][_neighborPlaces[k].Column].MyColor != Color) continue;
                             bool FoundNew = true;
                             foreach (var Pos in coloredPlaces)
                             {
-                                if (Pos.Line == NeighborPlaces[k].Line && Pos.Column == NeighborPlaces[k].Column)
+                                if (Pos.Line == _neighborPlaces[k].Line && Pos.Column == _neighborPlaces[k].Column)
                                 {
                                     FoundNew = false;
                                     break;
@@ -188,20 +188,19 @@ namespace Gameplay.Field
                             }
                             if (FoundNew) 
                             {
-                                coloredPlaces.Add(NeighborPlaces[k]);
-                                //SameColor.Add(NeighborPlaces[k]); 
+                                coloredPlaces.Add(_neighborPlaces[k]);
                             }
                         }
                     }
-                    coloredPlaces.Remove(Center);
+                    coloredPlaces.Remove(_center);
                     if (coloredPlaces.Count >= 2)
                     {
-                        SameColor.AddRange(coloredPlaces);
+                        _sameColor.AddRange(coloredPlaces);
                     }
                 }
                 if (!isMulticolor)
                 {
-                    SameColor.Add(Center);
+                    _sameColor.Add(_center);
                 }
             }
             
@@ -209,39 +208,39 @@ namespace Gameplay.Field
             {
                 const int OutlineShift = 2;
                 
-                var Count = GetNeighborPlaces(Center, OutlineShift, ref ShiftFXPlaces);
+                var Count = GetNeighborPlaces(_center, OutlineShift, ref _shiftFXPlaces);
                 List<Place> ForShift = new List<Place>(Count);
                 for (int i = 0; i < Count; i ++)
                 {
-                    ValidatePlace(ref ShiftFXPlaces[i]);
-                    if (!ShiftFXPlaces[i].Valid) continue;
-                    if (!ShiftFXPlaces[i].Busy) continue;
-                    ForShift.Add(ShiftFXPlaces[i]);
+                    ValidatePlace(ref _shiftFXPlaces[i]);
+                    if (!_shiftFXPlaces[i].Valid) continue;
+                    if (!_shiftFXPlaces[i].Busy) continue;
+                    ForShift.Add(_shiftFXPlaces[i]);
                 }
                 if (!isMulticolor)
                 {
-                    Effects.ShiftBubblesAfterContact(usualBubble, CollectBubbles(ForShift, false), trajectory.LastDirOnWay, Pos, OutlineShift * BubbleSize);
+                    _effects.ShiftBubblesAfterContact(usualBubble, CollectBubbles(ForShift, false), trajectory.LastDirOnWay, Pos, OutlineShift * BubbleSize);
                 }
             }
         }
         
         
-        void CleanEmptyLines()
+        private void CleanEmptyLines()
         {
-            for (int i = Lines.Count - 1; i > 0 ; i--)
+            for (int i = _lines.Count - 1; i > 0 ; i--)
             {
-                if (Lines[i].RequireToClean())
+                if (_lines[i].RequireToClean())
                 {
-                    var Cleared = Lines[i].CleanLineAndGetCount(Pool);
+                    var Cleared = _lines[i].CleanLineAndGetCount(_pool);
                     ColorStats.DecountByBubble(Cleared);
-                    Lines.RemoveAt(i);
+                    _lines.RemoveAt(i);
                 }
             }
         }
         
-        List<Bubble> CollectBubbles(List<Place> Places, bool RequireClean = true)
+        private List<Bubble> CollectBubbles(List<Place> Places, bool RequireClean = true)
         {
-            List<Bubble> Result = new List<Bubble>(Places.Count);
+            var Result = new List<Bubble>(Places.Count);
             for (int i=0; i< Places.Count; i++)
             {
                 Result.Add(CollectBubble(Places[i], RequireClean));
@@ -251,26 +250,26 @@ namespace Gameplay.Field
         
         public Bubble CollectBubble(Place place, bool RequireClean = true)
         {
-            var Bubble = Lines[place.Line][place.Column] ?? throw new System.NullReferenceException($"Trying to collect null bubble at {place.Line}x{place.Column}");
+            var Bubble = _lines[place.Line][place.Column] ?? throw new System.NullReferenceException($"Trying to collect null bubble at {place.Line}x{place.Column}");
             if (RequireClean)
             {
-                Lines[place.Line][place.Column] = null;
+                _lines[place.Line][place.Column] = null;
                 ColorStats.DecountByBubble(Bubble);
             }
             return Bubble;
         }
         
-        void ValidatePlace(ref Place Target, bool IgnoreEmptyLines = false)
+        private void ValidatePlace(ref Place Target, bool IgnoreEmptyLines = false)
         {
             Target.Valid = Target.Line >= 0 && Target.Column >= 0 && Target.Column < BubblesCountPerLine;
             if (!IgnoreEmptyLines)
             {
-                Target.Valid = Target.Valid && Target.Line < Lines.Count;
+                Target.Valid = Target.Valid && Target.Line < _lines.Count;
             }
             Target.Busy = false;
-            if (Target.Valid && Target.Line < Lines.Count)
+            if (Target.Valid && Target.Line < _lines.Count)
             {
-                Target.Busy = Lines[Target.Line][Target.Column] != null;
+                Target.Busy = _lines[Target.Line][Target.Column] != null;
             }
         }
     }

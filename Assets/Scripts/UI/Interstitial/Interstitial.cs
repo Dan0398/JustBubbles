@@ -1,105 +1,108 @@
 using Ads = Services.Advertisements;
 using BrakelessGames.Localization;
+using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
-using System.Collections;
 
 namespace UI
 {
     public partial class Interstitial : MonoBehaviour
     {
-        [SerializeField] RectTransform AdsPlank;
-        [SerializeField] MaskableGraphic FadeOnScene;
-        [SerializeField] TextTMPLocalized AdsLabel;
-        [SerializeField] string AdsTimerLocalized;
-        Fade fade;
-        Plank plank;
-        [SerializeField] int oldShownTimeOnScreen;
-        Gameplay.GameType.BaseType parent;
-        [SerializeField] float timer;
-        Ads.Controller Ads;
-        Ads.Timed Timed;
-        int resetTimer;
+        [SerializeField] private RectTransform _adsPlank;
+        [SerializeField] private MaskableGraphic _fadeOnScene;
+        [SerializeField] private TextTMPLocalized _adsLabel;
+        [SerializeField] private string _adsTimerLocalized;
+        [SerializeField] private int _oldShownTimeOnScreen;
+        [SerializeField] private float _timer;
+        private Fade _fade;
+        private Plank _plank;
+        private Gameplay.GameType.BaseType _parent;
+        private Ads.Controller _ads;
+        private Ads.Timed _timed;
+        private int _resetTimer;
         
-        bool works => resetTimer > 0;
+        private bool Works => _resetTimer > 0;
         
         public void Show(Gameplay.GameType.BaseType endless)
         {
-            parent = endless;
+            _parent = endless;
             gameObject.SetActive(true);
-            timer = -1;
-            resetTimer = -1;
+            _timer = -1;
+            _resetTimer = -1;
             StartCoroutine(TryActivate());
         }
         
-        IEnumerator TryActivate()
+        private IEnumerator TryActivate()
         {
             for(int i = 0; i < 10; i++)
             {
-                if (Timed != null && Timed.RequestDone && Timed.Ready)
+                if (_timed != null && _timed.RequestDone && _timed.Ready)
                 {
-                    resetTimer = Timed.CountBetweenShows;
-                    timer = resetTimer;
+                    _resetTimer = _timed.CountBetweenShows;
+                    _timer = _resetTimer;
                     yield break;
                 }
                 yield return new WaitForSeconds(3);
             }
         }
         
-        void Start()
+        private void Start()
         {
-            Ads = Services.DI.Single<Ads.Controller>();
-            Timed = Ads.Timed;
-            plank = new Plank(AdsPlank, this);
-            fade = new Fade(FadeOnScene, this);
+            _ads = Services.DI.Single<Ads.Controller>();
+            _timed = _ads.Timed;
+            _plank = new Plank(_adsPlank, this);
+            _fade = new Fade(_fadeOnScene, this);
         }
         
-        void FixedUpdate()
+        private void FixedUpdate()
         {
-            if (!works) return;
-            if (parent == null) return;
-            if (parent.InSettings) return;
-            if (Timed.InitialTimingDone) return;
-            if (timer < 0) return;
-            timer -= Time.fixedUnscaledDeltaTime;
-            plank.TryShowPlankByTime(timer);
-            fade.TryShowFadeByTime(timer);
+            if (!Works) return;
+            if (_parent == null) return;
+            if (_parent.InSettings) return;
+            if (_timed.InitialTimingDone) return;
+            if (_timer < 0) return;
+            _timer -= Time.fixedUnscaledDeltaTime;
+            _plank.TryShowPlankByTime(_timer);
+            _fade.TryShowFadeByTime(_timer);
             TryCountdownTimer();
-            if (timer <= 0) ForceShowAds();
+            if (_timer <= 0) ForceShowAds();
         }
         
-        void TryCountdownTimer()
+        private void TryCountdownTimer()
         {
-            if (timer > 10) return;
-            if (Mathf.FloorToInt(timer) == oldShownTimeOnScreen) return;
-            oldShownTimeOnScreen = Mathf.CeilToInt(timer);
-            AdsLabel.SetNewKeyFormatted(AdsTimerLocalized, new string[]{ oldShownTimeOnScreen.ToString() } );
+            if (_timer > 10) return;
+            if (Mathf.FloorToInt(_timer) == _oldShownTimeOnScreen) return;
+            _oldShownTimeOnScreen = Mathf.CeilToInt(_timer);
+            _adsLabel.SetNewKeyFormatted(_adsTimerLocalized, new string[]{ _oldShownTimeOnScreen.ToString() } );
         }
         
         public async void ForceShowAds()
         {
-            timer = -1;
-            parent.ProcessPause();
-            await Ads.ShowInterstitial();
-            parent.ProcessUnpause();
-            fade.Hide();
-            plank.Hide();
-            timer = resetTimer;
+            _timer = -1;
+            _parent.ProcessPause();
+            await _ads.ShowInterstitial();
+            _parent.ProcessUnpause();
+            _fade.Hide();
+            _plank.Hide();
+            _timer = _resetTimer;
         }
         
-        public void PauseParent() => parent?.ProcessPause();
+        public void PauseParent()
+        {
+            _parent?.ProcessPause();
+        }
         
         public async void Hide()
         {
-            if (parent == null) return;
-            parent = null;
+            if (_parent == null) return;
+            _parent = null;
             
             bool PlankReady = false;
             bool FadeReady = false;
-            plank?.Hide(() => PlankReady = true);
-            fade?.Hide(() => FadeReady = true);
+            _plank?.Hide(() => PlankReady = true);
+            _fade?.Hide(() => FadeReady = true);
             while (!PlankReady || !FadeReady) await Utilities.Wait();
-            if (parent != null) return;
+            if (_parent != null) return;
             gameObject.SetActive(false);
         }
     }

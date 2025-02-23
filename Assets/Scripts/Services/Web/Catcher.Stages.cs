@@ -1,7 +1,6 @@
 #pragma warning disable CS0618 
 #if UNITY_WEBGL
 using UnityEngine;
-using Cysharp.Threading.Tasks;
 
 namespace Services.Web
 {

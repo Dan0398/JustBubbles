@@ -5,16 +5,16 @@ namespace Gameplay.Effects
 {
     public class CameraShaker : MonoBehaviour
     {
-        [SerializeField] AnimationCurve ShakeDynamic;
-        [SerializeField] float ShakeScale;
-        [SerializeField] Vector3 BasePos;
-        Transform target;
-        WaitForEndOfFrame Wait;
+        [SerializeField] private AnimationCurve _shakeDynamic;
+        [SerializeField] private float _shakeScale;
+        [SerializeField] private Vector3 _basePos;
+        private Transform _target;
+        private WaitForEndOfFrame _wait;
         
-        void Start()
+        private void Start()
         {
-            target = transform;
-            Wait = new WaitForEndOfFrame();
+            _target = transform;
+            _wait = new WaitForEndOfFrame();
         }
         
         public void ApplyShake(Vector3 ShakeDirection, float Multiplier = 1)
@@ -22,15 +22,15 @@ namespace Gameplay.Effects
             StartCoroutine(ProcessShake(ShakeDirection, Multiplier));
         }
         
-        IEnumerator ProcessShake(Vector3 ShakeDirection, float Multiplier = 1)
+        private IEnumerator ProcessShake(Vector3 ShakeDirection, float Multiplier = 1)
         {
             const int Steps = 20;
             for (int Step = 0; Step <= Steps; Step ++)
             {
-                target.position = ShakeDynamic.Evaluate(Step / (float) Steps) * ShakeScale * Multiplier *  ShakeDirection + BasePos;
-                yield return Wait;
+                _target.position = _shakeDynamic.Evaluate(Step / (float) Steps) * _shakeScale * Multiplier *  ShakeDirection + _basePos;
+                yield return _wait;
             }
-            target.position = BasePos;
+            _target.position = _basePos;
         }
     }
 }

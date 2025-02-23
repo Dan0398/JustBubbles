@@ -5,24 +5,24 @@ namespace Gameplay.Instruments.Bubble
 {
     public class SwitchAbilityIcon : MonoBehaviour
     {
-        [SerializeField] GameObject PCHelpIcon;
-        bool isUserUseSwitchAbility;
-        Coroutine animationRoutine;
-        WaitForFixedUpdate Wait = new();
+        [SerializeField] private GameObject _pcHelpIcon;
+        private bool _isUserUseSwitchAbility;
+        private Coroutine _animationRoutine;
+        private WaitForFixedUpdate _wait = new();
         
         public void ReactOnEnvironment(bool IsPC)
         {
-            PCHelpIcon.SetActive(IsPC);
+            _pcHelpIcon.SetActive(IsPC);
         }
         
         public void TryShowHelpAnimated(float Duration)
         {
-            if (isUserUseSwitchAbility) return;
-            if (animationRoutine != null) StopCoroutine(animationRoutine);
-            animationRoutine = StartCoroutine(AnimateIcons(Duration));
+            if (_isUserUseSwitchAbility) return;
+            if (_animationRoutine != null) StopCoroutine(_animationRoutine);
+            _animationRoutine = StartCoroutine(AnimateIcons(Duration));
         }
         
-        IEnumerator AnimateIcons(float Duration, bool isShow = true)
+        private IEnumerator AnimateIcons(float Duration, bool isShow = true)
         {
             float Steps = Duration / Time.fixedDeltaTime;
             var HelpRenderers = GetComponentsInChildren<SpriteRenderer>();
@@ -34,22 +34,22 @@ namespace Gameplay.Instruments.Bubble
                 {
                     Renderer.color = Color.white - Color.black * (1 - Lerp);
                 }
-                yield return Wait;
+                yield return _wait;
             }
         }
         
         public void ReceiveUserSwitched(float AnimationDuration = 1f)
         {
-            if (isUserUseSwitchAbility) return;
+            if (_isUserUseSwitchAbility) return;
             HideNonSwitched(AnimationDuration);
-            isUserUseSwitchAbility = true;
+            _isUserUseSwitchAbility = true;
         }
         
         public void HideNonSwitched(float AnimationDuration)
         {
-            if (isUserUseSwitchAbility) return;
-            if (animationRoutine != null) StopCoroutine(animationRoutine);
-            animationRoutine = StartCoroutine(AnimateIcons(AnimationDuration, false));
+            if (_isUserUseSwitchAbility) return;
+            if (_animationRoutine != null) StopCoroutine(_animationRoutine);
+            _animationRoutine = StartCoroutine(AnimateIcons(AnimationDuration, false));
         }
     }
 }

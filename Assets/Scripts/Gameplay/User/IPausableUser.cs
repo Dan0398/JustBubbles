@@ -2,8 +2,8 @@ namespace Gameplay.User
 {
     public interface IPausableUser
     {
-        public void Pause();
+        void Pause();
         
-        public void Unpause();
+        void Unpause();
     }
 }

@@ -5,12 +5,12 @@ namespace Gameplay.Instruments
         [System.Serializable]
         public class DamagedBubble
         {
-            public Field.Place fieldPlace;
+            public Field.Place FieldPlace;
             public int Health;
             
             public DamagedBubble(Field.Place target, int health)
             {
-                fieldPlace = target;
+                FieldPlace = target;
                 Health = health;
             }
             

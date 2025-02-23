@@ -5,49 +5,49 @@ namespace Gameplay
     [AddComponentMenu("Help/Gameplay Controller")]
     public class Controller : MonoBehaviour, Services.IService
     {
-        [SerializeField] UI.Menu.MainMenu MainMenuCanvas;
-        [SerializeField] UI.Settings.Settings Settings;
+        [SerializeField] private UI.Menu.MainMenu _mainMenuCanvas;
+        [SerializeField] private UI.Settings.Settings _settings;
         [Header("Game modes")]
-        [SerializeField] UI.Endless.EndlessCanvas Endless;
-        [SerializeField] UI.Survival.SurvivalCanvas TimeTrial;
-        [SerializeField] UI.Strategy.StrategyCanvas Strategy;
-        [SerializeField] UI.Merge.MergeCanvas Merge;
+        [SerializeField] private UI.Endless.EndlessCanvas _endless;
+        [SerializeField] private UI.Survival.SurvivalCanvas _timeTrial;
+        [SerializeField] private UI.Strategy.StrategyCanvas _strategy;
+        [SerializeField] private UI.Merge.MergeCanvas _merge;
         [Header("Bubble Game Processors")]
-        [SerializeField] Field.BubbleField bubbleField;
-        [SerializeField] User.Action Actions;
+        [SerializeField] private Field.BubbleField _bubbleField;
+        [SerializeField] private User.Action _actions;
         [Header("Merge Game Processors")]
-        [SerializeField] Merge.MergeField mergeField;
-        [SerializeField] User.MergeUser mergeUser;
-        [SerializeReference] GameType.BaseType ActualType;
-        [SerializeField] InGameParents InGameParts;
+        [SerializeField] private Merge.MergeField _mergeField;
+        [SerializeField] private User.MergeUser _mergeUser;
+        [SerializeReference] private GameType.BaseType _actualType;
+        [SerializeField] private InGameParents _inGameParts;
         
-        void Start()
+        private void Start()
         {
             StopGameplay();
         }
         
-        void FixedUpdate()
+        private void FixedUpdate()
         {
-            ActualType?.ProcessGameplayUpdate();
+            _actualType?.ProcessGameplayUpdate();
         }
         
-        public void StopGameplay() => ChangeGameType(() => new GameType.Idle       (this, Settings, InGameParts, MainMenuCanvas));
+        public void StopGameplay() => ChangeGameType(() => new GameType.Idle       (this, _settings, _inGameParts, _mainMenuCanvas));
         
-        public void StartEndless() => ChangeGameType(() => new GameType.Endless     (this, Settings, InGameParts, bubbleField, Actions, Endless));
+        public void StartEndless() => ChangeGameType(() => new GameType.Endless     (this, _settings, _inGameParts, _bubbleField, _actions, _endless));
         
-        public void StartTimeTrial()=> ChangeGameType(() => new GameType.Survival   (this, Settings, InGameParts, bubbleField, Actions, TimeTrial));
+        public void StartTimeTrial()=> ChangeGameType(() => new GameType.Survival   (this, _settings, _inGameParts, _bubbleField, _actions, _timeTrial));
         
-        public void StartStrategy() => ChangeGameType(() => new GameType.Strategy   (this, Settings, InGameParts, bubbleField, Actions, Strategy));
+        public void StartStrategy() => ChangeGameType(() => new GameType.Strategy   (this, _settings, _inGameParts, _bubbleField, _actions, _strategy));
         
-        internal void StartMerge() => ChangeGameType(() => new GameType.Merge       (this, Settings, InGameParts, mergeField, mergeUser, Merge));
+        public void StartMerge()    => ChangeGameType(() => new GameType.Merge       (this, _settings, _inGameParts, _mergeField, _mergeUser, _merge));
         
-        async void ChangeGameType(System.Func<GameType.BaseType> newType)
+        private async void ChangeGameType(System.Func<GameType.BaseType> newType)
         {
-            if (ActualType != null)
+            if (_actualType != null)
             {
-                await ActualType.Dispose();
+                await _actualType.Dispose();
             }
-            ActualType = newType.Invoke();
+            _actualType = newType.Invoke();
         }
     }
 }

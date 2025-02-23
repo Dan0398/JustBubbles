@@ -240,9 +240,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fced18124427fc4c987ed13c6480196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  When: 1
-  Message: ReceiveEndgameUnwrapped
-  Direct: 1
+  _when: 1
+  _message: ReceiveEndgameUnwrapped
+  _direct: 1
 --- !u!1102 &-715376642119614913
 AnimatorState:
   serializedVersion: 6
@@ -304,9 +304,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fced18124427fc4c987ed13c6480196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  When: 1
-  Message: CallHeaderFullAlpha
-  Direct: 1
+  _when: 1
+  _message: CallHeaderFullAlpha
+  _direct: 1
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -431,9 +431,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fced18124427fc4c987ed13c6480196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  When: 1
-  Message: FinalizeHide
-  Direct: 1
+  _when: 1
+  _message: FinalizeHide
+  _direct: 1
 --- !u!1102 &2665307125696873234
 AnimatorState:
   serializedVersion: 6

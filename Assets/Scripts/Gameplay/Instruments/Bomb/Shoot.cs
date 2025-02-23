@@ -7,35 +7,34 @@ namespace Gameplay.Instruments.Bomb
     {
         public override void ReactOnClickDown()
         {
-            wannaShoot = true;
+            _wannaShoot = true;
             if (!User.UsingTouch) ShootBomb();
         }
 
         public override void ReactOnClickUp()
         {
-            wannaShoot = false;
+            _wannaShoot = false;
             if (User.UsingTouch) ShootBomb();
         }
         
         private void ShootBomb()
         {
-            if (inFly) return;
-            if (!instrumentShown) return;
+            if (_inFly) return;
+            if (!InstrumentShown) return;
             if (!User.IsClickedInGameField()) return;
-            if (BombOnScene == null) return;
+            if (_bombOnScene == null) return;
             
-            var FlyTrajectory = new User.Trajectory(CollisionRadius, Field.TryResponseCollision, 1, trajectoryCollisionsCount);
+            var FlyTrajectory = new User.Trajectory(CollisionRadius, Field.TryResponseCollision, 1, TrajectoryCollisionsCount);
             Sounds.Stop(Services.Audio.Sounds.SoundType.BombIdle);
             Sounds.Play(Services.Audio.Sounds.SoundType.BombFly);
-            //Effects.PlayBombFlySound();
-            StartCoroutine(AnimateBombFly(BombOnScene.transform, ProcessEndBombWay));
-            inFly = true;
+            StartCoroutine(AnimateBombFly(_bombOnScene.transform, ProcessEndBombWay));
+            _inFly = true;
         
             IEnumerator AnimateBombFly(Transform Target, System.Action OnEnd)
             {
-                FlyTrajectory.PrepareFirst(User.transform.position, mouseClampedDirection);
+                FlyTrajectory.PrepareFirst(User.transform.position, MouseClampedDirection);
                 Target.position = FlyTrajectory.PosOnWay;
-                FlyTrajectory.StepLengthOnWay = BombFlySpeed;
+                FlyTrajectory.StepLengthOnWay = _bombFlySpeed;
                 while (!FlyTrajectory.Completed)
                 {
                     FlyTrajectory.TryStepAndCheckCollisions();
@@ -49,11 +48,11 @@ namespace Gameplay.Instruments.Bomb
             {
                 Sounds.Stop(Services.Audio.Sounds.SoundType.BombFly);
                 Sounds.Play(Services.Audio.Sounds.SoundType.BombExplode);
-                BombOnScene.SetActive(false);
-                Effects.PlayExplosionEffects(FlyTrajectory.PosOnWay);
-                Field.ProcessExplosion(FlyTrajectory.PosOnWay, ExplodeRadius);
+                _bombOnScene.SetActive(false);
+                _effects.PlayExplosionEffects(FlyTrajectory.PosOnWay);
+                Field.ProcessExplosion(FlyTrajectory.PosOnWay, _explodeRadius);
                 AfterUse?.Invoke();
-                inFly = false;
+                _inFly = false;
             }
         }
     }

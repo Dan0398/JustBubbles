@@ -7,19 +7,19 @@ namespace Services.Advertisements
     {
         public bool RequestDone     { get; private set; }
         public bool Ready           { get; private set; }
-        int countBetweenShows;
-        int countFromStart;
+        private int _countBetweenShows;
+        private int _countFromStart;
         
-        public int CountBetweenShows => countBetweenShows;
+        public int CountBetweenShows => _countBetweenShows;
         
-        public bool InitialTimingDone => Ready && countFromStart > Time.time;
+        public bool InitialTimingDone => Ready && _countFromStart > Time.time;
         
         public Timed()
         {
             RequestTimings();
         }
         
-        async void RequestTimings()
+        private async void RequestTimings()
         {
             for(int i = 0; i < 5; i++)
             {
@@ -30,19 +30,10 @@ namespace Services.Advertisements
                 {
                     var parts = request.downloadHandler.text.Split("|");
                     Ready = parts.Length == 2
-                        &&  int.TryParse(parts[0], out countFromStart)
-                        &&  countFromStart >= 0
-                        &&  int.TryParse(parts[1], out countBetweenShows)
-                        &&  countBetweenShows > 0;
-                    #if UNITY_EDITOR
-                    /*
-                    if (Ready)
-                    {
-                        countFromStart = 15;
-                        countBetweenShows = 13;
-                    }
-                    */
-                    #endif
+                        &&  int.TryParse(parts[0], out _countFromStart)
+                        &&  _countFromStart >= 0
+                        &&  int.TryParse(parts[1], out _countBetweenShows)
+                        &&  _countBetweenShows > 0;
                     request.Dispose();
                     break;
                 }

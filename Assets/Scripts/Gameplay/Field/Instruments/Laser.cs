@@ -10,25 +10,9 @@ namespace Gameplay.Field
             Place place = PosToPlace(endpoint);
             ValidatePlace(ref place);
             if (place.Valid && place.Busy) return place;
-            /*
-            var Step = direction.normalized * BubbleSize * 0.6f;
-            endpoint += Step;
-            ValidatePlace(ref place);
-            while(place.Valid && !place.Busy)
-            {
-                endpoint += Step;
-                place = PosToPlace(endpoint);
-                ValidatePlace(ref place);
-            }
-            return place;
-            */
-            if (NeighborPlaces == null)
-            {
-                NeighborPlaces = new Place[6];
-            }
-            GetNeighborPlaces(place, 1, ref NeighborPlaces);
+            _neighborPlaces ??= new Place[6];
+            GetNeighborPlaces(place, 1, ref _neighborPlaces);
             var Angle = Vector2.SignedAngle(Vector2.up, direction);
-            //Debug.Log($"Center:{place.Line}x{place.PlaceID}; Angle:{Angle}");
             /*
                x -  Центр
                | -  Угол 0 градусов
@@ -55,51 +39,42 @@ namespace Gameplay.Field
                     else if ((Angle > (-120+delta) || Angle < (-60-delta)) && !Indexes.Contains(1)) Indexes.Add(1);
                     else Indexes.Add(3);
                 }
-                ValidatePlace(ref NeighborPlaces[Indexes[id]]);
-                if (NeighborPlaces[Indexes[id]].Valid && NeighborPlaces[Indexes[id]].Busy) 
+                ValidatePlace(ref _neighborPlaces[Indexes[id]]);
+                if (_neighborPlaces[Indexes[id]].Valid && _neighborPlaces[Indexes[id]].Busy) 
                 {
-                    return NeighborPlaces[Indexes[id]];
+                    return _neighborPlaces[Indexes[id]];
                 }
             }
             id--;
-            /*
-            //Debug.DrawRay(PlaceToPos(NeighborPlaces[index]), Vector3.down, Color.white, 5);
-            string result = string.Empty;
-            for (int i =0; i < Indexes.Count; i++)
-            {
-                result += Indexes[i].ToString();
-            }
-            Debug.Log(result);
-            */
-            return NeighborPlaces[Indexes[id]];// new Place(Lines[Place.Line][Place.PlaceID], 
+            return _neighborPlaces[Indexes[id]];
         }
         
         public void TryChangeLinesPosInDamaged(ref List<Instruments.Laser.DamagedBubble> damagedBubbles, int oldLinesCount)
         {
-            var newLinesCount = Lines.Count;
+            var newLinesCount = _lines.Count;
             for (int i = 0; i < damagedBubbles.Count; i++)
             {
-                var newLineNumber = damagedBubbles[i].fieldPlace.Line + newLinesCount - oldLinesCount;
+                var newLineNumber = damagedBubbles[i].FieldPlace.Line + newLinesCount - oldLinesCount;
                 if (newLineNumber < 0 || newLineNumber > newLinesCount)
                 {
                     damagedBubbles.RemoveAt(i);
                     i--;
                     continue;
                 }
-                damagedBubbles[i].fieldPlace = new Field.Place(newLineNumber, damagedBubbles[i].fieldPlace.Column);
+                damagedBubbles[i].FieldPlace = new Field.Place(newLineNumber, damagedBubbles[i].FieldPlace.Column);
             }
         }
         
         public void CleanDamagedBubble(ref Instruments.Laser.DamagedBubble target)
         {
-            var ValidPlaces = new List<Place>(1) {target.fieldPlace};
-            Effects.PopBubbles(CollectBubbles(ValidPlaces));
+            var ValidPlaces = new List<Place>(1) {target.FieldPlace};
+            _effects.PopBubbles(CollectBubbles(ValidPlaces));
             SeekNonConnectedToRoot();
-            if (NonRootChank.Count > 0)
+            if (_nonRootChank.Count > 0)
             {
-                Effects.AnimateFallUnconnectedBubbles(CollectBubbles(NonRootChank));
+                _effects.AnimateFallUnconnectedBubbles(CollectBubbles(_nonRootChank));
             }
-            ReactOnBubbleSet.Invoke(ValidPlaces, NonRootChank, typeof(Instruments.Laser));
+            _reactOnBubbleSet.Invoke(ValidPlaces, _nonRootChank, typeof(Instruments.Laser));
             CleanEmptyLines();
             OnFieldRefreshed?.Invoke();
         }

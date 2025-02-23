@@ -8,126 +8,131 @@ namespace UI.Strategy
     [RequireComponent(typeof(Animator))]
     public class StrategyCanvas : MonoBehaviour
     {
-        [SerializeField] float ShowAnimationSpeed;
+        [SerializeField] private float _showAnimationSpeed;
         [Header("In-game data In Header")]
-        [SerializeField] Image PopComboFill;
-        [SerializeField] TMPro.TMP_Text BeforeAppendCountLabel, AppendLinesCountLabel, ClicksCountLabel;
+        [SerializeField] private Image _popComboFill;
+        [SerializeField] private TMPro.TMP_Text _beforeAppendCountLabel;
+        [SerializeField] private TMPro.TMP_Text _appendLinesCountLabel;
+        [SerializeField] private TMPro.TMP_Text _clicksCountLabel;
         [Header("Removed overlay")]
-        [SerializeField] GameObject RemovedColorParent;
-        [SerializeField] RemoveColorContainer[] RemovedColors;
+        [SerializeField] private GameObject _removedColorParent;
+        [SerializeField] private RemoveColorContainer[] _removedColors;
         [Space()]
-        [SerializeField] Animator HelpAnimator;
+        [SerializeField] private Animator _helpAnimator;
         [Space()]
-        [SerializeField] Endgame EndgameView;
-        Coroutine PopComboRoutine;
-        Gameplay.GameType.Strategy parent;
-        System.Action AfterPopEnd;
-        bool HeaderShown;
-        bool turnOffLocked;
+        [SerializeField] private Endgame _endgameView;
+        private Coroutine _popComboRoutine;
+        private Gameplay.GameType.Strategy _parent;
+        private System.Action _afterPopEnd;
+        private bool _headerShown;
+        private bool _turnOffLocked;
 
         public void Show(Gameplay.GameType.Strategy strategy, float Duration = 1f)
         {
-            parent = strategy;
+            _parent = strategy;
             gameObject.SetActive(true);
-            turnOffLocked= false;
-            if (HeaderShown) return;
+            _turnOffLocked= false;
+            if (_headerShown) return;
             var animator = GetComponent<Animator>();
-            animator.SetFloat("Speed", ShowAnimationSpeed / Duration);
+            animator.SetFloat("Speed", _showAnimationSpeed / Duration);
             ShowHeader();
         }
         
-        void ShowHeader()
+        private void ShowHeader()
         {
             GetComponent<Animator>().SetTrigger("Show");
-            HeaderShown = true;
+            _headerShown = true;
         }
         
         public void RegisterHideFromAnimator()
         {
-            if (turnOffLocked) return;
+            if (_turnOffLocked) return;
             gameObject.SetActive(false);
         }
 
         public void ReactOnColorRemove(List<Gameplay.Bubble.BubbleColor> obj)
         {
-            for (int i = 0; i < RemovedColors.Length; i++)
+            for (int i = 0; i < _removedColors.Length; i++)
             {
                 bool required = i < obj.Count;
-                RemovedColors[i].Turnable.SetActive(required);
+                _removedColors[i].Turnable.SetActive(required);
                 if (required)
                 {
-                    RemovedColors[i].Shown.color = Gameplay.ColorPicker.GetColorByEnum(obj[i]);
+                    _removedColors[i].Shown.color = Gameplay.ColorPicker.GetColorByEnum(obj[i]);
                 }
             }
-            RemovedColorParent.SetActive(true);
+            _removedColorParent.SetActive(true);
         }
         
         public void RemovedCallHide()
         {
-            RemovedColorParent.SetActive(false);
+            _removedColorParent.SetActive(false);
         }
 
-        internal void RefreshAppendLinesCount(int appendLinesCount)
+        public void RefreshAppendLinesCount(int appendLinesCount)
         {
-            AppendLinesCountLabel.text = GetStringMultiplier(appendLinesCount);
+            _appendLinesCountLabel.text = GetStringMultiplier(appendLinesCount);
         }
         
         public void RefreshCountUntilAppend(int countUntilAppend)
         {
-            BeforeAppendCountLabel.text = GetStringMultiplier(countUntilAppend);
+            _beforeAppendCountLabel.text = GetStringMultiplier(countUntilAppend);
         }
         
-        string GetStringMultiplier(int Value) => string.Concat('X', Value);
+        private string GetStringMultiplier(int Value)
+        {
+            return string.Concat('X', Value);
+        }
 
         public void RefreshClicks(int clicksCount)
         {
-            ClicksCountLabel.text = clicksCount.ToString();
+            _clicksCountLabel.text = clicksCount.ToString();
         }
 
         public void RefreshPopCombo(float v, System.Action appendLine = null)
         {
-            if (PopComboRoutine != null) StopCoroutine(PopComboRoutine);
-            AfterPopEnd?.Invoke();
-            AfterPopEnd = appendLine;
+            if (_popComboRoutine != null) StopCoroutine(_popComboRoutine);
+            _afterPopEnd?.Invoke();
+            _afterPopEnd = appendLine;
             
-            if (v > PopComboFill.fillAmount)
+            if (v > _popComboFill.fillAmount)
             {
                 System.Action AfterEnd = v == 1? PlayIncreasePop : null;
-                PopComboRoutine = StartCoroutine(AnimatePopCombo(v, AfterEnd));
+                _popComboRoutine = StartCoroutine(AnimatePopCombo(v, AfterEnd));
             }
             else
             {
-                PopComboFill.fillAmount = v;
-                AfterPopEnd?.Invoke();
-                AfterPopEnd = null;
+                _popComboFill.fillAmount = v;
+                _afterPopEnd?.Invoke();
+                _afterPopEnd = null;
             }
             
             void PlayIncreasePop()
             {
-                StopCoroutine(PopComboRoutine);
-                PopComboRoutine = StartCoroutine(AnimateIncrease(PopComboFill.rectTransform, () => RefreshPopCombo(0)));
+                StopCoroutine(_popComboRoutine);
+                _popComboRoutine = StartCoroutine(AnimateIncrease(_popComboFill.rectTransform, () => RefreshPopCombo(0)));
             }
         }
         
-        IEnumerator AnimatePopCombo(float newAmount, System.Action OnEnd)
+        private IEnumerator AnimatePopCombo(float newAmount, System.Action OnEnd)
         {
-            float oldAmount = PopComboFill.fillAmount;
+            float oldAmount = _popComboFill.fillAmount;
             var Wait = new WaitForFixedUpdate();
-            PopComboFill.rectTransform.localScale = Vector3.one;
+            _popComboFill.rectTransform.localScale = Vector3.one;
             for (int i = 1; i <= 10; i++)
             {
-                PopComboFill.fillAmount = Mathf.Lerp(oldAmount, newAmount, Mathf.Sin(i/10f * 90 * Mathf.Deg2Rad));
+                _popComboFill.fillAmount = Mathf.Lerp(oldAmount, newAmount, Mathf.Sin(i/10f * 90 * Mathf.Deg2Rad));
                 yield return Wait;
             }
             if (OnEnd == null)
             {
-                AfterPopEnd?.Invoke();
-                AfterPopEnd = null;
+                _afterPopEnd?.Invoke();
+                _afterPopEnd = null;
             }
             else OnEnd.Invoke();
         }
         
-        IEnumerator AnimateIncrease(RectTransform Rect, System.Action OnMiddle)
+        private IEnumerator AnimateIncrease(RectTransform Rect, System.Action OnMiddle)
         {
             var Wait = new WaitForFixedUpdate();
             for (int i = 1; i <= 10; i++)
@@ -140,47 +145,47 @@ namespace UI.Strategy
         
         public void CallSettings()
         {
-            parent.CallSettings();
+            _parent.CallSettings();
         }
         
         public void CallInfo()
         {
-            parent.ProcessPause();
-            HelpAnimator.gameObject.SetActive(true);
+            _parent.ProcessPause();
+            _helpAnimator.gameObject.SetActive(true);
         }
         
-        public void HideInfo() => HelpAnimator.SetTrigger("Hide"); 
+        public void HideInfo() => _helpAnimator.SetTrigger("Hide"); 
         
         public void FinalizeHideInfo()
         {
-            parent.ProcessUnpause();
-            HelpAnimator.gameObject.SetActive(false);
+            _parent.ProcessUnpause();
+            _helpAnimator.gameObject.SetActive(false);
         }
         
         public void Hide(float Duration = 1f)
         {
-            if (!HeaderShown) return;
-            HeaderShown = false;
+            if (!_headerShown) return;
+            _headerShown = false;
             var animator = GetComponent<Animator>();
-            animator.SetFloat("Speed", ShowAnimationSpeed / Duration);
+            animator.SetFloat("Speed", _showAnimationSpeed / Duration);
             animator.SetTrigger("Hide");
         }
         
         public void ShowEndgame(Result result)
         {
-            turnOffLocked = true;
+            _turnOffLocked = true;
             Hide();
             result.OnRetry += ShowHeader;
             result.OnEnd += () =>
             {
-                EndgameView.BeforeTurnOff += () => gameObject.SetActive(false);
+                _endgameView.BeforeTurnOff += () => gameObject.SetActive(false);
             };
-            EndgameView.ShowEndgame(result);
+            _endgameView.ShowEndgame(result);
         }
         
         public void ReceiveEndgameUnwrapped()
         {
-            EndgameView.ReceiveEndgameUnwrapped();
+            _endgameView.ReceiveEndgameUnwrapped();
         }
     }
 }

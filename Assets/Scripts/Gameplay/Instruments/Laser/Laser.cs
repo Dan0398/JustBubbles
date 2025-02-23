@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Services.Audio;
 using UnityEngine;
 
 namespace Gameplay.Instruments
@@ -7,26 +6,27 @@ namespace Gameplay.Instruments
     [System.Serializable]
     public partial class Laser : BaseInstrument
     {
-        [SerializeField] int BubbleResistFrames;
-        [SerializeField] float MaxEnergy, Energy;
-        [Space(), SerializeField] Transform laserOnScene;
-        [Header("Burn Effects"), SerializeField] Transform burnPoint;
-        [SerializeField] ParticleSystem burnEdge;
-        [SerializeField] ParticleSystem burnSmoke;
-        [SerializeField] ParticleSystem laserSmoke;
-        [SerializeField] LineRenderer burnLine;
-        List<DamagedBubble> underAttack;
-        SpriteRenderer laserSpite;
-        Gameplay.User.Trajectory traj;
-        DamagedBubble TargetBubble;
-        Coroutine processRoutine;
-        Vector3 burnWorldPos;
-        int oldLinesCount;
-        bool IsSlicing;
+        [SerializeField] private int _bubbleResistFrames;
+        [SerializeField] private float _maxEnergy;
+        [SerializeField] private float _energy;
+        [Space(), SerializeField] private Transform _laserOnScene;
+        [Header("Burn Effects"), SerializeField] private Transform _burnPoint;
+        [SerializeField] private ParticleSystem _burnEdge;
+        [SerializeField] private ParticleSystem _burnSmoke;
+        [SerializeField] private ParticleSystem _laserSmoke;
+        [SerializeField] private LineRenderer _burnLine;
+        private List<DamagedBubble> _underAttack;
+        private SpriteRenderer _laserSpite;
+        private Gameplay.User.Trajectory _trajectory;
+        private DamagedBubble _targetBubble;
+        private Vector3 _burnWorldPos;
+        private int _oldLinesCount;
+        private bool _isSlicing;
         
         public override bool RequireDrawTrajectory => false;
 
-        protected override int trajectoryCollisionsCount => 1;
-        protected override float collisionSizeMultiplier => 0.5f;
+        protected override int TrajectoryCollisionsCount => 1;
+        
+        protected override float CollisionSizeMultiplier => 0.5f;
     }
 }

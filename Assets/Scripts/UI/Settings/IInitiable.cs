@@ -2,6 +2,6 @@ namespace UI.Settings
 {
     public interface IInitiable
     {
-        public void Init(Settings Parent);
+        void Init(Settings Parent);
     }
 }

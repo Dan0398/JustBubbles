@@ -4,11 +4,11 @@ namespace Content.Merge
 {
     public class Processor
     {
-        Services.Bundles.Agent Loader;
+        private Services.Bundles.Agent _loader;
         
         public Processor()
         {
-            Loader = Services.DI.Single<Services.Bundles.Agent>();
+            _loader = Services.DI.Single<Services.Bundles.Agent>();
         }
         
         public void LoadTheme(ThemesList.Theme Theme, System.Action AfterLoad)
@@ -21,7 +21,7 @@ namespace Content.Merge
             if (Theme.DownloadRequest == null)
             {
                 var Path = Application.streamingAssetsPath + '/' + Theme.BundlePath;
-                Theme.DownloadRequest = Loader.GiveMeContent(Path, this);
+                Theme.DownloadRequest = _loader.GiveMeContent(Path, this);
             }
             System.Action<AssetBundle> After = null;
             After = (s) =>

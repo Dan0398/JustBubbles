@@ -6,23 +6,24 @@ namespace Gameplay.Field
     public class Barriers
     {
         public const float SizeWidth = 0.3f;
-        [SerializeField] BoxCollider2D LeftBarrier, RightBarrier, TopBarrier;
-        [SerializeField] RectTransform BackgroundRect;
+        [SerializeField] BoxCollider2D _leftBarrier;
+        [SerializeField] BoxCollider2D _rightBarrier;
+        [SerializeField] BoxCollider2D _topBarrier;
+        [SerializeField] RectTransform _backgroundRect;
         
         public User.CollisionType TryResponseCollision(Collider2D col)
         {
-            if (LeftBarrier != null && col == LeftBarrier)
+            if (_leftBarrier != null && col == _leftBarrier)
             {
                 return User.CollisionType.LeftBarrier;
             }
-            if (RightBarrier != null && col == RightBarrier)
+            if (_rightBarrier != null && col == _rightBarrier)
             {
                 return User.CollisionType.RightBarrier;
             }
-            if (TopBarrier != null && col == TopBarrier)
+            if (_topBarrier != null && col == _topBarrier)
             {
                 return User.CollisionType.IntoBunch;
-                //return User.CollisionType.TopBarrier;
             }
             return User.CollisionType.IntoBunch;
         }
@@ -31,24 +32,24 @@ namespace Gameplay.Field
         {
             var Size = new Vector2(SizeWidth, FieldSize.y + SizeWidth);
             var XOffset = (FieldSize.x + SizeWidth) * 0.5f;
-            if (LeftBarrier != null)
+            if (_leftBarrier != null)
             {
-                LeftBarrier.transform.localPosition = new Vector3(-XOffset, (SizeWidth) * 0.5f, 0.1f);
-                LeftBarrier.transform.localScale = Size;
+                _leftBarrier.transform.localPosition = new Vector3(-XOffset, SizeWidth * 0.5f, 0.1f);
+                _leftBarrier.transform.localScale = Size;
             }
-            if (RightBarrier != null)
+            if (_rightBarrier != null)
             {
-                RightBarrier.transform.localPosition = new Vector3(XOffset, (SizeWidth) * 0.5f, 0.1f);
-                RightBarrier.transform.localScale = Size;
+                _rightBarrier.transform.localPosition = new Vector3(XOffset, SizeWidth * 0.5f, 0.1f);
+                _rightBarrier.transform.localScale = Size;
             }
-            if (TopBarrier != null)
+            if (_topBarrier != null)
             {
-                TopBarrier.transform.localPosition = new Vector3(0, (FieldSize.y + SizeWidth- UpperOutstand) * 0.5f , 0.1f);
-                TopBarrier.transform.localScale = new Vector3(FieldSize.x, SizeWidth + UpperOutstand);
+                _topBarrier.transform.localPosition = new Vector3(0, (FieldSize.y + SizeWidth- UpperOutstand) * 0.5f , 0.1f);
+                _topBarrier.transform.localScale = new Vector3(FieldSize.x, SizeWidth + UpperOutstand);
             }
-            if (BackgroundRect != null)
+            if (_backgroundRect != null)
             {
-                BackgroundRect.sizeDelta = FieldSize;
+                _backgroundRect.sizeDelta = FieldSize;
             }
         }
     }

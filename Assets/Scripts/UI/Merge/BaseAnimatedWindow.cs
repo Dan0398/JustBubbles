@@ -7,26 +7,29 @@ namespace UI.Merge
 {    
     public class BaseAnimatedWindow : MonoBehaviour
     {
-        protected virtual bool AddHalfHeader => true;
-        [SerializeField] float HeaderUnwrappedPos;
-        [SerializeField] float WindowUnwrappedMinY, WindowUnwrappedMaxY;
-        [SerializeField] Image Fade;
-        [SerializeField] Image WindowMask;
-        [SerializeField] RectTransform WindowTransform, HeaderTransform;
         [field:SerializeField] protected TextTMPLocalized Header { get; private set;}
-        [SerializeField] GameObject CloseButton;
-        Services.Audio.Sounds.Service Sounds;
-        WaitForFixedUpdate Wait;
+        [SerializeField] private float _headerUnwrappedPos;
+        [SerializeField] private float _windowUnwrappedMinY;
+        [SerializeField] private float _windowUnwrappedMaxY;
+        [SerializeField] private Image _fade;
+        [SerializeField] private Image _windowMask;
+        [SerializeField] private RectTransform _windowTransform;
+        [SerializeField] private RectTransform _headerTransform;
+        [SerializeField] private GameObject _closeButton;
+        private Services.Audio.Sounds.Service _sounds;
+        private WaitForFixedUpdate _wait;
+        
+        protected virtual bool AddHalfHeader => true;
         
         protected IEnumerator AnimateHeader(float Duration = 1f, bool IsHide = false)
         {
-            Wait ??= new ();
+            _wait ??= new ();
             
             int Steps = Mathf.RoundToInt(Duration / Time.fixedDeltaTime);
-            float HeaderHaflHeight = (HeaderTransform.anchorMax.y -  HeaderTransform.anchorMin.y) * 0.5f;
-            HeaderTransform.anchorMin = new Vector2(HeaderTransform.anchorMin.x, 0.5f - HeaderHaflHeight);
-            HeaderTransform.anchorMax = new Vector2(HeaderTransform.anchorMax.x, 0.5f + HeaderHaflHeight);
-            if (!IsHide) HeaderTransform.gameObject.SetActive(true);
+            float HeaderHaflHeight = (_headerTransform.anchorMax.y -  _headerTransform.anchorMin.y) * 0.5f;
+            _headerTransform.anchorMin = new Vector2(_headerTransform.anchorMin.x, 0.5f - HeaderHaflHeight);
+            _headerTransform.anchorMax = new Vector2(_headerTransform.anchorMax.x, 0.5f + HeaderHaflHeight);
+            if (!IsHide) _headerTransform.gameObject.SetActive(true);
             
             for (int i = 1; i <= Steps; i++)
             {
@@ -37,45 +40,44 @@ namespace UI.Merge
                 }
                 else
                 {
-                    //Lerp = EasingFunction.EaseInOutSine(0, 1, i/(float)Steps);
                     Lerp = EasingFunction.EaseOutBounce(0,1, i/(float)Steps);
                 }
-                HeaderTransform.localScale = new Vector3(Lerp, 1, 1);
-                yield return Wait;
+                _headerTransform.localScale = new Vector3(Lerp, 1, 1);
+                yield return _wait;
             }
-            if (IsHide) HeaderTransform.gameObject.SetActive(false);
+            if (IsHide) _headerTransform.gameObject.SetActive(false);
         }
         
         protected IEnumerator AnimateUnwrapWindow(float Duration = 1f, bool IsHide = false)
         {
-            Wait ??= new ();
-            Sounds ??= Services.DI.Single<Services.Audio.Sounds.Service>(); 
-            Sounds.Play(Services.Audio.Sounds.SoundType.Unwrap);
+            _wait ??= new ();
+            if (_sounds == null) _sounds = Services.DI.Single<Services.Audio.Sounds.Service>(); 
+            _sounds.Play(Services.Audio.Sounds.SoundType.Unwrap);
             
             int Steps = Mathf.RoundToInt(Duration / Time.fixedDeltaTime);
             
-            float HeaderHaflHeight = (HeaderTransform.anchorMax.y -  HeaderTransform.anchorMin.y) * 0.5f;
+            float HeaderHaflHeight = (_headerTransform.anchorMax.y -  _headerTransform.anchorMin.y) * 0.5f;
             float WindowAppend = AddHalfHeader? HeaderHaflHeight : 0;
             for (int i = 1; i <= Steps; i++)
             {
                 float Lerp = EasingFunction.EaseInOutSine(0, 1, i/(float)Steps);
                 if (IsHide) Lerp = 1 - Lerp;
                 
-                HeaderTransform.anchorMin = new Vector2(HeaderTransform.anchorMin.x, Mathf.Lerp(0.5f, HeaderUnwrappedPos, Lerp) - HeaderHaflHeight);
-                HeaderTransform.anchorMax = new Vector2(HeaderTransform.anchorMax.x, Mathf.Lerp(0.5f, HeaderUnwrappedPos, Lerp) + HeaderHaflHeight);
+                _headerTransform.anchorMin = new Vector2(_headerTransform.anchorMin.x, Mathf.Lerp(0.5f, _headerUnwrappedPos, Lerp) - HeaderHaflHeight);
+                _headerTransform.anchorMax = new Vector2(_headerTransform.anchorMax.x, Mathf.Lerp(0.5f, _headerUnwrappedPos, Lerp) + HeaderHaflHeight);
                 
-                WindowTransform.anchorMax = new Vector2(WindowTransform.anchorMax.x, Mathf.Lerp(0.5f + WindowAppend, WindowUnwrappedMaxY, Lerp));
-                WindowTransform.anchorMin = new Vector2(WindowTransform.anchorMin.x, Mathf.Lerp(0.5f + WindowAppend - (WindowUnwrappedMaxY - WindowUnwrappedMinY), WindowUnwrappedMinY, Lerp));
+                _windowTransform.anchorMax = new Vector2(_windowTransform.anchorMax.x, Mathf.Lerp(0.5f + WindowAppend, _windowUnwrappedMaxY, Lerp));
+                _windowTransform.anchorMin = new Vector2(_windowTransform.anchorMin.x, Mathf.Lerp(0.5f + WindowAppend - (_windowUnwrappedMaxY - _windowUnwrappedMinY), _windowUnwrappedMinY, Lerp));
                 
-                WindowMask.fillAmount = Lerp;
-                yield return Wait;
+                _windowMask.fillAmount = Lerp;
+                yield return _wait;
             } 
-            Sounds.Stop(Services.Audio.Sounds.SoundType.Unwrap);
+            _sounds.Stop(Services.Audio.Sounds.SoundType.Unwrap);
         }
         
         protected IEnumerator AnimateHeaderColor(float Duration = 1f, bool IsHide = false)
         {
-            Wait ??= new ();
+            _wait ??= new ();
             
             int Steps = Mathf.RoundToInt(Duration / Time.fixedDeltaTime);
             
@@ -88,15 +90,18 @@ namespace UI.Merge
                 float Lerp = i / (float) Steps;
                 if (IsHide) Lerp = 1 - Lerp;
                 Target.color = Color.Lerp(Clear, Usual, Lerp); 
-                yield return Wait;
+                yield return _wait;
             }
         }
         
-        protected void SetTurnOffStatus(bool enabled) => CloseButton.SetActive(enabled);
+        protected void SetTurnOffStatus(bool enabled)
+        {
+            _closeButton.SetActive(enabled);
+        }
         
         protected IEnumerator AnimateFade(float Duration = 1f, bool IsHide = false)
         {
-            Wait ??= new ();
+            _wait ??= new ();
             
             int Steps = Mathf.RoundToInt(Duration / Time.fixedDeltaTime);
             
@@ -106,8 +111,8 @@ namespace UI.Merge
             {
                 float Lerp = i / (float) Steps;
                 if (IsHide) Lerp = 1 - Lerp;
-                Fade.color = Color.Lerp(Color.clear, Usual, Lerp); 
-                yield return Wait;
+                _fade.color = Color.Lerp(Color.clear, Usual, Lerp); 
+                yield return _wait;
             }
         }
     }

@@ -7,28 +7,35 @@ namespace UI.Endless
     [System.Serializable]
     public class RequestByAds
     {
-        [SerializeField] GameObject Turnable;
-        [SerializeField] Animator Animator;
-        [SerializeField] TextTMPLocalized Name, Description;
-        [SerializeField] TMPro.TMP_Text BonusCount;
-        [SerializeField] Image Icon;
-        [SerializeField] Button TryActivateButton;
+        [SerializeField] private GameObject _turnable;
+        [SerializeField] private Animator _animator;
+        [SerializeField] private TextTMPLocalized _name;
+        [SerializeField] private TextTMPLocalized _description;
+        [SerializeField] private TMPro.TMP_Text _bonusCount;
+        [SerializeField] private Image _icon;
+        [SerializeField] private Button _tryActivateButton;
         
         public void TurnOn(Content.Instrument.Config.InstrumentView View, System.Action OnActivate)
         {
             var str = BrakelessGames.Localization.Controller.GetValueByKey("Instrument_Formatted");
             var name = BrakelessGames.Localization.Controller.GetValueByKey(View.NameLangKey);
-            Name.SetTextNoTranslate(string.Format(str, name));
-            Description.SetNewKey(View.DescriptionLangKey);
-            Icon.sprite = View.Sprite;
-            BonusCount.text = '+' + View.IncreaseCount.ToString();
-            TryActivateButton.onClick.RemoveAllListeners();
-            TryActivateButton.onClick.AddListener(OnActivate.Invoke);
-            Turnable.SetActive(true);
+            _name.SetTextNoTranslate(string.Format(str, name));
+            _description.SetNewKey(View.DescriptionLangKey);
+            _icon.sprite = View.Sprite;
+            _bonusCount.text = '+' + View.IncreaseCount.ToString();
+            _tryActivateButton.onClick.RemoveAllListeners();
+            _tryActivateButton.onClick.AddListener(OnActivate.Invoke);
+            _turnable.SetActive(true);
         }
 
-        internal void StartTurnOff() => Animator.SetTrigger("Hide");
+        public void StartTurnOff()
+        {
+            _animator.SetTrigger("Hide");
+        }
 
-        internal void TurnOff() => Turnable.SetActive(false);
+        public void TurnOff()
+        {
+            _turnable.SetActive(false);
+        }
     }
 }

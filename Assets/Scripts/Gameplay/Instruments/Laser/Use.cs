@@ -5,50 +5,42 @@ namespace Gameplay.Instruments
 {
     public partial class Laser : BaseInstrument
     {
+        private Vector3[] _linePoints;
+        
         public override void ReactOnClickDown()
         {
-            //processRoutine = 
-            if (!instrumentShown) return;
+            if (!InstrumentShown) return;
             if (!User.IsClickedInGameField()) return;
             StartCoroutine(ProcessSlice());
         }
 
         public override void ReactOnClickUp()
         {
-            //if (processRoutine != null) User.StopCoroutine(processRoutine);
-            IsSlicing = false;
-            burnLine.enabled = false;
+            _isSlicing = false;
+            _burnLine.enabled = false;
             Sounds.Stop(Services.Audio.Sounds.SoundType.LaserUse);
             Sounds.Play(Services.Audio.Sounds.SoundType.LaserIdle);
-            /*
-            burnSound.Stop();
-            idleSound.Play();
-            */
-            if (burnSmoke != null) burnSmoke.Stop();
-            if (laserSmoke != null) laserSmoke.Stop();
-            if (burnEdge != null) burnEdge.Stop();
+            if (_burnSmoke != null) _burnSmoke.Stop();
+            if (_laserSmoke != null) _laserSmoke.Stop();
+            if (_burnEdge != null) _burnEdge.Stop();
         }
         
-        IEnumerator ProcessSlice()
+        private IEnumerator ProcessSlice()
         {
             RefreshTargetBubble();
             ChangeView();
             
-            IsSlicing = true;
-            burnLine.enabled = true;
+            _isSlicing = true;
+            _burnLine.enabled = true;
             Sounds.Play(Services.Audio.Sounds.SoundType.LaserUse);
             Sounds.Stop(Services.Audio.Sounds.SoundType.LaserIdle);
             
-            /*
-            idleSound.Stop();
-            burnSound.Play();
-            */
-            if (laserSmoke != null) laserSmoke.Play();
-            if (burnSmoke != null) burnSmoke.Play();
-            if (burnEdge != null) burnEdge.Play();
+            if (_laserSmoke != null) _laserSmoke.Play();
+            if (_burnSmoke != null) _burnSmoke.Play();
+            if (_burnEdge != null) _burnEdge.Play();
             
             bool RefreshOnNextStep = true;
-            while(IsSlicing && Energy > 0)
+            while(_isSlicing && _energy > 0)
             {
                 if (RefreshOnNextStep)
                 {
@@ -57,17 +49,17 @@ namespace Gameplay.Instruments
                     RotateRifle();
                     RefreshOnNextStep = false;
                 }
-                Energy --;
-                if (TargetBubble != null && TargetBubble.IsDamageCauseDeath())
+                _energy --;
+                if (_targetBubble != null && _targetBubble.IsDamageCauseDeath())
                 {
-                    underAttack.Remove(TargetBubble);
-                    Field.CleanDamagedBubble(ref TargetBubble);
-                    TargetBubble = null;
+                    _underAttack.Remove(_targetBubble);
+                    Field.CleanDamagedBubble(ref _targetBubble);
+                    _targetBubble = null;
                     RefreshOnNextStep = true;
                 }
                 yield return Wait;
             }
-            if (Energy <= 0)
+            if (_energy <= 0)
             {
                 AfterUse?.Invoke();
                 ReactOnClickUp();
@@ -82,66 +74,57 @@ namespace Gameplay.Instruments
             RotateRifle();
         }
         
-        Vector3[] LinePoints;
-        void ChangeView()
+        private void ChangeView()
         {
-            if (LinePoints == null)
-            {
-                LinePoints = new Vector3[3] {laserOnScene.parent.position, Vector3.zero, Vector3.zero};
-            }
-            LinePoints[2] = burnWorldPos;
-            LinePoints[1] = Vector3.Lerp(LinePoints[0], LinePoints[2], 0.1f);
-            burnLine.SetPositions(LinePoints);
+            _linePoints ??= new Vector3[3] {_laserOnScene.parent.position, Vector3.zero, Vector3.zero};
+            _linePoints[2] = _burnWorldPos;
+            _linePoints[1] = Vector3.Lerp(_linePoints[0], _linePoints[2], 0.1f);
+            _burnLine.SetPositions(_linePoints);
             
-            burnPoint.position = burnWorldPos;
+            _burnPoint.position = _burnWorldPos;
         }
         
-        void RefreshTargetBubble()
+        private void RefreshTargetBubble()
         {
-            if (traj == null)
-            {
-                //Debug.Log("Не создалось((");
-                traj = new User.Trajectory(CollisionRadius, Field.TryResponseCollision, 1, trajectoryCollisionsCount);
-            }
-            traj.CalculateFullWayClean(laserOnScene.parent.position, mouseClampedDirection);
-            var corner = traj.Corners[0];
-            burnWorldPos = corner.Endpoint;
-            if (!IsSlicing) return;
+            _trajectory ??= new User.Trajectory(CollisionRadius, Field.TryResponseCollision, 1, TrajectoryCollisionsCount);
+            _trajectory.CalculateFullWayClean(_laserOnScene.parent.position, MouseClampedDirection);
+            var corner = _trajectory.Corners[0];
+            _burnWorldPos = corner.Endpoint;
+            if (!_isSlicing) return;
             if (corner.CollisionReason != Gameplay.User.CollisionType.IntoBunch) return;
-            var place = Field.GiveBubbleByDirection(ref burnWorldPos, corner.Direction);
+            var place = Field.GiveBubbleByDirection(ref _burnWorldPos, corner.Direction);
             if (!place.Valid || !place.Busy)
             {
-                TargetBubble = null;
+                _targetBubble = null;
                 return;
             }
-            foreach(var damaged in underAttack)
+            foreach(var damaged in _underAttack)
             {
-                if (damaged.fieldPlace.Line == place.Line && damaged.fieldPlace.Column == place.Column)
+                if (damaged.FieldPlace.Line == place.Line && damaged.FieldPlace.Column == place.Column)
                 {
-                    TargetBubble = damaged;
+                    _targetBubble = damaged;
                     return;
                 }
             }
-            TargetBubble = new DamagedBubble(place, this.BubbleResistFrames);
-            underAttack.Add(TargetBubble);
+            _targetBubble = new DamagedBubble(place, this._bubbleResistFrames);
+            _underAttack.Add(_targetBubble);
         }
         
-        void RotateRifle()
+        private void RotateRifle()
         {
-            if (!laserSpite) laserSpite = laserOnScene.GetComponent<SpriteRenderer>();
-            laserOnScene.rotation = Quaternion.LookRotation(Vector3.forward, new Vector3(mouseClampedDirection.x, mouseClampedDirection.y));
+            if (!_laserSpite) _laserSpite = _laserOnScene.GetComponent<SpriteRenderer>();
+            _laserOnScene.rotation = Quaternion.LookRotation(Vector3.forward, new Vector3(MouseClampedDirection.x, MouseClampedDirection.y));
         }
         
         public override void ReactOnFieldMove()
         {
             base.ReactOnFieldMove();
             var newLinesCount = Field.LineCount;
-            if (oldLinesCount != newLinesCount)
+            if (_oldLinesCount != newLinesCount)
             {
-                Field.TryChangeLinesPosInDamaged(ref underAttack, oldLinesCount);
-                oldLinesCount = newLinesCount;
+                Field.TryChangeLinesPosInDamaged(ref _underAttack, _oldLinesCount);
+                _oldLinesCount = newLinesCount;
             }
-            
         }
     }
 }

@@ -1,33 +1,33 @@
 #pragma warning disable CS0618 
 #if UNITY_WEBGL
-using UnityEngine;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace Services.Web
 {
     public partial class Catcher : MonoBehaviour
     {
-        static bool isReviewMade, isReviewSuccess;
+        private static bool _isReviewMade, _isReviewSuccess;
         
         public static async UniTask<bool> IsReviewSuccess()
         {
-            isReviewMade = false;
-            isReviewSuccess = false;
+            _isReviewMade = false;
+            _isReviewSuccess = false;
             Application.ExternalCall("RequestReview");
-            while (!isReviewMade) await Utilities.Wait();
-            return isReviewSuccess;
+            while (!_isReviewMade) await Utilities.Wait();
+            return _isReviewSuccess;
         }
         
         public void ReviewSuccess()
         {
-            isReviewSuccess = true;
-            isReviewMade = true;
+            _isReviewSuccess = true;
+            _isReviewMade = true;
         }
         
         public void ReviewFail(string Message)
         {
-            isReviewSuccess = false;
-            isReviewMade = true;
+            _isReviewSuccess = false;
+            _isReviewMade = true;
         }
     }
 }

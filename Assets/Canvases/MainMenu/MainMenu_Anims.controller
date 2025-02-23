@@ -89,9 +89,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fced18124427fc4c987ed13c6480196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  When: 0
-  Message: RegisterIsShown
-  Direct: 0
+  _when: 0
+  _message: RegisterIsShown
+  _direct: 0
 --- !u!1102 &-3467404209860024944
 AnimatorState:
   serializedVersion: 6
@@ -163,9 +163,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fced18124427fc4c987ed13c6480196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  When: 0
-  Message: HideMenu
-  Direct: 0
+  _when: 0
+  _message: HideMenu
+  _direct: 0
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0

@@ -11,20 +11,23 @@ namespace Gameplay.Field
 #else 
         public static float MinAspectRatio => 9/16f;
 #endif
-        bool IsFieldSizeDynamic;
-        float MaxAspectRatio;
-        int CheckStep = 30;
-        float oldAspectRatio;
-        Coroutine FieldAspectAnim;
+        private bool _isFieldSizeDynamic;
+        private float _maxAspectRatio;
+        private int _checkStep = 30;
+        private float _oldAspectRatio;
+        private Coroutine _fieldAspectAnim;
 
-        internal void ResetAspect() => oldAspectRatio = -1;
+        public void ResetAspect()
+        {
+            _oldAspectRatio = -1;
+        }
         
         public void TryCheckAspectChange()
         {
-            if (!IsFieldSizeDynamic) return;
-            CheckStep ++;
-            if (CheckStep >= 30) CheckStep = 0;
-            if (CheckStep == 0)
+            if (!_isFieldSizeDynamic) return;
+            _checkStep ++;
+            if (_checkStep >= 30) _checkStep = 0;
+            if (_checkStep == 0)
             {
                 CheckAspectChange();
             }
@@ -32,43 +35,42 @@ namespace Gameplay.Field
         
         public void CheckAspectChange()
         {
-            var Aspect = Mathf.Clamp(Screen.width / (float) (Screen.height * (1 - UpperRelativePlace)), MinAspectRatio, MaxAspectRatio);
-            if (Aspect == oldAspectRatio) return;
-            oldAspectRatio = Aspect;
+            var Aspect = Mathf.Clamp(Screen.width / (float) (Screen.height * (1 - UpperRelativePlace)), MinAspectRatio, _maxAspectRatio);
+            if (Aspect == _oldAspectRatio) return;
+            _oldAspectRatio = Aspect;
             SetAspect(Aspect);
         }
         
         public void SetAspect(float AspectRatio)
         {
-            var OldSize = FieldSize;
+            var OldSize = _fieldSize;
             var oldBubblesCount = BubblesCountPerLine;
-            //AspectRatio = Mathf.Clamp(AspectRatio, MinAspectRatio, MaxAspectRatio);
-            BubblesCountPerLine = GimmeBubbleCount((FieldSize.y * AspectRatio));
-            FieldSize = new Vector2(BubbleSize * BubblesCountPerLine, FieldSize.y);
-            inGameCanvas.ReactOnFieldResize(FieldSize.x/FieldSize.y);
+            BubblesCountPerLine = GimmeBubbleCount((_fieldSize.y * AspectRatio));
+            _fieldSize = new Vector2(BubbleSize * BubblesCountPerLine, _fieldSize.y);
+            _inGameCanvas.ReactOnFieldResize(_fieldSize.x/_fieldSize.y);
             RefreshFieldStats();
             SetupBarriers();
-            if (FieldAspectAnim != null)
+            if (_fieldAspectAnim != null)
             {
-                StopCoroutine(FieldAspectAnim);
+                StopCoroutine(_fieldAspectAnim);
             }
-            FieldAspectAnim = StartCoroutine(AnimateAspectChange(OldSize));
+            _fieldAspectAnim = StartCoroutine(AnimateAspectChange(OldSize));
             SetBubblesToEmptyPlaces(oldBubblesCount);
         }
         
-        IEnumerator AnimateAspectChange(Vector2 OldSize)
+        private IEnumerator AnimateAspectChange(Vector2 OldSize)
         {
-            Lines ??= new List<LineOfBubbles>();
+            _lines ??= new List<LineOfBubbles>();
             var linesUnderShift = new List<LineOfBubbles>();
-            linesUnderShift.AddRange(Lines);
-            int Count = Lines.Count;
+            linesUnderShift.AddRange(_lines);
+            int Count = _lines.Count;
             
             float[] OldPos = new float[Count];
             float[] NewPos = new float[Count];
             for (int k = 0; k < Count; k++)
             {
                 OldPos[k] = linesUnderShift[k].OnScene.position.x;
-                NewPos[k] = StartPoint.x + (linesUnderShift[k].Shifted? ShiftWidth:0);
+                NewPos[k] = _startPoint.x + (linesUnderShift[k].Shifted? _shiftWidth:0);
             }
             float Lerp = 0;
             for (int i = 0; i <= 30; i++)
@@ -78,53 +80,59 @@ namespace Gameplay.Field
                 {
                     linesUnderShift[k].OnScene.position = new Vector3(Mathf.Lerp(OldPos[k], NewPos[k], Lerp),  linesUnderShift[k].OnScene.position.y, 0);
                 }
-                SetupBarriers(Vector2.Lerp(OldSize, FieldSize, Lerp));
-                yield return Wait;
+                SetupBarriers(Vector2.Lerp(OldSize, _fieldSize, Lerp));
+                yield return _wait;
             }
         }
         
-        void SetBubblesToEmptyPlaces(int OldSize)
+        private void SetBubblesToEmptyPlaces(int OldSize)
         {
-            for (int i=0; i< Lines.Count; i++)
+            for (int i=0; i< _lines.Count; i++)
             {
-                var Line = Lines[i];
+                var Line = _lines[i];
                 FillLineByBubbles(ref Line);
             }
         }
         
-        int GimmeBubbleCount() => GimmeBubbleCount(FieldSize.x);
-        
-        int GimmeBubbleCount(float XSize) => Mathf.FloorToInt((XSize - ShiftWidth) / (float)BubbleSize);
-        
-        void RefreshFieldStats()
+        private int GimmeBubbleCount()
         {
-            LineHeight = BubbleSize * Mathf.Sin(60 * Mathf.Deg2Rad);
-            ShiftWidth = BubbleSize * 0.5f;
+            return GimmeBubbleCount(_fieldSize.x);
+        }
+        
+        private int GimmeBubbleCount(float XSize)
+        {
+            return Mathf.FloorToInt((XSize - _shiftWidth) / (float)BubbleSize);
+        }
+        
+        private void RefreshFieldStats()
+        {
+            _lineHeight = BubbleSize * Mathf.Sin(60 * Mathf.Deg2Rad);
+            _shiftWidth = BubbleSize * 0.5f;
             BubblesCountPerLine = GimmeBubbleCount();
             RefreshStartPoint();
         }
         
-        void RefreshStartPoint()
+        private void RefreshStartPoint()
         {
-            float UsefulWidth = BubblesCountPerLine * BubbleSize + ShiftWidth;
-            StartPoint = (Vector2)transform.position + new Vector2(-UsefulWidth * 0.5f, FieldSize.y * 0.5f);
-            StartPoint += new Vector2(ShiftWidth, - ShiftWidth);
-            StartPoint += FieldSize.y * UpperRelativePlace * Vector2.down;
+            float UsefulWidth = BubblesCountPerLine * BubbleSize + _shiftWidth;
+            _startPoint = (Vector2)transform.position + new Vector2(-UsefulWidth * 0.5f, _fieldSize.y * 0.5f);
+            _startPoint += new Vector2(_shiftWidth, - _shiftWidth);
+            _startPoint += _fieldSize.y * UpperRelativePlace * Vector2.down;
         }
         
-        void SetupBarriers() => SetupBarriers(new Vector2(BubblesCountPerLine * BubbleSize + ShiftWidth, FieldSize.y));
+        private void SetupBarriers() => SetupBarriers(new Vector2(BubblesCountPerLine * BubbleSize + _shiftWidth, _fieldSize.y));
         
-        void SetupBarriers(Vector2 fieldSize)
+        private void SetupBarriers(Vector2 fieldSize)
         {
-            barriers.SetupBarriers(fieldSize, fieldSize.y * UpperRelativePlace);
-            if (EndLine != null)
+            _barriers.SetupBarriers(fieldSize, fieldSize.y * UpperRelativePlace);
+            if (_endLine != null)
             {
-                EndLine.localPosition = new Vector3(0, fieldSize.y * 0.5f - FieldUsableSpace, 0.5f);
-                EndLine.localScale = new Vector3(fieldSize.x + Barriers.SizeWidth * 2, 0.025f);
+                _endLine.localPosition = new Vector3(0, fieldSize.y * 0.5f - _fieldUsableSpace, 0.5f);
+                _endLine.localScale = new Vector3(fieldSize.x + Barriers.SizeWidth * 2, 0.025f);
             }
-            if (Background != null)
+            if (_background != null)
             {
-                Background.sizeDelta = new Vector2(FieldSize.y * (Screen.width / (float)Screen.height), FieldSize.y);
+                _background.sizeDelta = new Vector2(_fieldSize.y * (Screen.width / (float)Screen.height), _fieldSize.y);
             }
         }
     }

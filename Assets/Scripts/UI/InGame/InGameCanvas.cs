@@ -6,12 +6,13 @@ namespace UI.InGame
 {
     public class InGameCanvas : MonoBehaviour
     {
-        [SerializeField] Icon[] icons;
-        [SerializeField] GameObject HorizontalParent, VerticalParent;
-        [SerializeField] AspectRatioFitter VerticalAspect;
-        System.Action OnInstrumentCountUnbind;
+        [SerializeField] private Icon[] _icons;
+        [SerializeField] private GameObject _horizontalParent;
+        [SerializeField] private GameObject _verticalParent;
+        [SerializeField] private AspectRatioFitter _verticalAspect;
+        private System.Action _onInstrumentCountUnbind;
         
-        void Start()
+        private void Start()
         {
             ActivateViewsFromConfig();
         }
@@ -20,44 +21,44 @@ namespace UI.InGame
         {
             var service = Services.DI.Single<Content.Instrument.Service>();
             while(service.Config == null) if (await Utilities.IsWaitEndsFailure()) return;
-            foreach(var icon in icons) icon.ApplyConfig(service.Config);
+            foreach(var icon in _icons) icon.ApplyConfig(service.Config);
         }
         
         public void BindWithCounts(Gameplay.Instruments.Counts counts)
         {
-            OnInstrumentCountUnbind?.Invoke();
-            OnInstrumentCountUnbind = null;
+            _onInstrumentCountUnbind?.Invoke();
+            _onInstrumentCountUnbind = null;
             if (counts == null) return;
-            foreach(var icon in icons)
+            foreach(var icon in _icons)
             {
                 var NewUnbindLogic = icon.BindWithCount(counts.GetPair(icon.Type));;
                 if (NewUnbindLogic == null) continue;
-                OnInstrumentCountUnbind += NewUnbindLogic;
+                _onInstrumentCountUnbind += NewUnbindLogic;
             }
         }
         
         public void ReactOnFieldResize(float Aspect)
         {
             bool isHorizontal = Aspect >= 1;
-            foreach(var icon in icons) icon.ApplyFieldStat(isHorizontal);
-            VerticalAspect.aspectRatio = Aspect;
+            foreach(var icon in _icons) icon.ApplyFieldStat(isHorizontal);
+            _verticalAspect.aspectRatio = Aspect;
             if (isHorizontal)
             {
-                HorizontalParent.SetActive(true);
-                var ForRebuild =  HorizontalParent.GetComponentInChildren<HorizontalLayoutGroup>().GetComponent<RectTransform>();
+                _horizontalParent.SetActive(true);
+                var ForRebuild =  _horizontalParent.GetComponentInChildren<HorizontalLayoutGroup>().GetComponent<RectTransform>();
                 LayoutRebuilder.ForceRebuildLayoutImmediate(ForRebuild);
-                VerticalParent.SetActive(false);
+                _verticalParent.SetActive(false);
             }
             else
             {
-                HorizontalParent.SetActive(false);
-                VerticalParent.SetActive(true);
+                _horizontalParent.SetActive(false);
+                _verticalParent.SetActive(true);
             }
         }
 
-        internal void AnimateFailUseInstrument(WorkType type)
+        public void AnimateFailUseInstrument(WorkType type)
         {
-            foreach(var icon in icons)
+            foreach(var icon in _icons)
             {
                 if (icon.Type != type) continue;
                 icon.AnimateFailActivate(this, 0.5f);
@@ -66,8 +67,14 @@ namespace UI.InGame
             }
         }
         
-        public void Hide() => GetComponent<Animator>().SetTrigger("Hide");
+        public void Hide()
+        {
+            GetComponent<Animator>().SetTrigger("Hide");
+        }
         
-        public void FinalizeHide() => gameObject.SetActive(false);
+        public void FinalizeHide()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

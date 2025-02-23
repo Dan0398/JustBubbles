@@ -7,24 +7,24 @@ namespace Gameplay.GameType
 {
     public abstract class BubbleBaseType : BaseType
     {
-        protected Action user                   { get; private set; }
-        protected Field.BubbleField field       { get; private set; }
+        protected Action User                   { get; private set; }
+        protected Field.BubbleField Field       { get; private set; }
         protected virtual float UserDistance => 8f;
         
         protected BubbleBaseType(Gameplay.Controller Gameplay, Settings Settings, InGameParents InGameParts, BubbleField Field, Action User) 
         : base(Gameplay, User, Settings, InGameParts)
         {
-            field = Field;
-            user = User;
-            user.ChangeRayDistance(UserDistance);
+            this.Field = Field;
+            this.User = User;
+            this.User.ChangeRayDistance(UserDistance);
             ProcessEnterToType();
         }
         
         public abstract void ReactOnUserBubbleSet(List<Field.Place> PopByUser, List<Field.Place> Fallen, System.Type InstrumentType);
         
-        void ProcessEnterToType()
+        private void ProcessEnterToType()
         {
-            field.ReceiveConfig(new Field.BubbleField.Config()
+            Field.ReceiveConfig(new Field.BubbleField.Config()
             {
                 ReactOnBubbleSet = ReactOnUserBubbleSet,
                 IsFieldSizeDynamic = this.IsFieldAspectDynamic,
@@ -33,11 +33,11 @@ namespace Gameplay.GameType
             });
             if (!IsFieldAspectDynamic)
             {
-                field.SetAspect(MaxFieldAspect);
+                Field.SetAspect(MaxFieldAspect);
             }
             else 
             {
-                field.ResetAspect();
+                Field.ResetAspect();
             }
             settings.Skins.SetTurnedOnStatus(SkinChangeAvailable);
         }

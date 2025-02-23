@@ -7,70 +7,72 @@ namespace UI.Merge
     [System.Serializable]
     public class SizeConfigView
     {
-        [SerializeField] GameObject Parent;
-        [SerializeField] Image Preview;
-        [SerializeField] TextTMPLocalized NameLocalized;
-        [SerializeField] Button Prev, Next;
-        [SerializeField] TextTMPLocalized PhoneBlockerLabel;
-        [SerializeField] Image PhoneBlockerView;
-        [SerializeField] Sprite PhoneBlocked, PhoneAvailable;
-        [SerializeField] Button Select;
-        [SerializeField] Image Select_View;
-        [SerializeField] TextTMPLocalized SelectLabel;
-        Content.Merge.Selector.SizeSelector Selector;
-        System.Action onClick;
-        Services.Environment Env;
-        bool selectAvailable;
+        [SerializeField] private GameObject _parent;
+        [SerializeField] private Image _preview;
+        [SerializeField] private TextTMPLocalized _nameLocalized;
+        [SerializeField] private Button _prev;
+        [SerializeField] private Button _next;
+        [SerializeField] private TextTMPLocalized _phoneBlockerLabel;
+        [SerializeField] private Image _phoneBlockerView;
+        [SerializeField] private Sprite _phoneBlocked;
+        [SerializeField] private Sprite _phoneAvailable;
+        [SerializeField] private Button _select;
+        [SerializeField] private Image _select_View;
+        [SerializeField] private TextTMPLocalized _selectLabel;
+        private Content.Merge.Selector.SizeSelector _selector;
+        private System.Action _onClick;
+        private Services.Environment _env;
+        private bool _selectAvailable;
         
         public void Init()
         {
-            Next.onClick.AddListener(() =>
+            _next.onClick.AddListener(() =>
             {
-                if (Selector == null) return;
-                Selector.GoToNext();
+                if (_selector == null) return;
+                _selector.GoToNext();
                 Refresh();
             });
-            Prev.onClick.AddListener(()=>
+            _prev.onClick.AddListener(()=>
             {
-                if (Selector == null) return;
-                Selector.GoToPrev();
+                if (_selector == null) return;
+                _selector.GoToPrev();
                 Refresh();
             });
-            Select.onClick.AddListener( () =>
+            _select.onClick.AddListener( () =>
             {
-                if (!selectAvailable)
+                if (!_selectAvailable)
                 {
                     Services.DI.Single<Services.Audio.Sounds.Service>().Play(Services.Audio.Sounds.SoundType.InstrumentFail);
                     return;
                 }
-                Selector.Select();
-                onClick.Invoke();
+                _selector.Select();
+                _onClick.Invoke();
             });
-            Env = Services.DI.Single<Services.Environment>();
+            _env = Services.DI.Single<Services.Environment>();
         }
         
         public void Show(Content.Merge.Selector.SizeSelector selector, System.Action OnSelect)
         {
-            Parent.SetActive(true);
-            Selector = selector;
-            onClick = OnSelect;
+            _parent.SetActive(true);
+            _selector = selector;
+            _onClick = OnSelect;
             Refresh();
         }
         
-        void Refresh()
+        private void Refresh()
         {
-            Preview.sprite = Selector.Selected.Preview;
-            NameLocalized.SetNewKey(Selector.Selected.NameLangKey);
+            _preview.sprite = _selector.Selected.Preview;
+            _nameLocalized.SetNewKey(_selector.Selected.NameLangKey);
             
-            var OKForTouch = Selector.Selected.MobileAvailable;
-            PhoneBlockerView.sprite = OKForTouch? PhoneAvailable : PhoneBlocked;
-            PhoneBlockerLabel.SetNewKey(OKForTouch? "AvailabeForTouch" : "NotAvailabeForTouch");
+            var OKForTouch = _selector.Selected.MobileAvailable;
+            _phoneBlockerView.sprite = OKForTouch? _phoneAvailable : _phoneBlocked;
+            _phoneBlockerLabel.SetNewKey(OKForTouch? "AvailabeForTouch" : "NotAvailabeForTouch");
             
-            selectAvailable = OKForTouch == Env.IsUsingTouch.Value || !Env.IsUsingTouch.Value;
-            SelectLabel.SetNewKey(selectAvailable? "Select": "Blocked");
-            Select_View.color = selectAvailable? Color.white : new Color(1, 0.8f, 0.8f, 1);
+            _selectAvailable = OKForTouch == _env.IsUsingTouch.Value || !_env.IsUsingTouch.Value;
+            _selectLabel.SetNewKey(_selectAvailable? "Select": "Blocked");
+            _select_View.color = _selectAvailable? Color.white : new Color(1, 0.8f, 0.8f, 1);
         }
         
-        public void Hide() => Parent.SetActive(false);
+        public void Hide() => _parent.SetActive(false);
     }
 }

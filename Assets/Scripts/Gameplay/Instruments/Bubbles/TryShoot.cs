@@ -5,7 +5,7 @@ namespace Gameplay.Instruments.Bubble
 {
     public partial class Circle : BaseInstrument
     {
-        void TryShoot()
+        private void TryShoot()
         {
             if (IsClickedToSwitchBubbleButton())
             {
@@ -20,32 +20,32 @@ namespace Gameplay.Instruments.Bubble
             {
                 var Ray = User.GetScreenRayAtCursor();
                 var Hit = Physics2D.Raycast(Ray.origin, Ray.direction, 100, 2);
-                return Hit.collider == BubbleSwitchButton;
+                return Hit.collider == _bubbleSwitchButton;
             }
         }
         
-        void ShootBubble()
+        private void ShootBubble()
         {
             if (!User.IsClickedInGameField()) return;
-            if (isBubblesOnReload) return;
-            if (!instrumentShown) return;
+            if (_isBubblesOnReload) return;
+            if (!InstrumentShown) return;
             
             TryBreakSwitchAnimation();
-            var flyTrajectory = new User.Trajectory(CollisionRadius, Field.TryResponseCollision, 1, trajectoryCollisionsCount);
+            var flyTrajectory = new User.Trajectory(CollisionRadius, Field.TryResponseCollision, 1, TrajectoryCollisionsCount);
             
-            Gameplay.User.ICircleObject bubble = bubblesInCircle[0];
-            bubblesInCircle.RemoveAt(0);
+            Gameplay.User.ICircleObject bubble = _bubblesInCircle[0];
+            _bubblesInCircle.RemoveAt(0);
             
             bool isUsualBubble = bubble is Gameplay.Bubble;
             if (isUsualBubble)
             {
-                bubbleCount--;
+                _bubbleCount--;
             }
             else
             {
                 MultiBallUsed = false;
             }
-            MovingBubbles.ApplyParticleToMovingBubble(bubble);
+            _movingBubbles.ApplyParticleToMovingBubble(bubble);
             Sounds.Play(Services.Audio.Sounds.SoundType.BubbleShoot);
             
             StartCoroutine(AnimateBubbleFly(bubble.MyTransform, ProcessEndBubbleWay));
@@ -53,23 +53,23 @@ namespace Gameplay.Instruments.Bubble
         
             void TryBreakSwitchAnimation()
             {
-                if (CircleRotateAnimation == null) return;
-                User.StopCoroutine(CircleRotateAnimation);
+                if (_circleRotateAnimation == null) return;
+                User.StopCoroutine(_circleRotateAnimation);
                 PlaceBubblesAndRecolorTrajectory();
             }
         
             IEnumerator AnimateBubbleFly(Transform Target, System.Action OnEnd)
             {
                 User.CollisionType Col;
-                flyTrajectory.PrepareFirst(User.transform.position, mouseClampedDirection);
+                flyTrajectory.PrepareFirst(User.transform.position, MouseClampedDirection);
                 Target.position = flyTrajectory.PosOnWay;
-                flyTrajectory.StepLengthOnWay = BubbleSpeed;
+                flyTrajectory.StepLengthOnWay = _bubbleSpeed;
                 while (!flyTrajectory.Completed)
                 {
                     Col = flyTrajectory.TryStepAndCheckCollisions();
                     if (Col != Gameplay.User.CollisionType.None)
                     {
-                        Collisions.ReactOnCollision(Col, flyTrajectory.CurrentCornerPointOnWay);
+                        _collisions.ReactOnCollision(Col, flyTrajectory.CurrentCornerPointOnWay);
                     }
                     Target.position = flyTrajectory.PosOnWay;
                     yield return Wait;
@@ -79,18 +79,17 @@ namespace Gameplay.Instruments.Bubble
             
             IEnumerator AnimateBubblesShift(System.Func<Color> OldColor, System.Action OnEnd = null)
             {
-                isBubblesOnReload = true;
+                _isBubblesOnReload = true;
                 var Increment = isUsualBubble? 1 : 0;
-                var AngleStep = 360 / (bubblesInCircle.Count + Increment);
+                var AngleStep = 360 / (_bubblesInCircle.Count + Increment);
                 
-                bool Linear = bubblesInCircle.Count + Increment == 2;
+                bool Linear = _bubblesInCircle.Count + Increment == 2;
                 
-                BubblePack[] Rotated = new BubblePack[bubblesInCircle.Count];
+                BubblePack[] Rotated = new BubblePack[_bubblesInCircle.Count];
                 for (int i = 0; i < Rotated.Length; i++)
                 {
                     
-                    Rotated[i] = new BubblePack(bubblesInCircle[i], ObjToAngle(bubblesInCircle[i]), (i + 1 + Increment) * AngleStep);
-                    //Rotated[i] = new BubblePack(bubblesInCircle[i], (i+1) * AngleStep, (i+2) * AngleStep);
+                    Rotated[i] = new BubblePack(_bubblesInCircle[i], ObjToAngle(_bubblesInCircle[i]), (i + 1 + Increment) * AngleStep);
                 }
                 
                 Vector2 newPos = Vector2.zero;
@@ -101,7 +100,7 @@ namespace Gameplay.Instruments.Bubble
                     newBubble = GiveAndSetupBubble();
                 }
                 
-                StartCoroutine(RecolorTrajectory(OldColor, bubblesInCircle[bubblesInCircle.Count - 1].TrajectoryColor, 11));
+                StartCoroutine(RecolorTrajectory(OldColor, _bubblesInCircle[_bubblesInCircle.Count - 1].TrajectoryColor, 11));
                 
                 float Lerp = 0;
                 for (int i = 0; i < 10; i ++)
@@ -127,26 +126,26 @@ namespace Gameplay.Instruments.Bubble
                 }
                 if (isUsualBubble)
                 {
-                    bubblesInCircle.Insert(0, newBubble);
-                    bubbleCount++;
+                    _bubblesInCircle.Insert(0, newBubble);
+                    _bubbleCount++;
                 }
                 LastToFirst();
                 PlaceBubblesAndRecolorTrajectory();
-                isBubblesOnReload = false;
+                _isBubblesOnReload = false;
                 OnEnd?.Invoke();
             }
             
             void ProcessEndBubbleWay()
             {
-                MovingBubbles.DisableBubbleParticle();
+                _movingBubbles.DisableBubbleParticle();
                 flyTrajectory.StepLengthOnWay *= -1;
                 
                 if (isUsualBubble) ((Gameplay.Bubble)bubble).ActivateCollisions();
                 Field.PlaceUserBubble(bubble, flyTrajectory, !isUsualBubble);
-                if (!isUsualBubble) multiball.MyTransform.gameObject.SetActive(false);
-                for(int i = 0; i < bubblesInCircle.Count; i++)
+                if (!isUsualBubble) _multiBall.MyTransform.gameObject.SetActive(false);
+                for(int i = 0; i < _bubblesInCircle.Count; i++)
                 {
-                    if (bubblesInCircle[i] is Gameplay.Bubble bubble)
+                    if (_bubblesInCircle[i] is Gameplay.Bubble bubble)
                     {
                         Field.TryFilterColor(ref bubble);
                     }

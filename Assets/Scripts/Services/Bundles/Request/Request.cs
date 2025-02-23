@@ -10,21 +10,21 @@ namespace Services.Bundles
         public Observable<LoadedStatus> Status {get; private set;}
         public ContentPart Content {get; private set;}
         public int ClientsCount {get; private set;}
-        List<object> clients;
-        Agent parent;
+        private List<object> _clients;
+        private Agent _parent;
         
         public Request(string fullPathInStreamingAssets, Priority priority, Agent Parent = null)
         {
             FullPathInStreamingAssets = fullPathInStreamingAssets;
             Importance = priority;
-            parent = Parent;
-            clients = new List<object>(3);
+            _parent = Parent;
+            _clients = new List<object>(3);
             Content = new ContentPart();
             Status = LoadedStatus.NotLoaded;
             SubscribeToLoad();
         }
         
-        void SubscribeToLoad()
+        private void SubscribeToLoad()
         {
             System.Action<UnityEngine.AssetBundle> OnLoaded = null;
             OnLoaded = (bundle) => 
@@ -37,13 +37,13 @@ namespace Services.Bundles
         
         public void AddClient(object client)
         {
-            clients.Add(client);
+            _clients.Add(client);
             ClientsCount++;
         }
         
         public void RemoveClient(object client)
         {
-            clients.Remove(client);
+            _clients.Remove(client);
             ClientsCount--;
         }
         

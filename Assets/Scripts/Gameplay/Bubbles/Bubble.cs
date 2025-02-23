@@ -18,8 +18,8 @@ namespace Gameplay
         [field:SerializeField] public BubbleColor MyColor   { get; private set; }
         [field:SerializeField] public Vector3 LocalPosInLine{ get; private set; }
         public System.Action OnSceneAnimationEnds;
-        Collider2D Collisions;
-        float Size;
+        private Collider2D _collisions;
+        private float _size;
         
         public System.Func<Color> TrajectoryColor => () => Gameplay.ColorPicker.GetColorByEnum(MyColor);
         
@@ -28,7 +28,7 @@ namespace Gameplay
             OnScene = GameObject.Instantiate(Sample);
             OnScene.SetActive(true);
             MyTransform = OnScene.transform;
-            Collisions = OnScene.GetComponent<Collider2D>();
+            _collisions = OnScene.GetComponent<Collider2D>();
             MyRigid = OnScene.AddComponent<Rigidbody2D>();
             MyRigid.isKinematic = true;
             if (BubblesSkins != null)
@@ -47,23 +47,30 @@ namespace Gameplay
         
         public void SetSize(float BubbleSize)
         {
-            Size = BubbleSize;
+            _size = BubbleSize;
             MyTransform.localScale = Vector3.one * BubbleSize;
         }
         
-        public void RandomizeColor(int MaxColorID, float RandomizeFactor = 1) => ChangeColor(ColorPicker.GetRandomColor(MaxColorID, RandomizeFactor));
-        public void RandomizeColor(List<BubbleColor> AvailableColors, float RandomizeFactor = 1) => ChangeColor(ColorPicker.GetRandomColor(AvailableColors, RandomizeFactor));
+        public void RandomizeColor(int MaxColorID, float RandomizeFactor = 1)
+        {
+            ChangeColor(ColorPicker.GetRandomColor(MaxColorID, RandomizeFactor));
+        }
+        
+        public void RandomizeColor(List<BubbleColor> AvailableColors, float RandomizeFactor = 1)
+        {
+            ChangeColor(ColorPicker.GetRandomColor(AvailableColors, RandomizeFactor));
+        }
         
         public void PlaceInLine(Transform LineTransform, int IdOnLine)
         {
             MyTransform.SetParent(LineTransform);
-            LocalPosInLine = Vector3.right * Size * IdOnLine;
+            LocalPosInLine = Vector3.right * _size * IdOnLine;
             MyTransform.localPosition = LocalPosInLine;
             MyTransform.localRotation = Quaternion.identity;
         }
         
-        public void DeactivateCollisions() => Collisions.enabled = false;
+        public void DeactivateCollisions() => _collisions.enabled = false;
         
-        public void ActivateCollisions() => Collisions.enabled = true;
+        public void ActivateCollisions() => _collisions.enabled = true;
     }
 }

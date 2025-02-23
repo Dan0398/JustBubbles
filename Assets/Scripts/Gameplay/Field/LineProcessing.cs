@@ -7,104 +7,96 @@ namespace Gameplay.Field
     {
         public void FullCleanupAnimated(float Duration, System.Action OnEnd = null)
         {
-            if (Lines.Count == 0)
+            if (_lines.Count == 0)
             {
                 OnEnd?.Invoke();
                 return;
             }
-            EffectsTransformMoveFrozen = true;
+            _effectsTransformMoveFrozen = true;
             StartCoroutine(AnimateLines(false, Duration, CleanLinesAndInvokeEnd));
             
             void CleanLinesAndInvokeEnd()
             {
-                for (int i = Lines.Count - 1; i >= 0; i --)
+                for (int i = _lines.Count - 1; i >= 0; i --)
                 {
-                    var Result = Lines[i].CleanLineAndGetCount(Pool);
+                    var Result = _lines[i].CleanLineAndGetCount(_pool);
                     ColorStats.DecountByBubble(Result);
-                    Lines.RemoveAt(i);
+                    _lines.RemoveAt(i);
                 }
-                LastLineShifted = true;
+                _lastLineShifted = true;
                 OnEnd?.Invoke();
-                EffectsTransformMoveFrozen = false;
+                _effectsTransformMoveFrozen = false;
             }
         }
         
         public void AppendOneLine()
         {
-            //var Line = 
             CreateAndPlaceLineAtTop(true);
-            //FillLineByBubbles(ref Line);
         }
         
         public void AppendLinesAndAnimate(int LinesCount, float AnimDuration, System.Action OnEnd = null)
         {
             for (int i = 0; i < LinesCount; i ++)
             {
-                //AppendOneLine();
-                //var Line = 
                 CreateAndPlaceLineAtTop(true);
-                //FillLineByBubbles(ref Line);
             }
-            if (LineDownAnimation != null)
+            if (_lineDownAnimation != null)
             {
-                StopCoroutine(LineDownAnimation);
+                StopCoroutine(_lineDownAnimation);
             }
-            LineDownAnimation = StartCoroutine(AnimateLines(true, AnimDuration, OnEnd));
+            _lineDownAnimation = StartCoroutine(AnimateLines(true, AnimDuration, OnEnd));
         }
         
-        IEnumerator AnimateLines(bool AnimateDown, float Duration, System.Action OnEnd)
+        private IEnumerator AnimateLines(bool AnimateDown, float Duration, System.Action OnEnd)
         {
-            float Delta = Lines[0].OnScene.position.y - StartPoint.y;
-            if (!AnimateDown) Delta -= Lines.Count * LineHeight;
+            float Delta = _lines[0].OnScene.position.y - _startPoint.y;
+            if (!AnimateDown) Delta -= _lines.Count * _lineHeight;
             int Steps = Mathf.RoundToInt(Duration / Time.fixedDeltaTime);
             Delta /= Steps;
             for (int i = 0; i < Steps; i ++)
             {
                 ShiftLinesDown(Delta);
-                yield return Wait;
+                yield return _wait;
             }
             OnEnd?.Invoke();
-            LineDownAnimation = null;
+            _lineDownAnimation = null;
         }
         
         public void ShiftLinesDown(float Scale)
         {
             var Shift = Vector3.down * Scale;
-            for (int i = 0; i< Lines.Count; i++)
+            for (int i = 0; i< _lines.Count; i++)
             {
-                Lines[i].OnScene.position += Shift;
+                _lines[i].OnScene.position += Shift;
             }
-            if (EffectsTransform != null && !EffectsTransformMoveFrozen)
+            if (_effectsTransform != null && !_effectsTransformMoveFrozen)
             {
-                EffectsTransform.position += Shift;
+                _effectsTransform.position += Shift;
             }
             OnFieldRefreshed?.Invoke();
         }
         
-        //LineOfBubbles 
-        void CreateAndPlaceLineAtTop(bool RequireFillLine = false)
+        private void CreateAndPlaceLineAtTop(bool RequireFillLine = false)
         {
-            Vector3 Pos = StartPoint;
-            if (Lines.Count > 0 && Lines[0] != null)
+            Vector3 Pos = _startPoint;
+            if (_lines.Count > 0 && _lines[0] != null)
             {
-                Pos = new Vector3(StartPoint.x, Lines[0].OnScene.transform.position.y);
-                //Pos += Vector3.up * (Lines[0].OnScene.transform.position.y - Pos.y);
+                Pos = new Vector3(_startPoint.x, _lines[0].OnScene.transform.position.y);
             }
-            if (LastLineShifted) Pos += Vector3.right * ShiftWidth;
-            Pos += Vector3.up * LineHeight;
+            if (_lastLineShifted) Pos += Vector3.right * _shiftWidth;
+            Pos += Vector3.up * _lineHeight;
             
-            var Result = new LineOfBubbles(transform, LastLineShifted);
-            LastLineShifted = !LastLineShifted;
-            Lines.Insert(0, Result);
+            var Result = new LineOfBubbles(transform, _lastLineShifted);
+            _lastLineShifted = !_lastLineShifted;
+            _lines.Insert(0, Result);
             Result.OnScene.position = Pos;
             if (RequireFillLine)
             {
                 FillLineByBubbles(ref Result);
             }
-            //return Result;
         }
         
-        void FillLineByBubbles(ref LineOfBubbles Line)
+        private void FillLineByBubbles(ref LineOfBubbles Line)
         {
             var AddCountRequired = BubblesCountPerLine - Line.MaxCapacity;
             if (AddCountRequired > 0)

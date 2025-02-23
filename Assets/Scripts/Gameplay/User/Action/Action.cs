@@ -1,5 +1,5 @@
-using UnityEngine;
 using Utils.Observables;
+using UnityEngine;
 
 namespace Gameplay.User
 {
@@ -7,44 +7,46 @@ namespace Gameplay.User
     public partial class Action: BaseUser<Field.BubbleField>
     {
         public bool UsingTouch          { get; private set; }
-        [SerializeField] Instruments.Bubble.Circle bubble;
-        [SerializeField] Instruments.Bomb.Bomb bomb;
-        [SerializeField] Instruments.SniperShot sniperShot;
-        [SerializeField] Instruments.Laser laser;
-        [SerializeField] RayTrajectory Trajectory;
-        [SerializeField] Effects.Controller Effects;
-        //[SerializeField] Field.BubbleField Field;
-        [SerializeField] UI.InGame.InGameCanvas InGameCanvas;
-        Instruments.BaseInstrument SelectedInstrument;
-        bool Started;
-        ObsFloat RayBaseDistance;
+        [SerializeField] private Instruments.Bubble.Circle _bubble;
+        [SerializeField] private Instruments.Bomb.Bomb _bomb;
+        [SerializeField] private Instruments.SniperShot _sniperShot;
+        [SerializeField] private Instruments.Laser _laser;
+        [SerializeField] private RayTrajectory _trajectory;
+        [SerializeField] private Effects.Controller _effects;
+        [SerializeField] private UI.InGame.InGameCanvas _inGameCanvas;
+        private Instruments.BaseInstrument _selectedInstrument;
+        private bool _started;
+        private ObsFloat _rayBaseDistance;
         
         protected override void Start()
         {
-            if (Started) return;
-            Started = true;
+            if (_started) return;
+            _started = true;
             base.Start();
-            Trajectory.Init(this, Field.TryResponseCollision);
+            _trajectory.Init(this, Field.TryResponseCollision);
             Field.OnFieldRefreshed += ReactOnFieldMove;
             SetupEnvironment();
-            RayBaseDistance ??= 0;
+            _rayBaseDistance ??= 0;
             InitInstruments();
         }
         
-        void InitInstruments()
+        private void InitInstruments()
         {
-            bubble.Init(this, Field, Effects, Trajectory, RayBaseDistance);
-            bomb.Init(this, Field, Effects, Trajectory, RayBaseDistance);
-            sniperShot.Init(this, Field, Effects, Trajectory, RayBaseDistance);
-            laser.Init(this, Field, Effects, Trajectory, RayBaseDistance);
+            _bubble.Init(this, Field, _effects, _trajectory, _rayBaseDistance);
+            _bomb.Init(this, Field, _effects, _trajectory, _rayBaseDistance);
+            _sniperShot.Init(this, Field, _effects, _trajectory, _rayBaseDistance);
+            _laser.Init(this, Field, _effects, _trajectory, _rayBaseDistance);
         }
         
-        void ReactOnFieldMove()
+        private void ReactOnFieldMove()
         {
-            SelectedInstrument?.ReactOnFieldMove();
+            if (_selectedInstrument != null)
+            {
+                _selectedInstrument.ReactOnFieldMove();
+            }
         }
         
-        void SetupEnvironment()
+        private void SetupEnvironment()
         {
             var Env = Services.DI.Single<Services.Environment>();
             ReactOnEnvironment(Env.IsUsingTouch.Value);
@@ -56,9 +58,12 @@ namespace Gameplay.User
             }
         }
         
-        void Update()
+        private void Update()
         {
-            Trajectory.ReceiveAvailableAndTryDraw(!Paused && MouseInsideField && (SelectedInstrument != null && SelectedInstrument.RequireDrawTrajectory));
+            _trajectory.ReceiveAvailableAndTryDraw(!Paused 
+                                                && MouseInsideField 
+                                                && _selectedInstrument != null 
+                                                && _selectedInstrument.RequireDrawTrajectory);
         }
     }
 }

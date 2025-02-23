@@ -1,7 +1,7 @@
 using System.Collections;
-using UnityEngine;
-using UnityEngine.UI;
 using Utils.Observables;
+using UnityEngine.UI;
+using UnityEngine;
 
 namespace UI.Merge
 {    
@@ -9,126 +9,128 @@ namespace UI.Merge
     public class Header: MonoBehaviour
     {
         public bool Shown   { get; private set; }
-        [SerializeField] TMPro.TMP_Text Score, Money;
-        [SerializeField] Button Save, Pause;
-        [SerializeField] Image SaveFill;
-        [SerializeField] Transform SaveMark;
-        [SerializeField] AnimationCurve SaveMarkSizeDynamic;
+        [SerializeField] private TMPro.TMP_Text _score;
+        [SerializeField] private TMPro.TMP_Text _money;
+        [SerializeField] private Button _save;
+        [SerializeField] private Button _pause;
+        [SerializeField] private Image _saveFill;
+        [SerializeField] private Transform _saveMark;
+        [SerializeField] private AnimationCurve _saveMarkSizeDynamic;
         [Header("Game Over")]
-        [SerializeField] Image GameOverFill;
-        [SerializeField] Slider GameOverValue;
-        Gameplay.GameType.Merge parent;
-        RectTransform MyRect;
-        System.Action OnUnbind;
-        ObsFloat gameOver;
-        bool gameOverUnWrapped;
-        Coroutine AnimationRoutine, SaveRoutine, GameOverUnwrapRoutine;
-        WaitForFixedUpdate Wait;
+        [SerializeField] private Image _gameOverFill;
+        [SerializeField] private Slider _gameOverValue;
+        private Gameplay.GameType.Merge _parent;
+        private RectTransform _myRect;
+        private System.Action _onUnbind;
+        private ObsFloat _gameOver;
+        private bool _gameOverUnWrapped;
+        private Coroutine _animationRoutine, _saveRoutine, _gameOverUnwrapRoutine;
+        private WaitForFixedUpdate _wait;
         
         public void BindAndShowAnimated(Gameplay.Merge.SaveModel slotModel, Gameplay.GameType.Merge Parent, ObsFloat GameOver, float AnimDuration = 1f)
         {
             Shown = true;
-            OnUnbind?.Invoke();
-            OnUnbind = null;
+            _onUnbind?.Invoke();
+            _onUnbind = null;
             gameObject.SetActive(true);
-            parent = Parent;
+            _parent = Parent;
             BindScore();
             BindMoney();
             BindPause();
             BindSave();
             BindGameOver();
-            if (AnimationRoutine != null) StopCoroutine(AnimationRoutine);
-            AnimationRoutine = StartCoroutine(AnimateShow(AnimDuration));
+            if (_animationRoutine != null) StopCoroutine(_animationRoutine);
+            _animationRoutine = StartCoroutine(AnimateShow(AnimDuration));
             
             void BindScore()
             {
-                System.Action RefreshScore = () => Score.text = slotModel.Points.Value.ToString();
+                System.Action RefreshScore = () => _score.text = slotModel.Points.Value.ToString();
                 RefreshScore.Invoke();
                 slotModel.Points.Changed += RefreshScore;
-                OnUnbind += () => slotModel.Points.Changed -= RefreshScore;
+                _onUnbind += () => slotModel.Points.Changed -= RefreshScore;
             }
             
             void BindMoney()
             {
-                System.Action RefreshMoney = () => Money.text = string.Concat(slotModel.Money.Value, '$');
+                System.Action RefreshMoney = () => _money.text = string.Concat(slotModel.Money.Value, '$');
                 RefreshMoney.Invoke();
                 slotModel.Money.Changed += RefreshMoney;
-                OnUnbind += () => slotModel.Money.Changed -= RefreshMoney;
+                _onUnbind += () => slotModel.Money.Changed -= RefreshMoney;
             }
             
             void BindPause()
             {
-                Pause.onClick.AddListener(Parent.CallSettings);
-                OnUnbind += () => Pause.onClick.RemoveAllListeners();
+                _pause.onClick.AddListener(Parent.CallSettings);
+                _onUnbind += () => _pause.onClick.RemoveAllListeners();
             }
             
             void BindSave()
             {
-                Save.onClick.AddListener(TrySave);
-                OnUnbind += () => Save.onClick.RemoveAllListeners();
+                _save.onClick.AddListener(TrySave);
+                _onUnbind += () => _save.onClick.RemoveAllListeners();
             }
             
             void BindGameOver()
             {
-                if (GameOverUnwrapRoutine != null) StopCoroutine(GameOverUnwrapRoutine);
-                GameOverFill.fillAmount = 0;
+                if (_gameOverUnwrapRoutine != null) StopCoroutine(_gameOverUnwrapRoutine);
+                _gameOverFill.fillAmount = 0;
                 
-                gameOver = GameOver;
-                gameOver.Changed += ReactOnStatus;
+                _gameOver = GameOver;
+                _gameOver.Changed += ReactOnStatus;
                 ReactOnStatus();
-                OnUnbind += () => 
+                _onUnbind += () => 
                 {
-                    gameOver.Changed -= ReactOnStatus;
-                    gameOver = null;
+                    _gameOver.Changed -= ReactOnStatus;
+                    _gameOver = null;
                 };
                 
                 void ReactOnStatus()
                 {
-                    if (gameOver == null) return;
-                    GameOverValue.value = gameOver.Value;
-                    if (!gameOverUnWrapped && gameOver.Value > 0)
+                    if (_gameOver == null) return;
+                    _gameOverValue.value = _gameOver.Value;
+                    if (!_gameOverUnWrapped && _gameOver.Value > 0)
                     {
-                        gameOverUnWrapped = true;
-                        if (GameOverUnwrapRoutine != null) StopCoroutine(GameOverUnwrapRoutine);
-                        GameOverUnwrapRoutine = StartCoroutine(UnwrapGameOver());
+                        _gameOverUnWrapped = true;
+                        if (_gameOverUnwrapRoutine != null) StopCoroutine(_gameOverUnwrapRoutine);
+                        _gameOverUnwrapRoutine = StartCoroutine(UnwrapGameOver());
                     }
-                    else if (gameOverUnWrapped && gameOver.Value == 0)
+                    else if (_gameOverUnWrapped && _gameOver.Value == 0)
                     {
-                        gameOverUnWrapped = false;
-                        if (GameOverUnwrapRoutine != null) StopCoroutine(GameOverUnwrapRoutine);
-                        GameOverUnwrapRoutine = StartCoroutine(UnwrapGameOver(true));
+                        _gameOverUnWrapped = false;
+                        if (_gameOverUnwrapRoutine != null) StopCoroutine(_gameOverUnwrapRoutine);
+                        _gameOverUnwrapRoutine = StartCoroutine(UnwrapGameOver(true));
                     }
                 }
                 
             }
         }
         
-        IEnumerator UnwrapGameOver(bool Reversed = false, float Duration = 1f)
+        private IEnumerator UnwrapGameOver(bool Reversed = false, float Duration = 1f)
         {
-            Wait ??= new WaitForFixedUpdate();
+            _wait ??= new WaitForFixedUpdate();
             
             int Steps = Mathf.RoundToInt(Duration / Time.fixedDeltaTime);
             
-            if (!Reversed) GameOverFill.gameObject.SetActive(true);
+            if (!Reversed) _gameOverFill.gameObject.SetActive(true);
             for (int i = 1; i <= Steps; i++)
             {
                 float Lerp = EasingFunction.EaseInSine(0, 1, i/(float)Steps);
                 if (Reversed) Lerp = 1 - Lerp;
-                GameOverFill.fillAmount = Lerp;
-                yield return Wait;
+                _gameOverFill.fillAmount = Lerp;
+                yield return _wait;
             }
-            if (Reversed) GameOverFill.gameObject.SetActive(false);
+            if (Reversed) _gameOverFill.gameObject.SetActive(false);
         }
         
-        IEnumerator AnimateShow(float Duration, System.Action OnEnd = null, bool IsHide = false)
+        private IEnumerator AnimateShow(float Duration, System.Action OnEnd = null, bool IsHide = false)
         {
             const float Height = 0.07f;
-            MyRect ??= GetComponent<RectTransform>();
-            Wait ??= new WaitForFixedUpdate();
+            _myRect ??= GetComponent<RectTransform>();
+            _wait ??= new WaitForFixedUpdate();
             
             int MaxSteps = Mathf.RoundToInt(Duration / Time.fixedDeltaTime);
             
-            int Step = Mathf.RoundToInt((MyRect.anchorMax.y - 1)/Height * MaxSteps);
+            int Step = Mathf.RoundToInt((_myRect.anchorMax.y - 1)/Height * MaxSteps);
             
             int FinalStep = IsHide? MaxSteps : 0;
             int Dir = IsHide? 1: -1;
@@ -136,10 +138,10 @@ namespace UI.Merge
             while(Step != FinalStep + Dir)
             {
                 float Lerp = Mathf.Cos(Step/(float)MaxSteps * 90 * Mathf.Deg2Rad);
-                MyRect.anchorMin = Vector2.up * (1 - Height* Lerp);
-                MyRect.anchorMax = new Vector2(1, 1 + Height * (1-Lerp));
+                _myRect.anchorMin = Vector2.up * (1 - Height* Lerp);
+                _myRect.anchorMax = new Vector2(1, 1 + Height * (1-Lerp));
                 Step += Dir;
-                yield return Wait;
+                yield return _wait;
             }
             OnEnd?.Invoke();
         }
@@ -147,18 +149,18 @@ namespace UI.Merge
         public void HideAnimated(float Duration = 1f, System.Action OnEnd = null)
         {
             Shown = false;
-            OnUnbind?.Invoke();
-            OnUnbind = null;
+            _onUnbind?.Invoke();
+            _onUnbind = null;
             if (!gameObject.activeSelf)
             {
                 OnEnd?.Invoke();
                 return;
             }
-            if (AnimationRoutine != null) StopCoroutine(AnimationRoutine);
-            AnimationRoutine = StartCoroutine(AnimateShow(Duration, AfterEnd, true));
+            if (_animationRoutine != null) StopCoroutine(_animationRoutine);
+            _animationRoutine = StartCoroutine(AnimateShow(Duration, AfterEnd, true));
             
-            if (GameOverUnwrapRoutine != null) StopCoroutine(GameOverUnwrapRoutine);
-            GameOverUnwrapRoutine = StartCoroutine(UnwrapGameOver(true, Duration));
+            if (_gameOverUnwrapRoutine != null) StopCoroutine(_gameOverUnwrapRoutine);
+            _gameOverUnwrapRoutine = StartCoroutine(UnwrapGameOver(true, Duration));
             
             void AfterEnd()
             {
@@ -167,37 +169,36 @@ namespace UI.Merge
             }
         }
         
-        void TrySave()
+        private void TrySave()
         {
-            if (SaveRoutine != null) 
+            if (_saveRoutine != null) 
             {
                 Debug.Log("Error sound");
                 return;
             }
-            parent.SaveSelectedSlot();
-            SaveRoutine = StartCoroutine(AnimateSave());
+            _parent.SaveSelectedSlot();
+            _saveRoutine = StartCoroutine(AnimateSave());
         }
         
-        IEnumerator AnimateSave()
+        private IEnumerator AnimateSave()
         {
-            Wait ??= new WaitForFixedUpdate();
+            _wait ??= new WaitForFixedUpdate();
             int Steps = Mathf.RoundToInt(2.5f / Time.fixedDeltaTime);
             for (int i = 1; i <= Steps; i++)
             {
-                SaveFill.fillAmount = i/(float)Steps;
-                yield return Wait;
+                _saveFill.fillAmount = i/(float)Steps;
+                yield return _wait;
             }
-            //yield return new WaitForSecondsRealtime(0.5f);
-            SaveMark.gameObject.SetActive(true);
+            _saveMark.gameObject.SetActive(true);
             Steps = Mathf.RoundToInt(0.7f / Time.fixedDeltaTime);
             Services.DI.Single<Services.Audio.Sounds.Service>().Play(Services.Audio.Sounds.SoundType.Merge_Saved);
             for (int i = 1; i <= Steps; i++)
             {
-                SaveMark.localScale = SaveMarkSizeDynamic.Evaluate(i/(float)Steps) * Vector3.one;
-                yield return Wait;
+                _saveMark.localScale = _saveMarkSizeDynamic.Evaluate(i/(float)Steps) * Vector3.one;
+                yield return _wait;
             }
-            SaveMark.gameObject.SetActive(false);
-            SaveRoutine = null;
+            _saveMark.gameObject.SetActive(false);
+            _saveRoutine = null;
         }
     }
 }

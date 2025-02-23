@@ -1,26 +1,26 @@
 #if UNITY_EDITOR
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gameplay.Field
 {
     public partial class BubbleField: MonoBehaviour, IField
     {
-        [SerializeField] bool Draw;
-        void OnDrawGizmos()
+        [SerializeField] private bool _draw;
+        
+        private void OnDrawGizmos()
         {
-            if (!Draw) return;
+            if (!_draw) return;
             DrawEdges();
             DrawBubbles();
             SetupBarriers();
         }
         
-        void DrawEdges()
+        private void DrawEdges()
         {
             Gizmos.color = Color.yellow;
-            Vector2 Max = (Vector2)transform.position + FieldSize * 0.5f;
-            Vector2 Min = (Vector2)transform.position - FieldSize * 0.5f;
-            Vector2 Corner = new Vector2(-FieldSize.x, FieldSize.y)*0.5f;
+            Vector2 Max = (Vector2)transform.position + _fieldSize * 0.5f;
+            Vector2 Min = (Vector2)transform.position - _fieldSize * 0.5f;
+            Vector2 Corner = new Vector2(-_fieldSize.x, _fieldSize.y)*0.5f;
             Vector2 MinusCorner = (Vector2)transform.position - Corner;
             Corner = (Vector2)transform.position + Corner;
             Gizmos.DrawLine(Corner, Min);
@@ -29,16 +29,12 @@ namespace Gameplay.Field
             Gizmos.DrawLine(MinusCorner, Max);
         }
         
-        void DrawBubbles()
+        private void DrawBubbles()
         {
             const int DrawnLines = 6;
             RefreshFieldStats();
-            Vector2 LinePoint = StartPoint;
-            Vector2 ShiftDown =  Vector2.down * BubbleSize * Mathf.Sin(60*Mathf.Deg2Rad);
-            /*
-            LinePoint += (FieldSize.x - (BubblesCountPerLine * BubbleSize)) * 0.5f * Vector2.right;
-            LinePoint += ShiftDown * 0.5f;
-            */
+            Vector2 LinePoint = _startPoint;
+            Vector2 ShiftDown =  BubbleSize * Mathf.Sin(60*Mathf.Deg2Rad) * Vector2.down;
             
             Gizmos.color = Color.green;
             for (int Line = 0; Line < DrawnLines; Line ++)

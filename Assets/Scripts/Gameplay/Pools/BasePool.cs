@@ -6,19 +6,18 @@ namespace Gameplay.Pools
     public abstract class BasePool<T> : MonoBehaviour where T:IWithTransform
     {
         [SerializeField] protected GameObject Sample;
-        //[SerializeField] Skinned.Bubble Skins;
-        Queue<T> PooledBubbles;
+        private Queue<T> _pooledBubbles;
         
-        void Start()
+        private void Start()
         {
-            PooledBubbles ??= new Queue<T>();
+            _pooledBubbles ??= new Queue<T>();
         }
         
         public T GiveItem()
         {
-            if (PooledBubbles != null && PooledBubbles.Count > 0)
+            if (_pooledBubbles != null && _pooledBubbles.Count > 0)
             {
-                var Result = PooledBubbles.Dequeue();
+                var Result = _pooledBubbles.Dequeue();
                 Result.MyTransform.gameObject.SetActive(true);
                 return Result;
             }
@@ -29,7 +28,7 @@ namespace Gameplay.Pools
         
         public void Hide(T UselessObject)
         {
-            PooledBubbles.Enqueue(UselessObject);
+            _pooledBubbles.Enqueue(UselessObject);
             UselessObject.MyTransform.SetParent(transform);
             UselessObject.MyTransform.gameObject.SetActive(false);
         }
@@ -41,12 +40,12 @@ namespace Gameplay.Pools
         
         protected void Clear()
         {
-            PooledBubbles ??= new Queue<T>();
-            for (int i = 0; i < PooledBubbles.Count; i++)
+            _pooledBubbles ??= new Queue<T>();
+            for (int i = 0; i < _pooledBubbles.Count; i++)
             {
-                GameObject.Destroy(PooledBubbles.Dequeue().MyTransform.gameObject);
+                Destroy(_pooledBubbles.Dequeue().MyTransform.gameObject);
             }
-            PooledBubbles.Clear();
+            _pooledBubbles.Clear();
         }
     }
 }

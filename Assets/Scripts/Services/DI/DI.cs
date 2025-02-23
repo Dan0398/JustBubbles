@@ -5,7 +5,7 @@ namespace Services
 {
     public class DI : MonoBehaviour
     {
-        static Dictionary<System.Type, IService> AllSystems;
+        private static Dictionary<System.Type, IService> AllSystems;
         
         static DI()
         {

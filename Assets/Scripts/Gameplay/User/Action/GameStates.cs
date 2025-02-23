@@ -4,21 +4,21 @@ namespace Gameplay.User
     {
         public override void StartGameplayAndAnimate(float Duration = 1f)
         {
-            if (!Started) Start();
-            SelectedInstrument = bubble;
-            SelectedInstrument.ShowAnimated(Duration);
-            instrumentInUse = false;
+            if (!_started) Start();
+            _selectedInstrument = _bubble;
+            _selectedInstrument.ShowAnimated(Duration);
+            _instrumentInUse = false;
             Unpause();
         }
         
         public override void StopGameplayAndAnimate(float Duration, System.Action OnEnd = null)
         {
             Pause();
-            SelectedInstrument.HideAnimated(Duration, OnAnimationEnd);
+            _selectedInstrument.HideAnimated(Duration, OnAnimationEnd);
             
             void OnAnimationEnd()
             {
-                SelectedInstrument = null;
+                _selectedInstrument = null;
                 OnEnd?.Invoke();
             }
         }

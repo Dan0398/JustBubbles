@@ -5,6 +5,7 @@ namespace Gameplay.Field
     {
         public bool Valid, Busy;
         public int Line, Column;
+        
         public Place(int Line, int Place)
         {
             Valid = true;

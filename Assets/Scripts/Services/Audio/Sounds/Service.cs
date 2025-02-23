@@ -6,10 +6,10 @@ namespace Services.Audio.Sounds
     [AddComponentMenu("Help/SoundService")]
     public class Service: MonoBehaviour, IService
     {
-        WaitForSecondsRealtime Wait;
-        Config soundsConfig;
-        bool soundsPrepared = false;
-        float volume;
+        private WaitForSecondsRealtime _wait;
+        private Config _soundsConfig;
+        private bool _soundsPrepared;
+        private float _volume;
         
         public static Service CreateInstance()
         {
@@ -18,28 +18,28 @@ namespace Services.Audio.Sounds
             return obj.AddComponent<Service>();
         }
         
-        void Start()
+        private void Start()
         {
-            Wait = new WaitForSecondsRealtime(0.5f);
+            _wait = new WaitForSecondsRealtime(0.5f);
             StartCoroutine(LoadConfig());
             StartCoroutine(LoadSoundSettings());
         }
         
-        IEnumerator LoadConfig()
+        private IEnumerator LoadConfig()
         {
             var ConfigRequest = Resources.LoadAsync<Config>("Config/SoundConfig");
-            while(!ConfigRequest.isDone) yield return Wait;
-            soundsConfig = (Config)ConfigRequest.asset;
+            while(!ConfigRequest.isDone) yield return _wait;
+            _soundsConfig = (Config)ConfigRequest.asset;
             
             var loader = DI.Single<Bundles.Agent>();
-            var LoadRequest = loader.GiveMeContent(Application.streamingAssetsPath + '/' + soundsConfig.BundlePath, this, Bundles.Request.Priority.Mid);
-            while(!LoadRequest.IsReady) yield return Wait;
+            var LoadRequest = loader.GiveMeContent(Application.streamingAssetsPath + '/' + _soundsConfig.BundlePath, this, Bundles.Request.Priority.Mid);
+            while(!LoadRequest.IsReady) yield return _wait;
             var bundle = LoadRequest.BundleInMemory;
             
-            foreach(var pair in soundsConfig.SoundPairs)
+            foreach(var pair in _soundsConfig.SoundPairs)
             {
                 var Load = bundle.LoadAssetAsync<AudioClip>(pair.NameInBundle);
-                while(Load.isDone) yield return Wait;
+                while(Load.isDone) yield return _wait;
                 
                 pair.LoadedData = (AudioClip) Load.asset;
                 var source = gameObject.AddComponent<AudioSource>();
@@ -49,40 +49,38 @@ namespace Services.Audio.Sounds
                 source.volume = pair.DefaultVolume;
                 pair.OnScene = source;
             }
-            
-            soundsPrepared = true;
+            _soundsPrepared = true;
         }
         
-        IEnumerator LoadSoundSettings()
+        private IEnumerator LoadSoundSettings()
         {
             var Settings = DI.Single<Data.SettingsController>();
-            while(!Settings.isDataLoaded) yield return Wait;
-            while(!soundsPrepared) yield return Wait;
+            while(!Settings.isDataLoaded) yield return _wait;
+            while(!_soundsPrepared) yield return _wait;
             Refresh();
             Settings.Data.SoundLevel.Changed += Refresh;
             
             void Refresh()
             {
-                volume = Settings.Data.SoundLevel.Value;
-                foreach(var pair in soundsConfig.SoundPairs)
+                _volume = Settings.Data.SoundLevel.Value;
+                foreach(var pair in _soundsConfig.SoundPairs)
                 {
-                    pair.OnScene.volume = volume * pair.DefaultVolume * pair.InGameMastering;
+                    pair.OnScene.volume = _volume * pair.DefaultVolume * pair.InGameMastering;
                 }
             }
         }
         
         public void Play(SoundType type)
         {
-            if (!soundsPrepared) return;
+            if (!_soundsPrepared) return;
             var pair = PairByType(type);
-            //if (pair == null) return;
             if (pair.OnScene.isPlaying && pair.Looped) return;
             pair.OnScene.Play();
         }
         
         public void Play(SoundType type, float Pitch)
         {
-            if (!soundsPrepared) return;
+            if (!_soundsPrepared) return;
             var Pair = PairByType(type);
             if (Pair == null) return;
             Pair.OnScene.pitch = Pitch;
@@ -91,27 +89,27 @@ namespace Services.Audio.Sounds
         
         public System.Action<float> PlayAndGiveVolumeChange(SoundType type)
         {
-            if (!soundsPrepared) return null;
+            if (!_soundsPrepared) return null;
             var pair = PairByType(type);
             if (pair == null) return null;
             pair.OnScene.Play();
             return (float a) => 
             {
                 pair.InGameMastering = a;
-                pair.OnScene.volume = volume * pair.DefaultVolume * pair.InGameMastering;
+                pair.OnScene.volume = _volume * pair.DefaultVolume * pair.InGameMastering;
             };
         }
 
         public void Stop(SoundType type)
         {
-            if (!soundsPrepared) return;
+            if (!_soundsPrepared) return;
             PairByType(type).OnScene.Stop();
         }
         
-        Config.Pair PairByType(SoundType type)
+        private Config.Pair PairByType(SoundType type)
         {
-            if (!soundsPrepared) return null;
-            foreach(var pair in soundsConfig.SoundPairs)
+            if (!_soundsPrepared) return null;
+            foreach(var pair in _soundsConfig.SoundPairs)
             {
                 if (pair.Type == type)
                 {

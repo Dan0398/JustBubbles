@@ -424,15 +424,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c75f3fe118e12aa40aba521a3e70d5d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HeaderUnwrappedPos: 0.9
-  WindowUnwrappedMinY: 0.05
-  WindowUnwrappedMaxY: 0.95
-  Fade: {fileID: 4934757}
-  WindowMask: {fileID: 1195440565}
-  WindowTransform: {fileID: 1195440562}
-  HeaderTransform: {fileID: 1757835739}
   <Header>k__BackingField: {fileID: 2081579856}
-  CloseButton: {fileID: 110997579}
+  _headerUnwrappedPos: 0.9
+  _windowUnwrappedMinY: 0.05
+  _windowUnwrappedMaxY: 0.95
+  _fade: {fileID: 4934757}
+  _windowMask: {fileID: 1195440565}
+  _windowTransform: {fileID: 1195440562}
+  _headerTransform: {fileID: 1757835739}
+  _closeButton: {fileID: 110997579}
 --- !u!1 &5103762
 GameObject:
   m_ObjectHideFlags: 0
@@ -695,7 +695,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &20170299
@@ -716,7 +716,7 @@ MonoBehaviour:
     m_Top: 10
     m_Bottom: 10
   m_ChildAlignment: 0
-  Spacing: 10
+  _spacing: 10
 --- !u!114 &20170300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1690,7 +1690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &62244824
@@ -6812,11 +6812,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15792a57618a06347a8702650ca0a939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Angle: 80
-  rifleOnScene: {fileID: 1989126438}
-  BulletSpeed: 1.21
-  BulletOnScene: {fileID: 1587811837}
-  AimLine: {fileID: 808755068}
+  _angle: 80
+  _rifleOnScene: {fileID: 1989126438}
+  _bulletSpeed: 1.21
+  _bulletOnScene: {fileID: 1587811837}
+  _aimLine: {fileID: 808755068}
 --- !u!1 &79057868
 GameObject:
   m_ObjectHideFlags: 0
@@ -6871,7 +6871,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &79057872
@@ -6886,7 +6886,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &79057873
 Animator:
   serializedVersion: 5
@@ -7070,7 +7070,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &88277605
@@ -7091,7 +7091,7 @@ MonoBehaviour:
     m_Top: 10
     m_Bottom: 10
   m_ChildAlignment: 0
-  Spacing: 10
+  _spacing: 10
 --- !u!114 &88277606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7240,7 +7240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &90064160
@@ -7255,7 +7255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &90064161
 Animator:
   serializedVersion: 5
@@ -7608,8 +7608,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdecfd5b6ef6a1142a2e2dba71cf6383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayType: 7
-  StopOnDisable: 0
+  _playType: 7
+  _stopOnDisable: 0
 --- !u!114 &95995976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8061,7 +8061,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &98404007
@@ -8219,7 +8219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &98891412
@@ -8234,7 +8234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &98891413
 Animator:
   serializedVersion: 5
@@ -8664,7 +8664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &107046445
@@ -9199,7 +9199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &132930802
@@ -15519,7 +15519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &203340738
@@ -15808,16 +15808,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39a7736bf9998aa4aa4db66b8710db9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Angle: 80
-  BubbleResistFrames: 3
-  MaxEnergy: 200
-  Energy: 0
-  laserOnScene: {fileID: 952872276}
-  burnPoint: {fileID: 2096698268}
-  burnEdge: {fileID: 71062126}
-  burnSmoke: {fileID: 1880514223}
-  laserSmoke: {fileID: 0}
-  burnLine: {fileID: 1576852379}
+  _angle: 80
+  _bubbleResistFrames: 3
+  _maxEnergy: 200
+  _energy: 0
+  _laserOnScene: {fileID: 952872276}
+  _burnPoint: {fileID: 2096698268}
+  _burnEdge: {fileID: 71062126}
+  _burnSmoke: {fileID: 1880514223}
+  _laserSmoke: {fileID: 0}
+  _burnLine: {fileID: 1576852379}
 --- !u!1 &220513947
 GameObject:
   m_ObjectHideFlags: 0
@@ -16050,7 +16050,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &227629426
@@ -16071,7 +16071,7 @@ MonoBehaviour:
     m_Top: 10
     m_Bottom: 10
   m_ChildAlignment: 0
-  Spacing: 10
+  _spacing: 10
 --- !u!114 &227629427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16199,14 +16199,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfec3a027a06f5e40a6fba9d2028b737, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Description: {fileID: 1699167983}
-  WindowRect: {fileID: 1859237910}
-  WindowYMin: 0.3
-  WindowYMax: 0.7
-  HeaderRect: {fileID: 1260953705}
-  HeaderYMin: 0.58
-  HeaderYMax: 0.7
-  Fader: {fileID: 229896397}
+  _description: {fileID: 1699167983}
+  _windowRect: {fileID: 1859237910}
+  _windowYMin: 0.3
+  _windowYMax: 0.7
+  _headerRect: {fileID: 1260953705}
+  _headerYMin: 0.58
+  _headerYMax: 0.7
+  _fader: {fileID: 229896397}
 --- !u!224 &229896393
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16864,7 +16864,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &239651766
@@ -16879,7 +16879,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &239651767
 Animator:
   serializedVersion: 5
@@ -22319,14 +22319,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffbe6dd4d3531ab459d7134e5dbcf764, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EmptyParent: {fileID: 287857772}
-  DataParent: {fileID: 697490017}
-  ThemePreview: {fileID: 1523918540}
-  FieldSizeLabel: {fileID: 1209021922}
-  ThemeNameLabel: {fileID: 1901685376}
-  ScoreLabel: {fileID: 1740563741}
-  MoneyLabel: {fileID: 539144176}
-  PhoneBlocker: {fileID: 1625668966}
+  _emptyParent: {fileID: 287857772}
+  _dataParent: {fileID: 697490017}
+  _themePreview: {fileID: 1523918540}
+  _fieldSizeLabel: {fileID: 1209021922}
+  _themeNameLabel: {fileID: 1901685376}
+  _scoreLabel: {fileID: 1740563741}
+  _moneyLabel: {fileID: 539144176}
+  _phoneBlocker: {fileID: 1625668966}
 --- !u!1 &281973886
 GameObject:
   m_ObjectHideFlags: 0
@@ -22629,7 +22629,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  Spacing: 0
+  _spacing: 0
 --- !u!1 &289284616
 GameObject:
   m_ObjectHideFlags: 0
@@ -23236,7 +23236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &301708444
@@ -25048,15 +25048,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 986771fa3ffe10048af7e2ccd9bb46ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovedWindow: {fileID: 181593441}
-  Fader: {fileID: 181593444}
-  Gameplay: {fileID: 519420034}
-  EndlessAnims: {fileID: 1219728696}
-  TimeTrialAnims: {fileID: 1295917258}
-  StrategyAnims: {fileID: 98891413}
-  MergeAnims: {fileID: 523686428}
-  SettingsAnims: {fileID: 1654846397}
-  TurnablePuzzleAds: {fileID: 1611352894}
+  _movedWindow: {fileID: 181593441}
+  _fader: {fileID: 181593444}
+  _gameplay: {fileID: 519420034}
+  _endlessAnims: {fileID: 1219728696}
+  _timeTrialAnims: {fileID: 1295917258}
+  _strategyAnims: {fileID: 98891413}
+  _mergeAnims: {fileID: 523686428}
+  _settingsAnims: {fileID: 1654846397}
+  _turnablePuzzleAds: {fileID: 1611352894}
 --- !u!1 &359942655
 GameObject:
   m_ObjectHideFlags: 0
@@ -25186,7 +25186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &364032531
@@ -25201,7 +25201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &364032532
 Animator:
   serializedVersion: 5
@@ -26292,25 +26292,25 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  ShowAnimationSpeed: 0.5
+  _showAnimationSpeed: 0.5
   <Score>k__BackingField:
-    ScoreLabel: {fileID: 102874225}
+    _scoreLabel: {fileID: 102874225}
   <Combo>k__BackingField:
-    ComboLangKey: ComboFormatted
-    ComboLabel: {fileID: 41303610}
-    PointsMultiplierLabel: {fileID: 1028163103}
+    _comboLangKey: ComboFormatted
+    _comboLabel: {fileID: 41303610}
+    _pointsMultiplierLabel: {fileID: 1028163103}
   <Progress>k__BackingField:
-    progressSlider: {fileID: 1927626521}
+    _progressSlider: {fileID: 1927626521}
   <FallenBubblesView>k__BackingField:
-    FallenText: {fileID: 880686822}
+    _fallenText: {fileID: 880686822}
   <GameOver>k__BackingField: {fileID: 1649169443}
   <ReceivedBonus>k__BackingField: {fileID: 1590951276}
-  ColorsCount: {fileID: 1601319147}
-  LevelAnchor: {fileID: 268929598}
-  HelpWindow: {fileID: 1224773237}
-  EndgameObj: {fileID: 1807616531}
-  HeaderObj: {fileID: 146721524}
-  FunctionalButtonsInHeader:
+  _colorsCount: {fileID: 1601319147}
+  _levelAnchor: {fileID: 268929598}
+  _helpWindow: {fileID: 1224773237}
+  _endgameObj: {fileID: 1807616531}
+  _headerObj: {fileID: 146721524}
+  _functionalButtonsInHeader:
   - {fileID: 683263405}
   - {fileID: 1330384259}
 --- !u!95 &380264968
@@ -26977,7 +26977,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &408568245
@@ -27370,7 +27370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!114 &423289828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27383,7 +27383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &423289829
@@ -27625,7 +27625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &429588266
@@ -28351,7 +28351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!222 &461594156
@@ -35184,7 +35184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78da353808af0ca40bb757292f576907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShakeDynamic:
+  _shakeDynamic:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -35262,8 +35262,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  ShakeScale: 0.12
-  BasePos: {x: 0, y: 0, z: -10}
+  _shakeScale: 0.12
+  _basePos: {x: 0, y: 0, z: -10}
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35276,19 +35276,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d022a249e4361ff4689405b166a6c1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainMenuCanvas: {fileID: 354463159}
-  Settings: {fileID: 717967861}
-  Endless: {fileID: 1691674027}
-  TimeTrial: {fileID: 380264966}
-  Strategy: {fileID: 912695147}
-  Merge: {fileID: 2084835681}
-  bubbleField: {fileID: 1702202613}
-  Actions: {fileID: 582389963}
-  mergeField: {fileID: 4394701703114246711}
-  mergeUser: {fileID: 1367629646780122682}
-  ActualType:
+  _mainMenuCanvas: {fileID: 354463159}
+  _settings: {fileID: 717967861}
+  _endless: {fileID: 1691674027}
+  _timeTrial: {fileID: 380264966}
+  _strategy: {fileID: 912695147}
+  _merge: {fileID: 2084835681}
+  _bubbleField: {fileID: 1702202613}
+  _actions: {fileID: 582389963}
+  _mergeField: {fileID: 4394701703114246711}
+  _mergeUser: {fileID: 1367629646780122682}
+  _actualType:
     rid: -2
-  InGameParts:
+  _inGameParts:
     <Bubble>k__BackingField: {fileID: 1849178991}
     <Merge>k__BackingField: {fileID: 5871405164690477881}
   references:
@@ -35308,7 +35308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0eca32780f96c14bb89ad26a9852835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 519420031}
+  _camera: {fileID: 519420031}
 --- !u!1 &522026467
 GameObject:
   m_ObjectHideFlags: 0
@@ -35439,7 +35439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &523686427
@@ -35454,7 +35454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &523686428
 Animator:
   serializedVersion: 5
@@ -41985,7 +41985,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Sample: {fileID: 642109571}
-  Skins: {fileID: 957219939}
+  _skins: {fileID: 957219939}
 --- !u!4 &569654574
 Transform:
   m_ObjectHideFlags: 0
@@ -42281,9 +42281,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae5719d77731bb347be48284b64147e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cam: {fileID: 519420031}
-  Events: {fileID: 1496892947}
-  CanvasesForIgnore:
+  _camera: {fileID: 519420031}
+  _events: {fileID: 1496892947}
+  _canvasesForIgnore:
   - {fileID: 354463154}
   - {fileID: 717967862}
   - {fileID: 1030148586}
@@ -42292,18 +42292,18 @@ MonoBehaviour:
   - {fileID: 912695142}
   - {fileID: 1785035544}
   Field: {fileID: 1702202613}
-  bubble: {fileID: 1317011333}
-  bomb: {fileID: 770893934}
-  sniperShot: {fileID: 76941425}
-  laser: {fileID: 217344374}
-  Trajectory:
-    SpaceBetweenDrawn: 0.3
-    MeshSize: 0.15
-    AnimationSpeed: 0.005
-    DrawnMesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
-    DrawnMaterial: {fileID: 2100000, guid: e96fb6e9a31990e458e80357c2ca45e4, type: 2}
-  Effects: {fileID: 1061230001}
-  InGameCanvas: {fileID: 1030148590}
+  _bubble: {fileID: 1317011333}
+  _bomb: {fileID: 770893934}
+  _sniperShot: {fileID: 76941425}
+  _laser: {fileID: 217344374}
+  _trajectory:
+    _spaceBetweenDrawn: 0.3
+    _meshSize: 0.15
+    _animationSpeed: 0.005
+    _drawnMesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+    _drawnMaterial: {fileID: 2100000, guid: e96fb6e9a31990e458e80357c2ca45e4, type: 2}
+  _effects: {fileID: 1061230001}
+  _inGameCanvas: {fileID: 1030148590}
 --- !u!1 &588480922
 GameObject:
   m_ObjectHideFlags: 0
@@ -42620,7 +42620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &605042651
@@ -42635,7 +42635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!1 &606295792
 GameObject:
   m_ObjectHideFlags: 0
@@ -47644,7 +47644,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &606957364
@@ -48243,7 +48243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &622469624
@@ -48258,7 +48258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &622469625
 Animator:
   serializedVersion: 5
@@ -49214,7 +49214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &632385396
@@ -49747,7 +49747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &647917146
@@ -49762,7 +49762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &647917147
 Animator:
   serializedVersion: 5
@@ -50174,7 +50174,7 @@ MonoBehaviour:
     m_Top: 10
     m_Bottom: 10
   m_ChildAlignment: 0
-  Spacing: 10
+  _spacing: 10
 --- !u!114 &651693643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50199,7 +50199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &654412648
@@ -50625,7 +50625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &666536119
@@ -50816,7 +50816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &671028878
@@ -51199,7 +51199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &686920790
@@ -51276,8 +51276,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdecfd5b6ef6a1142a2e2dba71cf6383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayType: 7
-  StopOnDisable: 0
+  _playType: 7
+  _stopOnDisable: 0
 --- !u!1 &696711722
 GameObject:
   m_ObjectHideFlags: 0
@@ -51561,7 +51561,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 3
-  Spacing: 0
+  _spacing: 0
 --- !u!1 &707460557
 GameObject:
   m_ObjectHideFlags: 0
@@ -51627,7 +51627,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!222 &707460561
@@ -51974,14 +51974,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GoToMenuAvailable: 0
   Skins:
-    Blocker: {fileID: 216931835}
-    BubbleSkin:
-      Window: {fileID: 957219939}
-      Clickable: {fileID: 1340406649}
-    BackgroundSkin:
-      Window: {fileID: 0}
-      Clickable: {fileID: 605042646}
-  LanguageCodes:
+    _blocker: {fileID: 216931835}
+    _bubbleSkin:
+      _window: {fileID: 957219939}
+      _clickable: {fileID: 1340406649}
+    _backgroundSkin:
+      _window: {fileID: 0}
+      _clickable: {fileID: 605042646}
+  _languageCodes:
   - en
   - ru
   - tr
@@ -51990,12 +51990,12 @@ MonoBehaviour:
   - de
   - pt
   - fr
-  MenuButton: {fileID: 1238845828}
-  Gameplay: {fileID: 519420034}
-  SoundsSlider: {fileID: 721721684}
-  MusicSlider: {fileID: 295783786}
-  MusicInfoButton: {fileID: 285776414}
-  GoToMenuLabel: {fileID: 483217181}
+  _menuButton: {fileID: 1238845828}
+  _gameplay: {fileID: 519420034}
+  _soundsSlider: {fileID: 721721684}
+  _musicSlider: {fileID: 295783786}
+  _musicInfoButton: {fileID: 285776414}
+  _goToMenuLabel: {fileID: 483217181}
 --- !u!114 &717967862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52749,7 +52749,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57a4d05d204f6c34bbd54528d308257c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PCHelpIcon: {fileID: 1535374250}
+  _pcHelpIcon: {fileID: 1535374250}
 --- !u!1 &748781365
 GameObject:
   m_ObjectHideFlags: 0
@@ -53402,12 +53402,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60b9e419c06c6e341a07219835a4e53c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Angle: 80
-  BombFlySpeed: 0.4
-  ExplodeRadius: 3
-  TrajectoryColor: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
-  BombOnScene: {fileID: 290809434}
-  Effects: {fileID: 770893938}
+  _angle: 80
+  _bombFlySpeed: 0.4
+  _explodeRadius: 3
+  _trajectoryColor: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
+  _bombOnScene: {fileID: 290809434}
+  _effects: {fileID: 770893938}
 --- !u!114 &770893938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53420,8 +53420,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8da699c9aab41e24199eaaaeb4050a22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionEffect: {fileID: 1325336843}
-  Shaker: {fileID: 519420033}
+  _explosionEffect: {fileID: 1325336843}
+  _shaker: {fileID: 519420033}
 --- !u!1 &773224985
 GameObject:
   m_ObjectHideFlags: 0
@@ -54129,7 +54129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &808199926
@@ -54424,7 +54424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &823005482
@@ -54664,7 +54664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &842260508
@@ -55260,14 +55260,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffbe6dd4d3531ab459d7134e5dbcf764, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EmptyParent: {fileID: 1390049277}
-  DataParent: {fileID: 939236320}
-  ThemePreview: {fileID: 981925920}
-  FieldSizeLabel: {fileID: 135742396}
-  ThemeNameLabel: {fileID: 1414362835}
-  ScoreLabel: {fileID: 972775407}
-  MoneyLabel: {fileID: 1086467230}
-  PhoneBlocker: {fileID: 453566939}
+  _emptyParent: {fileID: 1390049277}
+  _dataParent: {fileID: 939236320}
+  _themePreview: {fileID: 981925920}
+  _fieldSizeLabel: {fileID: 135742396}
+  _themeNameLabel: {fileID: 1414362835}
+  _scoreLabel: {fileID: 972775407}
+  _moneyLabel: {fileID: 1086467230}
+  _phoneBlocker: {fileID: 453566939}
 --- !u!1 &859392315
 GameObject:
   m_ObjectHideFlags: 0
@@ -55744,10 +55744,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7d2b8fe93d2cdc4a8853f6683c89e18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Text: {fileID: 1410517807}
-  Window: {fileID: 5103762}
-  Mask: {fileID: 5103768}
-  step: 0
+  _text: {fileID: 1410517807}
+  _window: {fileID: 5103762}
+  _mask: {fileID: 5103768}
+  _step: 0
 --- !u!1 &865393354
 GameObject:
   m_ObjectHideFlags: 0
@@ -62003,21 +62003,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a60817f4d16c4b3479eb0e741741a269, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowAnimationSpeed: 0.5
-  PopComboFill: {fileID: 848474783}
-  BeforeAppendCountLabel: {fileID: 881432011}
-  AppendLinesCountLabel: {fileID: 1242702266}
-  ClicksCountLabel: {fileID: 352546186}
-  RemovedColorParent: {fileID: 865634766}
-  RemovedColors:
+  _showAnimationSpeed: 0.5
+  _popComboFill: {fileID: 848474783}
+  _beforeAppendCountLabel: {fileID: 881432011}
+  _appendLinesCountLabel: {fileID: 1242702266}
+  _clicksCountLabel: {fileID: 352546186}
+  _removedColorParent: {fileID: 865634766}
+  _removedColors:
   - Turnable: {fileID: 103881686}
     Shown: {fileID: 1660272728}
   - Turnable: {fileID: 995062827}
     Shown: {fileID: 1809498931}
   - Turnable: {fileID: 1493968116}
     Shown: {fileID: 1514986564}
-  HelpAnimator: {fileID: 133532016}
-  EndgameView: {fileID: 979352916}
+  _helpAnimator: {fileID: 133532016}
+  _endgameView: {fileID: 979352916}
 --- !u!1 &922380421
 GameObject:
   m_ObjectHideFlags: 0
@@ -62311,7 +62311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!222 &926308390
@@ -62789,7 +62789,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 3
-  Spacing: 0
+  _spacing: 0
 --- !u!1 &943579868
 GameObject:
   m_ObjectHideFlags: 0
@@ -63286,8 +63286,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdecfd5b6ef6a1142a2e2dba71cf6383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayType: 7
-  StopOnDisable: 0
+  _playType: 7
+  _stopOnDisable: 0
 --- !u!1 &957219934
 GameObject:
   m_ObjectHideFlags: 0
@@ -63338,11 +63338,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SelectedContent:
     inspector: {fileID: 0}
-  MyView: {fileID: 0}
-  InfoOnCenter: {fileID: 0}
   AvailableContent:
   - {fileID: 2100000, guid: 7208bfde4a12d604a953ca58e43fda3d, type: 2}
-  BubbleOnScene: {fileID: 0}
+  _myView: {fileID: 0}
+  _infoOnCenter: {fileID: 0}
+  _bubbleOnScene: {fileID: 0}
 --- !u!1 &958223136
 GameObject:
   m_ObjectHideFlags: 0
@@ -68693,7 +68693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &974387283
@@ -69008,19 +69008,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71690ccc5c5923c4d924702b52e2991c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WindowHeader: {fileID: 776197930}
-  UserClick: {fileID: 1498863152}
-  BestScore: {fileID: 1896179028}
-  Hints: {fileID: 1027025346}
-  buttonsParent: {fileID: 1788440670}
-  GameEnded: GameOver
-  CloseLangKey: Close
-  RetryLangKey: Retry
-  leaderboards:
-    LineSample: {fileID: 773224985}
-    Header: {fileID: 340183569}
-    Content: {fileID: 743522599}
-    Separator: {fileID: 883877492}
+  _windowHeader: {fileID: 776197930}
+  _userClick: {fileID: 1498863152}
+  _bestScore: {fileID: 1896179028}
+  _hints: {fileID: 1027025346}
+  _buttonsParent: {fileID: 1788440670}
+  _gameEnded: GameOver
+  _closeLangKey: Close
+  _retryLangKey: Retry
+  _leaderboards:
+    _lineSample: {fileID: 773224985}
+    _header: {fileID: 340183569}
+    _content: {fileID: 743522599}
+    _separator: {fileID: 883877492}
 --- !u!114 &979352917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69033,8 +69033,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdecfd5b6ef6a1142a2e2dba71cf6383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayType: 3
-  StopOnDisable: 0
+  _playType: 3
+  _stopOnDisable: 0
 --- !u!1 &979948029
 GameObject:
   m_ObjectHideFlags: 0
@@ -69969,7 +69969,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1021066269
@@ -69984,7 +69984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &1021066270
 Animator:
   serializedVersion: 5
@@ -70365,10 +70365,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7d2b8fe93d2cdc4a8853f6683c89e18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Text: {fileID: 1410517807}
-  Window: {fileID: 5103762}
-  Mask: {fileID: 5103768}
-  step: 0
+  _text: {fileID: 1410517807}
+  _window: {fileID: 5103762}
+  _mask: {fileID: 5103768}
+  _step: 0
 --- !u!1 &1028163101
 GameObject:
   m_ObjectHideFlags: 0
@@ -70786,62 +70786,62 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7d2dd20f2d700749ade6cef532bc3d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icons:
-  - Name: Laser
+  _icons:
+  - _name: Laser
     <Type>k__BackingField: 3
-    Shown: {fileID: 424394646}
-    target: {fileID: 408568247}
-    UseCount: {fileID: 517689213}
-    horizontal:
-      parent: {fileID: 91752649}
-      mode: 2
-      Place: 0
-    vertical:
-      parent: {fileID: 180241786}
-      mode: 1
-      Place: 0
-  - Name: Sniper
+    _shown: {fileID: 424394646}
+    _target: {fileID: 408568247}
+    _useCount: {fileID: 517689213}
+    _horizontal:
+      _parent: {fileID: 91752649}
+      _mode: 2
+      _place: 0
+    _vertical:
+      _parent: {fileID: 180241786}
+      _mode: 1
+      _place: 0
+  - _name: Sniper
     <Type>k__BackingField: 2
-    Shown: {fileID: 97754005}
-    target: {fileID: 1302894409}
-    UseCount: {fileID: 3533144}
-    horizontal:
-      parent: {fileID: 91752649}
-      mode: 2
-      Place: 1
-    vertical:
-      parent: {fileID: 180241786}
-      mode: 1
-      Place: 1
-  - Name: Bomb
+    _shown: {fileID: 97754005}
+    _target: {fileID: 1302894409}
+    _useCount: {fileID: 3533144}
+    _horizontal:
+      _parent: {fileID: 91752649}
+      _mode: 2
+      _place: 1
+    _vertical:
+      _parent: {fileID: 180241786}
+      _mode: 1
+      _place: 1
+  - _name: Bomb
     <Type>k__BackingField: 1
-    Shown: {fileID: 659715464}
-    target: {fileID: 1002666058}
-    UseCount: {fileID: 2059639551}
-    horizontal:
-      parent: {fileID: 91752649}
-      mode: 2
-      Place: 3
-    vertical:
-      parent: {fileID: 1820315943}
-      mode: 1
-      Place: 0
-  - Name: MultyBall
+    _shown: {fileID: 659715464}
+    _target: {fileID: 1002666058}
+    _useCount: {fileID: 2059639551}
+    _horizontal:
+      _parent: {fileID: 91752649}
+      _mode: 2
+      _place: 3
+    _vertical:
+      _parent: {fileID: 1820315943}
+      _mode: 1
+      _place: 0
+  - _name: MultyBall
     <Type>k__BackingField: 4
-    Shown: {fileID: 406139614}
-    target: {fileID: 1157646175}
-    UseCount: {fileID: 1561317705}
-    horizontal:
-      parent: {fileID: 91752649}
-      mode: 2
-      Place: 4
-    vertical:
-      parent: {fileID: 1820315943}
-      mode: 1
-      Place: 1
-  HorizontalParent: {fileID: 2112130466}
-  VerticalParent: {fileID: 237711435}
-  VerticalAspect: {fileID: 237711437}
+    _shown: {fileID: 406139614}
+    _target: {fileID: 1157646175}
+    _useCount: {fileID: 1561317705}
+    _horizontal:
+      _parent: {fileID: 91752649}
+      _mode: 2
+      _place: 4
+    _vertical:
+      _parent: {fileID: 1820315943}
+      _mode: 1
+      _place: 1
+  _horizontalParent: {fileID: 2112130466}
+  _verticalParent: {fileID: 237711435}
+  _verticalAspect: {fileID: 237711437}
 --- !u!95 &1030148591
 Animator:
   serializedVersion: 5
@@ -70981,8 +70981,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdecfd5b6ef6a1142a2e2dba71cf6383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayType: 4
-  StopOnDisable: 0
+  _playType: 4
+  _stopOnDisable: 0
 --- !u!1 &1039061869
 GameObject:
   m_ObjectHideFlags: 0
@@ -71751,10 +71751,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11f59a09270590d44a7d0c9b52906629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BubblePopParticle: {fileID: 1443588672}
-  FallenForceScale: 5
-  CameraTransform: {fileID: 519420032}
-  CamShakeDynamic:
+  _bubblePopParticle: {fileID: 1443588672}
+  _fallenForceScale: 5
+  _cameraTransform: {fileID: 519420032}
+  _camShakeDynamic:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -71832,10 +71832,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  CamShakeScale: 0.08
-  MovingParent: {fileID: 1833127291}
-  Field: {fileID: 1702202613}
-  BubblesPool: {fileID: 569654573}
+  _camShakeScale: 0.08
+  _movingParent: {fileID: 1833127291}
+  _field: {fileID: 1702202613}
+  _bubblesPool: {fileID: 569654573}
 --- !u!4 &1061230002
 Transform:
   m_ObjectHideFlags: 0
@@ -73614,7 +73614,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1119881145
@@ -79433,14 +79433,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffbe6dd4d3531ab459d7134e5dbcf764, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EmptyParent: {fileID: 1410883360}
-  DataParent: {fileID: 1674797848}
-  ThemePreview: {fileID: 2036715744}
-  FieldSizeLabel: {fileID: 482334640}
-  ThemeNameLabel: {fileID: 1964091380}
-  ScoreLabel: {fileID: 973736814}
-  MoneyLabel: {fileID: 1874594395}
-  PhoneBlocker: {fileID: 633967063}
+  _emptyParent: {fileID: 1410883360}
+  _dataParent: {fileID: 1674797848}
+  _themePreview: {fileID: 2036715744}
+  _fieldSizeLabel: {fileID: 482334640}
+  _themeNameLabel: {fileID: 1964091380}
+  _scoreLabel: {fileID: 973736814}
+  _moneyLabel: {fileID: 1874594395}
+  _phoneBlocker: {fileID: 633967063}
 --- !u!1 &1194092239
 GameObject:
   m_ObjectHideFlags: 0
@@ -79532,8 +79532,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdecfd5b6ef6a1142a2e2dba71cf6383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayType: 7
-  StopOnDisable: 0
+  _playType: 7
+  _stopOnDisable: 0
 --- !u!114 &1195440564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79781,7 +79781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1201391852
@@ -79796,7 +79796,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &1201391853
 Animator:
   serializedVersion: 5
@@ -80143,7 +80143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1219728695
@@ -80158,7 +80158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &1219728696
 Animator:
   serializedVersion: 5
@@ -80841,7 +80841,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1238845832
@@ -80950,7 +80950,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!1 &1242702264
 GameObject:
   m_ObjectHideFlags: 0
@@ -81699,7 +81699,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1275794484
@@ -81714,7 +81714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &1275794485
 Animator:
   serializedVersion: 5
@@ -81946,7 +81946,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1282392312
@@ -82484,7 +82484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1295917257
@@ -82499,7 +82499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &1295917258
 Animator:
   serializedVersion: 5
@@ -82705,7 +82705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1301642312
@@ -82720,7 +82720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &1301642313
 Animator:
   serializedVersion: 5
@@ -83000,20 +83000,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 848ed19b52b2bd445ad069a4a28a28b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Angle: 80
-  BubbleSpeed: 0.38
-  mineCollisionSizeMultiplier: 0.5
-  RotateRadius: 0.45
-  BubbleSwitchButton: {fileID: 528376349}
-  UserHelp: {fileID: 744867848}
-  BubblePool: {fileID: 569654573}
-  MovingBubbles:
-    Field: {fileID: 1702202613}
-    BubbleParticle: {fileID: 606295796}
-  Collisions:
-    WallParticle: {fileID: 891901227}
-    Shaker: {fileID: 519420033}
-  multiball:
+  _angle: 80
+  _bubbleSpeed: 0.38
+  _mineCollisionSizeMultiplier: 0.5
+  _rotateRadius: 0.45
+  _bubbleSwitchButton: {fileID: 528376349}
+  _userHelp: {fileID: 744867848}
+  _bubblePool: {fileID: 569654573}
+  _movingBubbles:
+    _field: {fileID: 1702202613}
+    _bubbleParticle: {fileID: 606295796}
+  _collisions:
+    _wallParticle: {fileID: 891901227}
+    _shaker: {fileID: 519420033}
+  _multiBall:
     <MyTransform>k__BackingField: {fileID: 1793809768}
 --- !u!1 &1325336841
 GameObject:
@@ -88137,7 +88137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1332751000
@@ -88822,7 +88822,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1340406654
@@ -88837,7 +88837,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!1 &1341408758
 GameObject:
   m_ObjectHideFlags: 0
@@ -88904,7 +88904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1341408762
@@ -89246,7 +89246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1343774503
@@ -89387,10 +89387,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec06decec165e7b4aa6bf13e5baeb19b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EndlineView: {fileID: 576345840}
-  FillTime: 5
-  timer: 0
-  bombCollider: {fileID: 220513952}
+  _endlineView: {fileID: 576345840}
+  _fillTime: 5
+  _timer: 0
+  _bombCollider: {fileID: 220513952}
 --- !u!61 &1358845424
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -89656,7 +89656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1361071240
@@ -90090,7 +90090,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1368623138
@@ -90105,7 +90105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &1368623139
 Animator:
   serializedVersion: 5
@@ -90577,7 +90577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1379677511
@@ -90592,7 +90592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &1379677512
 Animator:
   serializedVersion: 5
@@ -91134,7 +91134,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  Spacing: 0
+  _spacing: 0
 --- !u!222 &1390049280
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -91674,7 +91674,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1405083665
@@ -91979,7 +91979,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  Spacing: 0
+  _spacing: 0
 --- !u!222 &1410883363
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -93147,7 +93147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!114 &1442639542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93160,7 +93160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1442639543
@@ -98328,7 +98328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1471653878
@@ -98343,7 +98343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &1471653879
 Animator:
   serializedVersion: 5
@@ -101593,20 +101593,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d75b2bd74b959b747925ac3bbff7f3e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HeaderUnwrappedPos: 0.9
-  WindowUnwrappedMinY: 0.05
-  WindowUnwrappedMaxY: 0.95
-  Fade: {fileID: 1577069751}
-  WindowMask: {fileID: 95995979}
-  WindowTransform: {fileID: 95995974}
-  HeaderTransform: {fileID: 183617519}
   <Header>k__BackingField: {fileID: 575014222}
-  CloseButton: {fileID: 610544386}
-  MoneyText: {fileID: 1528333215}
-  BombBuyButton: {fileID: 1946084368}
-  ShakerBuyButton: {fileID: 1201391850}
-  BombCost: 500
-  ShakerCost: 1000
+  _headerUnwrappedPos: 0.9
+  _windowUnwrappedMinY: 0.05
+  _windowUnwrappedMaxY: 0.95
+  _fade: {fileID: 1577069751}
+  _windowMask: {fileID: 95995979}
+  _windowTransform: {fileID: 95995974}
+  _headerTransform: {fileID: 183617519}
+  _closeButton: {fileID: 610544386}
+  _moneyText: {fileID: 1528333215}
+  _bombBuyButton: {fileID: 1946084368}
+  _shakerBuyButton: {fileID: 1201391850}
+  _bombCost: 500
+  _shakerCost: 1000
 --- !u!224 &1577069750
 RectTransform:
   m_ObjectHideFlags: 0
@@ -101859,8 +101859,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a808e7ef20b933a4f85f335a0d61471b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InstrumentIcon: {fileID: 1590951278}
-  InstrumentName: {fileID: 343147174}
+  _instrumentIcon: {fileID: 1590951278}
+  _instrumentName: {fileID: 343147174}
 --- !u!224 &1590951277
 RectTransform:
   m_ObjectHideFlags: 0
@@ -102127,7 +102127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1599638501
@@ -102475,7 +102475,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1621734448
@@ -102715,7 +102715,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  Spacing: 0
+  _spacing: 0
 --- !u!222 &1633180300
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -102780,7 +102780,7 @@ MonoBehaviour:
     m_Top: 10
     m_Bottom: 4
   m_ChildAlignment: 0
-  Spacing: 0
+  _spacing: 0
 --- !u!1 &1640947464
 GameObject:
   m_ObjectHideFlags: 0
@@ -102906,13 +102906,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa4f512de8f2e7b4ebce0d494aa702c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Score: {fileID: 711457374}
-  Money: {fileID: 666536121}
-  Save: {fileID: 1282392312}
-  Pause: {fileID: 107046445}
-  SaveFill: {fileID: 1957772552}
-  SaveMark: {fileID: 1165876198}
-  SaveMarkSizeDynamic:
+  _score: {fileID: 711457374}
+  _money: {fileID: 666536121}
+  _save: {fileID: 1282392312}
+  _pause: {fileID: 107046445}
+  _saveFill: {fileID: 1957772552}
+  _saveMark: {fileID: 1165876198}
+  _saveMarkSizeDynamic:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -102981,8 +102981,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  GameOverFill: {fileID: 1681173941}
-  GameOverValue: {fileID: 1057864563}
+  _gameOverFill: {fileID: 1681173941}
+  _gameOverValue: {fileID: 1057864563}
 --- !u!1 &1643086065
 GameObject:
   m_ObjectHideFlags: 0
@@ -103647,12 +103647,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d39b120659a8c642989d4575d24c7c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fade: {fileID: 1805583275}
-  LivesCountLabel: {fileID: 413258996}
-  ReviveParent: {fileID: 1649169436}
-  CountdownMask: {fileID: 975278083}
-  SkipCountdownButton: {fileID: 1021066267}
-  Final: {fileID: 1807616533}
+  _fade: {fileID: 1805583275}
+  _livesCountLabel: {fileID: 413258996}
+  _reviveParent: {fileID: 1649169436}
+  _countdownMask: {fileID: 975278083}
+  _skipCountdownButton: {fileID: 1021066267}
+  _final: {fileID: 1807616533}
 --- !u!95 &1649169444
 Animator:
   serializedVersion: 5
@@ -103929,7 +103929,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1654846396
@@ -103944,7 +103944,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &1654846397
 Animator:
   serializedVersion: 5
@@ -104576,7 +104576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1671425633
@@ -104612,42 +104612,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 135f677021dda9b43a26dabf9f433f65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HeaderUnwrappedPos: 0.8
-  WindowUnwrappedMinY: 0.15
-  WindowUnwrappedMaxY: 0.85
-  Fade: {fileID: 0}
-  WindowMask: {fileID: 1671425636}
-  WindowTransform: {fileID: 1671425635}
-  HeaderTransform: {fileID: 453359825}
   <Header>k__BackingField: {fileID: 869193359}
-  CloseButton: {fileID: 1453384594}
+  _headerUnwrappedPos: 0.8
+  _windowUnwrappedMinY: 0.15
+  _windowUnwrappedMaxY: 0.85
+  _fade: {fileID: 0}
+  _windowMask: {fileID: 1671425636}
+  _windowTransform: {fileID: 1671425635}
+  _headerTransform: {fileID: 453359825}
+  _closeButton: {fileID: 1453384594}
   <SaveSlots>k__BackingField:
   - {fileID: 279835000}
   - {fileID: 1189864393}
   - {fileID: 855574537}
   - {fileID: 2112273835}
-  Theme:
-    Parent: {fileID: 1071697297}
-    Preview: {fileID: 926557161}
-    NameLocalized: {fileID: 439016875}
-    Prev: {fileID: 2032261012}
-    Next: {fileID: 1996191962}
-    Select: {fileID: 1471653880}
-    UsualSelect: {fileID: 1360431480}
-    ForAdsSelect: {fileID: 1639974063}
-  Size:
-    Parent: {fileID: 885504720}
-    Preview: {fileID: 405557112}
-    NameLocalized: {fileID: 1431249174}
-    Prev: {fileID: 1301642314}
-    Next: {fileID: 647917148}
-    PhoneBlockerLabel: {fileID: 1068073331}
-    PhoneBlockerView: {fileID: 1532050091}
-    PhoneBlocked: {fileID: 21300000, guid: fc7d84c763dea324ebdd8dd07407bc7e, type: 3}
-    PhoneAvailable: {fileID: 21300000, guid: 3203cc415b82bda4389b34138f53ff92, type: 3}
-    Select: {fileID: 1379677513}
-    Select_View: {fileID: 1379677514}
-    SelectLabel: {fileID: 1332751002}
+  _theme:
+    _parent: {fileID: 1071697297}
+    _preview: {fileID: 926557161}
+    _nameLocalized: {fileID: 439016875}
+    _prev: {fileID: 2032261012}
+    _next: {fileID: 1996191962}
+    _select: {fileID: 1471653880}
+    _usualSelect: {fileID: 1360431480}
+    _forAdsSelect: {fileID: 1639974063}
+  _size:
+    _parent: {fileID: 885504720}
+    _preview: {fileID: 405557112}
+    _nameLocalized: {fileID: 1431249174}
+    _prev: {fileID: 1301642314}
+    _next: {fileID: 647917148}
+    _phoneBlockerLabel: {fileID: 1068073331}
+    _phoneBlockerView: {fileID: 1532050091}
+    _phoneBlocked: {fileID: 21300000, guid: fc7d84c763dea324ebdd8dd07407bc7e, type: 3}
+    _phoneAvailable: {fileID: 21300000, guid: 3203cc415b82bda4389b34138f53ff92, type: 3}
+    _select: {fileID: 1379677513}
+    _select_View: {fileID: 1379677514}
+    _selectLabel: {fileID: 1332751002}
 --- !u!224 &1671425635
 RectTransform:
   m_ObjectHideFlags: 0
@@ -104790,7 +104790,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 3
-  Spacing: 0
+  _spacing: 0
 --- !u!1 &1675174848
 GameObject:
   m_ObjectHideFlags: 0
@@ -105024,8 +105024,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdecfd5b6ef6a1142a2e2dba71cf6383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayType: 3
-  StopOnDisable: 0
+  _playType: 3
+  _stopOnDisable: 0
 --- !u!114 &1678910261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105076,18 +105076,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba3ada6a7ff15504e9e5f1d9cfa695c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HeaderUnwrappedPos: 0.7
-  WindowUnwrappedMinY: 0.35
-  WindowUnwrappedMaxY: 0.7
-  Fade: {fileID: 1678910261}
-  WindowMask: {fileID: 1565005445}
-  WindowTransform: {fileID: 1565005442}
-  HeaderTransform: {fileID: 1699769252}
   <Header>k__BackingField: {fileID: 283940423}
-  CloseButton: {fileID: 0}
-  Score: {fileID: 1725900032}
-  Retry: {fileID: 364032533}
-  Exit: {fileID: 1971675862}
+  _headerUnwrappedPos: 0.7
+  _windowUnwrappedMinY: 0.35
+  _windowUnwrappedMaxY: 0.7
+  _fade: {fileID: 1678910261}
+  _windowMask: {fileID: 1565005445}
+  _windowTransform: {fileID: 1565005442}
+  _headerTransform: {fileID: 1699769252}
+  _closeButton: {fileID: 0}
+  _score: {fileID: 1725900032}
+  _retry: {fileID: 364032533}
+  _exit: {fileID: 1971675862}
 --- !u!1 &1681173936
 GameObject:
   m_ObjectHideFlags: 0
@@ -105260,7 +105260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!222 &1686311253
@@ -105477,19 +105477,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71301d6736ac6694eb1845f3d95fc17b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Interstitial: {fileID: 1785035539}
-  AdsRequest:
-    Turnable: {fileID: 863689087}
-    Animator: {fileID: 863689091}
-    Name: {fileID: 1769680397}
-    Description: {fileID: 549524237}
-    BonusCount: {fileID: 1738723125}
-    Icon: {fileID: 623469637}
-    TryActivateButton: {fileID: 1275794486}
-  RewardCircleFill: {fileID: 1334473245}
-  BonusView: {fileID: 1031067036}
-  BonusName: {fileID: 513651713}
-  BonusUserReact: {fileID: 1366948832}
+  _interstitial: {fileID: 1785035539}
+  _adsRequest:
+    _turnable: {fileID: 863689087}
+    _animator: {fileID: 863689091}
+    _name: {fileID: 1769680397}
+    _description: {fileID: 549524237}
+    _bonusCount: {fileID: 1738723125}
+    _icon: {fileID: 623469637}
+    _tryActivateButton: {fileID: 1275794486}
+  _rewardCircleFill: {fileID: 1334473245}
+  _bonusView: {fileID: 1031067036}
+  _bonusName: {fileID: 513651713}
+  _bonusUserReact: {fileID: 1366948832}
 --- !u!95 &1691674028
 Animator:
   serializedVersion: 5
@@ -106286,28 +106286,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3155453a8f3a4634a8b074c4f92d9852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Difficulty: 0.827
-  UpperRelativePlace: 0.1
   <BubbleSize>k__BackingField: 0.45
   <BubblesCountPerLine>k__BackingField: 39
-  FieldSize: {x: 17.777, y: 10}
-  FieldUsableSpace: 8
-  barriers:
-    LeftBarrier: {fileID: 891985974}
-    RightBarrier: {fileID: 1546962072}
-    TopBarrier: {fileID: 1952081914}
-    BackgroundRect: {fileID: 1533662455}
-  EndLine: {fileID: 1994137598}
-  Background: {fileID: 0}
-  EffectsTransform: {fileID: 1833127291}
-  FieldRenderers:
+  Difficulty: 0.827
+  UpperRelativePlace: 0.1
+  _fieldSize: {x: 17.777, y: 10}
+  _fieldUsableSpace: 8
+  _barriers:
+    _leftBarrier: {fileID: 891985974}
+    _rightBarrier: {fileID: 1546962072}
+    _topBarrier: {fileID: 1952081914}
+    _backgroundRect: {fileID: 1533662455}
+  _endLine: {fileID: 1994137598}
+  _background: {fileID: 0}
+  _effectsTransform: {fileID: 1833127291}
+  _fieldRenderers:
   - {fileID: 891985975}
   - {fileID: 1546962073}
   - {fileID: 1994137599}
-  Pool: {fileID: 569654573}
-  Effects: {fileID: 1061230001}
-  inGameCanvas: {fileID: 1030148590}
-  Draw: 0
+  _pool: {fileID: 569654573}
+  _effects: {fileID: 1061230001}
+  _inGameCanvas: {fileID: 1030148590}
+  _draw: 0
 --- !u!1 &1704569189
 GameObject:
   m_ObjectHideFlags: 0
@@ -106360,7 +106360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1704569192
@@ -106888,7 +106888,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1718596121
@@ -113100,12 +113100,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dc485a6448f7664caeecb22e606fcae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdsPlank: {fileID: 1400620038}
-  FadeOnScene: {fileID: 1785035542}
-  AdsLabel: {fileID: 1513409700}
-  AdsTimerLocalized: EndlessInterstitial_Formatted
-  oldShownTimeOnScreen: 0
-  timer: 0
+  _adsPlank: {fileID: 1400620038}
+  _fadeOnScene: {fileID: 1785035542}
+  _adsLabel: {fileID: 1513409700}
+  _adsTimerLocalized: EndlessInterstitial_Formatted
+  _oldShownTimeOnScreen: 0
+  _timer: 0
 --- !u!224 &1785035540
 RectTransform:
   m_ObjectHideFlags: 0
@@ -113115,7 +113115,7 @@ RectTransform:
   m_GameObject: {fileID: 1785035538}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1400620038}
@@ -113685,7 +113685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9eaf5d30d512d048adedfef9f17e72f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FadeView: {fileID: 1805583273}
+  _fadeView: {fileID: 1805583273}
 --- !u!1 &1807616531
 GameObject:
   m_ObjectHideFlags: 0
@@ -113740,19 +113740,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71690ccc5c5923c4d924702b52e2991c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WindowHeader: {fileID: 981721435}
-  UserClick: {fileID: 1543969296}
-  BestScore: {fileID: 1989615006}
-  Hints: {fileID: 864899476}
-  buttonsParent: {fileID: 456932335}
-  GameEnded: GameOver
-  CloseLangKey: Close
-  RetryLangKey: Retry
-  leaderboards:
-    LineSample: {fileID: 1764645725}
-    Header: {fileID: 1374551743}
-    Content: {fileID: 1104159681}
-    Separator: {fileID: 1699335030}
+  _windowHeader: {fileID: 981721435}
+  _userClick: {fileID: 1543969296}
+  _bestScore: {fileID: 1989615006}
+  _hints: {fileID: 864899476}
+  _buttonsParent: {fileID: 456932335}
+  _gameEnded: GameOver
+  _closeLangKey: Close
+  _retryLangKey: Retry
+  _leaderboards:
+    _lineSample: {fileID: 1764645725}
+    _header: {fileID: 1374551743}
+    _content: {fileID: 1104159681}
+    _separator: {fileID: 1699335030}
 --- !u!95 &1807616534
 Animator:
   serializedVersion: 5
@@ -113794,8 +113794,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdecfd5b6ef6a1142a2e2dba71cf6383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayType: 3
-  StopOnDisable: 0
+  _playType: 3
+  _stopOnDisable: 0
 --- !u!1 &1809498927
 GameObject:
   m_ObjectHideFlags: 0
@@ -113940,7 +113940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1810870305
@@ -113955,7 +113955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &1810870306
 Animator:
   serializedVersion: 5
@@ -114340,7 +114340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1836791175
@@ -114517,7 +114517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1837217941
@@ -120694,7 +120694,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1881754787
@@ -122461,7 +122461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1946084370
@@ -122476,7 +122476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &1946084371
 Animator:
   serializedVersion: 5
@@ -123133,7 +123133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1971675860
@@ -123148,7 +123148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &1971675861
 Animator:
   serializedVersion: 5
@@ -128549,7 +128549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1989597759
@@ -128564,7 +128564,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &1989597760
 Animator:
   serializedVersion: 5
@@ -129118,7 +129118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1996191960
@@ -129133,7 +129133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &1996191961
 Animator:
   serializedVersion: 5
@@ -129367,7 +129367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &2032261010
@@ -129382,7 +129382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &2032261011
 Animator:
   serializedVersion: 5
@@ -130828,15 +130828,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51fa70fe3e634ef47ba54939d756d8db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Header: {fileID: 1641965010}
-  MergeWindow: {fileID: 1671425634}
-  InGameShop: {fileID: 1577069749}
-  HelpWindow: {fileID: 4934759}
-  Delete: {fileID: 229896392}
-  CanvasSize: {fileID: 2084835682}
-  SaveOverlay: {fileID: 325589323}
-  Interstitial: {fileID: 1785035539}
   <EndgameCanvas>k__BackingField: {fileID: 1678910263}
+  _header: {fileID: 1641965010}
+  _mergeWindow: {fileID: 1671425634}
+  _inGameShop: {fileID: 1577069749}
+  _helpWindow: {fileID: 4934759}
+  _delete: {fileID: 229896392}
+  _canvasSize: {fileID: 2084835682}
+  _saveOverlay: {fileID: 325589323}
+  _interstitial: {fileID: 1785035539}
 --- !u!114 &2084835682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130849,7 +130849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00a068f6e2ddbd24089f98c3798e4355, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Turnable: {fileID: 927166073}
+  _turnable: {fileID: 927166073}
 --- !u!1 &2087376479
 GameObject:
   m_ObjectHideFlags: 0
@@ -131302,7 +131302,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 3
-  Spacing: 0
+  _spacing: 0
 --- !u!1 &2105316325
 GameObject:
   m_ObjectHideFlags: 0
@@ -131519,14 +131519,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffbe6dd4d3531ab459d7134e5dbcf764, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EmptyParent: {fileID: 1633180297}
-  DataParent: {fileID: 2100926769}
-  ThemePreview: {fileID: 2049753541}
-  FieldSizeLabel: {fileID: 1293400568}
-  ThemeNameLabel: {fileID: 1759769899}
-  ScoreLabel: {fileID: 1120165650}
-  MoneyLabel: {fileID: 1073551789}
-  PhoneBlocker: {fileID: 732829689}
+  _emptyParent: {fileID: 1633180297}
+  _dataParent: {fileID: 2100926769}
+  _themePreview: {fileID: 2049753541}
+  _fieldSizeLabel: {fileID: 1293400568}
+  _themeNameLabel: {fileID: 1759769899}
+  _scoreLabel: {fileID: 1120165650}
+  _moneyLabel: {fileID: 1073551789}
+  _phoneBlocker: {fileID: 732829689}
 --- !u!224 &2112273836
 RectTransform:
   m_ObjectHideFlags: 0
@@ -131779,7 +131779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093536473c8816b4a909ffa89d7483d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AdditionalMoves:
+  _additionalMoves:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &2124657759
@@ -131794,7 +131794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb4b893aa5b83f49a34d4d0eb845ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShiftScale: 7.5
+  _shiftScale: 7.5
 --- !u!95 &2124657760
 Animator:
   serializedVersion: 5
@@ -132374,19 +132374,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbada6dcbab38594281cf7ffea57362c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cam: {fileID: 519420031}
-  Events: {fileID: 1496892947}
-  CanvasesForIgnore:
+  _camera: {fileID: 519420031}
+  _events: {fileID: 1496892947}
+  _canvasesForIgnore:
   - {fileID: 2084835677}
   - {fileID: 717967862}
   - {fileID: 1785035544}
   Field: {fileID: 4394701703114246711}
-  DropSpeed: {x: 0, y: -8, z: 0}
-  RotateSpeed: 10
-  GameOverPlace: {fileID: 1358845423}
-  Trajectory: {fileID: 7659023239738647764}
-  MergeBomb: {fileID: 220513950}
-  BombEffects: {fileID: 971928059}
+  _dropSpeed: {x: 0, y: -8, z: 0}
+  _rotateSpeed: 10
+  _gameOverPlace: {fileID: 1358845423}
+  _trajectory: {fileID: 7659023239738647764}
+  _mergeBomb: {fileID: 220513950}
+  _bombEffects: {fileID: 971928059}
 --- !u!1 &1871464699981408506
 GameObject:
   m_ObjectHideFlags: 0
@@ -132566,23 +132566,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RequireSave: 0
-  barriers:
-    RootPoint: {x: 0, y: -4.7}
-    Height: 9.7
-    Left: {fileID: 8962724376927467744}
-    Right: {fileID: 7842070235205580064}
-    Bottom: {fileID: 2173097733347233873}
-    Top: {fileID: 40596434}
-    Recolor:
+  _barriers:
+    _rootPoint: {x: 0, y: -4.7}
+    _height: 9.7
+    _left: {fileID: 8962724376927467744}
+    _right: {fileID: 7842070235205580064}
+    _bottom: {fileID: 2173097733347233873}
+    _top: {fileID: 40596434}
+    _recolor:
     - {fileID: 648051860946028093}
     - {fileID: 6366743841080282095}
     - {fileID: 4257256873751001803}
     - {fileID: 40596437}
-    MainColor: {r: 0.0603773, g: 0.6772847, b: 1, a: 1}
-  contactSounds: {fileID: 8431536834454703285}
-  GameOverPlace: {fileID: 1358845423}
-  MergeEffects: {fileID: 1772920055}
-  CamShaker: {fileID: 519420033}
+    _mainColor: {r: 0.0603773, g: 0.6772847, b: 1, a: 1}
+  _contactSounds: {fileID: 8431536834454703285}
+  _gameOverPlace: {fileID: 1358845423}
+  _mergeEffects: {fileID: 1772920055}
+  _camShaker: {fileID: 519420033}
 --- !u!61 &4628154162642491662
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -132853,14 +132853,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9360f68bd99765b4ab83a2bd3305f143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropLine: {fileID: 2087376481}
-  lineTransform: {fileID: 2087376480}
-  Ignore:
+  _dropLine: {fileID: 2087376481}
+  _lineTransform: {fileID: 2087376480}
+  _ignore:
   - {fileID: 1358845424}
   - {fileID: 220513952}
-  Circle:
-    Circle: {fileID: 1398448786}
-    Outline: {fileID: 932376220}
+  _circle:
+    _circle: {fileID: 1398448786}
+    _outline: {fileID: 932376220}
 --- !u!4 &7842070235205580064
 Transform:
   m_ObjectHideFlags: 0
@@ -132956,8 +132956,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1019e8bc234e1fb4e8b16c9b118faf95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LowerClip: 0.04
-  MaxSourcesCount: 8
+  _lowerClip: 0.04
+  _maxSourcesCount: 8
 --- !u!4 &8962724376927467744
 Transform:
   m_ObjectHideFlags: 0

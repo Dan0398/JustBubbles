@@ -7,11 +7,11 @@ namespace Gameplay.Merge
     public class SaveModel
     {
         public ObsInt Points, Money;
-        public Barrier.SizeType FieldSize;
+        public SizeType FieldSize;
         public string BundlePath;
         public UnitStatus[] Units;
         
-        public SaveModel(Barrier.SizeType fieldSize, string bundlePath)
+        public SaveModel(SizeType fieldSize, string bundlePath)
         {
             FieldSize = fieldSize;
             BundlePath = bundlePath;

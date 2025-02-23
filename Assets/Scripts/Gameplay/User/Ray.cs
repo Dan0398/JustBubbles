@@ -5,92 +5,96 @@ namespace Gameplay.User
     [System.Serializable]
     public class RayTrajectory
     {
-        [Header("Line info"), SerializeField, Min(0.05f)] float SpaceBetweenDrawn;
-        [SerializeField] float MeshSize = 0.5f;
-        [SerializeField, Range(0.001f, 0.03f)] float AnimationSpeed;
-        [SerializeField] Mesh DrawnMesh;
-        [SerializeField] Material DrawnMaterial;
+        [Header("Line info"), SerializeField, Min(0.05f)] private float _spaceBetweenDrawn;
+        [SerializeField] private float _meshSize = 0.5f;
+        [SerializeField, Range(0.001f, 0.03f)] private float _animationSpeed;
+        [SerializeField] private Mesh _drawnMesh;
+        [SerializeField] private Material _drawnMaterial;
         
-        Gameplay.User.Action parent;
-        Vector3 parentPos;
-        Matrix4x4[] points;
-        float drawnShift;
-        int drawnPointsCount;
-        int colorNameIDInShader;
-        Color TrajectoryBaseColor;
-        float oldAlpha;
-        int CollisionLayer;
-        Trajectory trajectory;
-        System.Func<Collider2D,CollisionType> Responser;
+        private Vector3 _parentPos;
+        private Matrix4x4[] _points;
+        private float _drawnShift;
+        private int _drawnPointsCount;
+        private int _colorNameIDInShader;
+        private Color _trajectoryBaseColor;
+        private float _oldAlpha;
+        private int _collisionLayer;
+        private Trajectory _trajectory;
+        private System.Func<Collider2D,CollisionType> _responser;
         
-        public void Init(Gameplay.User.Action parent/*, float BubbleCollisionRadius*/, System.Func<Collider2D,CollisionType> TryResponseCollision)
+        public void Init(Gameplay.User.Action parent, System.Func<Collider2D,CollisionType> TryResponseCollision)
         {
-            parentPos = parent.transform.position;
-            this.parent = parent;
-            points = new Matrix4x4[256];
-            CollisionLayer = 1;
-            colorNameIDInShader = Shader.PropertyToID("_MaskColor");
-            Responser = TryResponseCollision;
+            _parentPos = parent.transform.position;
+            _points = new Matrix4x4[256];
+            _collisionLayer = 1;
+            _colorNameIDInShader = Shader.PropertyToID("_MaskColor");
+            _responser = TryResponseCollision;
         }
         
         public void RefreshConfig(float Radius, int CollisionsCount = 20, float Distance = float.MaxValue)
         {
-            trajectory = new Trajectory(Radius, Responser, CollisionLayer, CollisionsCount, Distance);
+            _trajectory = new Trajectory(Radius, _responser, _collisionLayer, CollisionsCount, Distance);
         }
         
         public void ProcessRay(Vector2 MouseDirection)
         {
-            trajectory.CalculateFullWayClean(parentPos, MouseDirection);
+            _trajectory.CalculateFullWayClean(_parentPos, MouseDirection);
         }
         
-        internal void ReceiveAvailableAndTryDraw(bool allowed)
+        public void ReceiveAvailableAndTryDraw(bool allowed)
         {
             const float Step = 0.05f;
-            var Alpha = Mathf.Clamp01(oldAlpha + Step * (allowed? 1 : (-1)));
+            var Alpha = Mathf.Clamp01(_oldAlpha + Step * (allowed? 1 : (-1)));
             if (Alpha == 0) return;
-            if (Alpha != oldAlpha)
+            if (Alpha != _oldAlpha)
             {
-                oldAlpha = Alpha;
+                _oldAlpha = Alpha;
                 RefreshFinalColor();
             }
-            if(allowed) Draw();
-        }
-        
-        void Draw()
-        {
-            RefreshMatrices();
-            Graphics.DrawMeshInstanced(DrawnMesh, 0, DrawnMaterial, points, drawnPointsCount);
-            drawnShift += AnimationSpeed;
-            if (drawnShift >= SpaceBetweenDrawn)
+            if(allowed)
             {
-                drawnShift -= SpaceBetweenDrawn;
+                Draw();
             }
         }
         
-        void RefreshMatrices()
+        private void Draw()
         {
-            trajectory.ResetWay();
-            trajectory.MakeStep(drawnShift);
-            trajectory.StepLengthOnWay = SpaceBetweenDrawn;
-            drawnPointsCount = 0;
-            Vector3 Scale = Vector3.one * MeshSize;
-            Vector3 PosFix = Vector3.back * 0.1f;
-            while (!trajectory.WayEnded && drawnPointsCount < 255)
+            RefreshMatrices();
+            Graphics.DrawMeshInstanced(_drawnMesh, 0, _drawnMaterial, _points, _drawnPointsCount);
+            _drawnShift += _animationSpeed;
+            if (_drawnShift >= _spaceBetweenDrawn)
             {
-                points[drawnPointsCount] = Matrix4x4.TRS(trajectory.PosOnWay + PosFix, Quaternion.identity, Scale);
-                drawnPointsCount++;
-                trajectory.MakeStep();
+                _drawnShift -= _spaceBetweenDrawn;
+            }
+        }
+        
+        private void RefreshMatrices()
+        {
+            _trajectory.ResetWay();
+            _trajectory.MakeStep(_drawnShift);
+            _trajectory.StepLengthOnWay = _spaceBetweenDrawn;
+            _drawnPointsCount = 0;
+            Vector3 Scale = Vector3.one * _meshSize;
+            Vector3 PosFix = Vector3.back * 0.1f;
+            while (!_trajectory.WayEnded && _drawnPointsCount < 255)
+            {
+                _points[_drawnPointsCount] = Matrix4x4.TRS(_trajectory.PosOnWay + PosFix, Quaternion.identity, Scale);
+                _drawnPointsCount++;
+                _trajectory.MakeStep();
             }
         }
         
         public void ChangeColor(Color Col)
         {
-            if (Col == TrajectoryBaseColor) return;
-            TrajectoryBaseColor = Col;
+            if (Col == _trajectoryBaseColor) return;
+            _trajectoryBaseColor = Col;
             RefreshFinalColor();
              
         }
         
-        void RefreshFinalColor() => DrawnMaterial.SetColor(colorNameIDInShader, TrajectoryBaseColor - Color.black * (1-oldAlpha));
+        private void RefreshFinalColor()
+        {
+            _drawnMaterial.SetColor(_colorNameIDInShader, _trajectoryBaseColor - Color.black * (1-_oldAlpha));
+        }
     }
 }

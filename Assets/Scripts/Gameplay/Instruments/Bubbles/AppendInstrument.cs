@@ -6,30 +6,29 @@ namespace Gameplay.Instruments.Bubble
 {
     public partial class Circle : BaseInstrument
     {
-        internal void UseMultiBall()
+        public void UseMultiBall()
         {
             MultiBallUsed = true;
-            multiball.MyTransform.gameObject.SetActive(true);
-            StartCoroutine(AnimateAppend(multiball));
+            _multiBall.MyTransform.gameObject.SetActive(true);
+            StartCoroutine(AnimateAppend(_multiBall));
         }
         
-        IEnumerator AnimateAppend(ICircleObject appended)
+        private IEnumerator AnimateAppend(ICircleObject appended)
         {
             const int Steps = 25;
             
-            isBubblesOnReload = true;
-            var AngleStep = 360 / (bubblesInCircle.Count+1);
+            _isBubblesOnReload = true;
+            var AngleStep = 360 / (_bubblesInCircle.Count+1);
             
-            BubblePack[] Rotated = new BubblePack[bubblesInCircle.Count];
+            BubblePack[] Rotated = new BubblePack[_bubblesInCircle.Count];
             for (int i = 1; i < Rotated.Length; i++)
             {
-                Rotated[i] = new BubblePack(bubblesInCircle[i], ObjToAngle(bubblesInCircle[i]), (i) * AngleStep);
-                //Rotated[i] = new BubblePack(bubblesInCircle[i], (i+1) * AngleStep, (i+2) * AngleStep);
+                Rotated[i] = new BubblePack(_bubblesInCircle[i], ObjToAngle(_bubblesInCircle[i]), (i) * AngleStep);
             }
-            Rotated[0] = new BubblePack(bubblesInCircle[0], ObjToAngle(bubblesInCircle[0]), (-1) * AngleStep);
+            Rotated[0] = new BubblePack(_bubblesInCircle[0], ObjToAngle(_bubblesInCircle[0]), (-1) * AngleStep);
             Vector2 newPos = Angle2LocalPos(0);
             
-            StartCoroutine(RecolorTrajectory(bubblesInCircle[0].TrajectoryColor, appended.TrajectoryColor, Steps+1));
+            StartCoroutine(RecolorTrajectory(_bubblesInCircle[0].TrajectoryColor, appended.TrajectoryColor, Steps+1));
             
             for (int i = 1; i < Steps; i ++)
             {
@@ -43,12 +42,12 @@ namespace Gameplay.Instruments.Bubble
                 yield return Wait;
             }
             
-            var First = bubblesInCircle[0];
-            bubblesInCircle[0] = appended;
-            bubblesInCircle.Add(First);
+            var First = _bubblesInCircle[0];
+            _bubblesInCircle[0] = appended;
+            _bubblesInCircle.Add(First);
             PlaceBubblesAndRecolorTrajectory();
             
-            isBubblesOnReload = false;
+            _isBubblesOnReload = false;
         }
     }
 }

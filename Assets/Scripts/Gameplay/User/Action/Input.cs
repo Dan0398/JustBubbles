@@ -6,8 +6,9 @@ namespace Gameplay.User
     {
         protected override void ReactPointerMove()
         {
-            SelectedInstrument?.ProcessAimVector(MouseWorldPos - (Vector2)transform.position);
+            if (_selectedInstrument != null) _selectedInstrument.ProcessAimVector(MouseWorldPos - (Vector2)transform.position);
         }
+        
         protected override void BindInputs()
         {
             Inputs.BaseMap.Clicked.performed += (s) => ReactClickStart();
@@ -16,17 +17,17 @@ namespace Gameplay.User
             
             void ReactClickStart()
             {
-                SelectedInstrument?.ReactOnClickDown();
+                if (_selectedInstrument != null) _selectedInstrument.ReactOnClickDown();
             }
             
             void ReactClickEnd()
             {
-                SelectedInstrument?.ReactOnClickUp();
+                if (_selectedInstrument != null) _selectedInstrument.ReactOnClickUp();
             }
 
             void ReactOnAdditional()
             {
-                SelectedInstrument?.ReactOnAdditional();
+                if (_selectedInstrument != null) _selectedInstrument.ReactOnAdditional();
             }
         }
     }

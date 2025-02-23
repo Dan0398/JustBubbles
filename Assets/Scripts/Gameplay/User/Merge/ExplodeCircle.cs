@@ -6,55 +6,56 @@ namespace Gameplay.User
     [System.Serializable]
     public class ExplodeCircle
     {
-        [SerializeField] GameObject Circle, Outline;
-        Transform circleTransform;
-        bool shown, replaceAvailable;
-        float mainLerp;
-        Pair circlePair, outlinePair;
-        MonoBehaviour CoroutineRunner;
-        Coroutine outlineRoutine;
-        WaitForFixedUpdate Wait;
+        [SerializeField] private GameObject _circle;
+        [SerializeField] private GameObject _outline;
+        private Transform _circleTransform;
+        private bool _shown, _replaceAvailable;
+        private float _mainLerp;
+        private Pair _circlePair, _outlinePair;
+        private MonoBehaviour _coroutineRunner;
+        private Coroutine _outlineRoutine;
+        private WaitForFixedUpdate _wait;
         
         public void Init(MergeTrajectory parent)
         {
-            circlePair = new Pair(Circle);
-            outlinePair = new Pair(Outline);
-            CoroutineRunner = parent;
-            Wait = new();
-            circleTransform = Circle.transform;
+            _circlePair = new Pair(_circle);
+            _outlinePair = new Pair(_outline);
+            _coroutineRunner = parent;
+            _wait = new();
+            _circleTransform = _circle.transform;
         }
         
         public void Show()
         {
-            shown = true;
-            outlineRoutine = CoroutineRunner.StartCoroutine(AnimateOutline());
-            Circle.SetActive(true); 
-            replaceAvailable = true;
+            _shown = true;
+            _outlineRoutine = _coroutineRunner.StartCoroutine(AnimateOutline());
+            _circle.SetActive(true); 
+            _replaceAvailable = true;
             Recolor(0);
         }
         
         public void Hide()
         {
-            shown = false;
-            CoroutineRunner.StopCoroutine(outlineRoutine);
-            Circle.SetActive(false); 
-            replaceAvailable = false;
+            _shown = false;
+            _coroutineRunner.StopCoroutine(_outlineRoutine);
+            _circle.SetActive(false); 
+            _replaceAvailable = false;
         }
 
         public void Recolor(float lerp)
         {
-            if (!shown || !replaceAvailable) return;
-            mainLerp = lerp;
-            circlePair.Recolor(lerp);
+            if (!_shown || !_replaceAvailable) return;
+            _mainLerp = lerp;
+            _circlePair.Recolor(lerp);
         }
         
         public void TryReplace(Vector3 worldPos)
         {
-            if (!shown || !replaceAvailable) return;
-            circleTransform.position = worldPos;
+            if (!_shown || !_replaceAvailable) return;
+            _circleTransform.position = worldPos;
         }
         
-        IEnumerator AnimateOutline()
+        private IEnumerator AnimateOutline()
         {
             const int MaxStep = 50;
             int Step = 0;
@@ -64,30 +65,28 @@ namespace Gameplay.User
                 if (Step >= MaxStep) Step = 0;
                 float Lerp = 2f * Step/(float)MaxStep;
                 if (Lerp > 1) Lerp = -Lerp + 2;
-                outlinePair.Recolor(Lerp * mainLerp);
-                yield return Wait;
+                _outlinePair.Recolor(Lerp * _mainLerp);
+                yield return _wait;
             }
         }
 
-        public void DontReplaceBombCircle() => replaceAvailable = false;
+        public void DontReplaceBombCircle() => _replaceAvailable = false;
 
-        class Pair
+        private class Pair
         {
-            GameObject onScene;
-            SpriteRenderer renderer;
-            Color usual, pure;
+            private SpriteRenderer _renderer;
+            private Color _usual, _pure;
             
             public Pair(GameObject onScene)
             {
-                this.onScene = onScene;
-                renderer = onScene.GetComponent<SpriteRenderer>();
-                usual = renderer.color;
-                pure = usual - Color.black * usual.a;
+                _renderer = onScene.GetComponent<SpriteRenderer>();
+                _usual = _renderer.color;
+                _pure = _usual - Color.black * _usual.a;
             }
             
             public void Recolor(float Scale)
             {
-                renderer.color = Color.Lerp(pure, usual, Scale);
+                _renderer.color = Color.Lerp(_pure, _usual, Scale);
             }
         }
     }

@@ -8,41 +8,40 @@ namespace UI.Strategy
     [System.Serializable]
     public class Leaderboards
     {
-        [SerializeField] GameObject LineSample;
-        [SerializeField] GameObject Header, Content;
-        [SerializeField] Transform Separator;
-        List<LBLineOnScene> shownLines;
-        Endgame parent;
-        
-        public void Init(Endgame Parent)
-        {
-            parent = Parent;
-        }
+        [SerializeField] private GameObject _lineSample;
+        [SerializeField] private GameObject _header;
+        [SerializeField] private GameObject _content;
+        [SerializeField] private Transform _separator;
+        private List<LBLineOnScene> _shownLines;
         
         public void PrepareView(Result Result)
         {
-            Header.gameObject.SetActive(false);
-            Content.gameObject.SetActive(false);
+            _header.SetActive(false);
+            _content.SetActive(false);
             CleanOld();
             CreateNewLines(Result);
         }
         
-        void CleanOld()
+        private void CleanOld()
         {
-            if (shownLines == null)
+            if (_shownLines == null)
             {
-                shownLines = new List<LBLineOnScene>();
+                _shownLines = new List<LBLineOnScene>();
                 return;
             }
-            for(int i = 0; i < shownLines.Count; i++)
+            for(int i = 0; i < _shownLines.Count; i++)
             {
-                shownLines[i].Destroy();
+                _shownLines[i].Destroy();
             }
-            shownLines.Clear();
-            Separator.gameObject.SetActive(false);
+            _shownLines.Clear();
+            _separator.gameObject.SetActive(false);
         }
         
-        async void CreateNewLines(Result result)
+        
+        #if UNITY_WEBGL
+        async 
+        #endif
+        private void CreateNewLines(Result result)
         {
             #if UNITY_WEBGL
             if (result.IsNewHighScore) await Utilities.Wait(5000);
@@ -75,19 +74,19 @@ namespace UI.Strategy
         
         public void Show()
         {
-            Header.gameObject.SetActive(true);
-            Content.gameObject.SetActive(true);
+            _header.SetActive(true);
+            _content.SetActive(true);
         }
         
-        class LBLineOnScene
+        private class LBLineOnScene
         {
-            GameObject onScene;
+            private GameObject _onScene;
             
             public LBLineOnScene(GameObject sample, Services.Leaderboards.Line data)
             {
-                onScene = GameObject.Instantiate(sample);
-                onScene.SetActive(true);
-                var Tr = onScene.transform;
+                _onScene = GameObject.Instantiate(sample);
+                _onScene.SetActive(true);
+                var Tr = _onScene.transform;
                 Tr.SetParent(sample.transform.parent);
                 Tr.localScale = Vector3.one;
                 
@@ -101,17 +100,17 @@ namespace UI.Strategy
                 
                 if (data.IsUser)
                 {
-                    var Fade = onScene.GetComponent<Image>();
+                    var Fade = _onScene.GetComponent<Image>();
                     Fade.enabled = true;
                     
-                    var FadeAnim = onScene.GetComponent<Animation>();
+                    var FadeAnim = _onScene.GetComponent<Animation>();
                     FadeAnim.Play();
                 }
             }
             
             public void Destroy()
             {
-                UnityEngine.Object.Destroy(onScene);
+                UnityEngine.Object.Destroy(_onScene);
             }
         }
     }

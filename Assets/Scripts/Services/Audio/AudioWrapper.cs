@@ -6,82 +6,89 @@ namespace Services.Audio
     [RequireComponent(typeof(AudioSource))]
     public class AudioWrapper : MonoBehaviour
     {
-        [SerializeField, Range(0, 1.0f)] float valueFromMastering;
-        float valueFromSettings = 1;
-        float valueFromScript;
-        [SerializeField] AudioSource audio;
-        Data.SettingsController reference;
-        bool subscribed = false;
-        bool started = false;
-        System.Action onDestroy;
+        [SerializeField, Range(0, 1.0f)] private float _valueFromMastering;
+        [SerializeField] private AudioSource _audio;
+        private float _valueFromSettings = 1;
+        private float _valueFromScript;
+        private Data.SettingsController _reference;
+        private bool _subscribed = false;
+        private bool _started = false;
+        private System.Action _onDestroy;
         
-        public void Play() => audio.Play();
-        public void Stop() => audio.Stop();
+        public void Play()
+        {
+            _audio.Play();
+        }
+        
+        public void Stop()
+        {
+            _audio.Stop();
+        }
         
         public void ChangeVolume(float NewValue)
         {
-            valueFromScript = NewValue;
+            _valueFromScript = NewValue;
             RefreshVolumes();
         }
         
-        void Start()
+        private void Start()
         {
-            if (started) return;
-            audio ??= GetComponent<AudioSource>();
-            if (!subscribed) StartCoroutine(Subscribe());
-            started = true;
+            if (_started) return;
+            _audio ??= GetComponent<AudioSource>();
+            if (!_subscribed) StartCoroutine(Subscribe());
+            _started = true;
         }
         
-        void OnEnable()
+        private void OnEnable()
         {
-            if (!started) return;
-            if (!subscribed) StartCoroutine(Subscribe());
+            if (!_started) return;
+            if (!_subscribed) StartCoroutine(Subscribe());
         }
         
-        void OnValidate()
+        private void OnValidate()
         {
             RefreshVolumes();
         }
         
-        IEnumerator Subscribe()
+        private IEnumerator Subscribe()
         {
             var Wait = new WaitForFixedUpdate();
-            reference ??= Services.DI.Single<Data.SettingsController>();
-            while (!reference.isDataLoaded) yield return Wait;
+            _reference ??= Services.DI.Single<Data.SettingsController>();
+            while (!_reference.isDataLoaded) yield return Wait;
             RefreshScale();
-            reference.Data.SoundLevel.Changed += RefreshScale;
-            onDestroy += () => reference.Data.SoundLevel.Changed -= RefreshScale;
-            subscribed = true;
+            _reference.Data.SoundLevel.Changed += RefreshScale;
+            _onDestroy += () => _reference.Data.SoundLevel.Changed -= RefreshScale;
+            _subscribed = true;
             
             void RefreshScale()
             {
-                valueFromSettings = reference.Data.SoundLevel.Value;
+                _valueFromSettings = _reference.Data.SoundLevel.Value;
                 RefreshVolumes();
             }
         }
         
-        void RefreshVolumes()
+        private void RefreshVolumes()
         {
-            this.audio.volume = valueFromSettings * valueFromScript * valueFromMastering;
+            _audio.volume = _valueFromSettings * _valueFromScript * _valueFromMastering;
         }
         
-        void OnDisable()
+        private void OnDisable()
         {
             if (gameObject == null) return;
-            if (subscribed) UnSubscribe();
+            if (_subscribed) UnSubscribe();
         }
         
-        void OnDestroy()
+        private void OnDestroy()
         {
             if (gameObject == null) return;
-            if (subscribed) UnSubscribe();
+            if (_subscribed) UnSubscribe();
         }
         
-        void UnSubscribe()
+        private void UnSubscribe()
         {
-            onDestroy?.Invoke();
-            onDestroy = null;
-            subscribed = false;
+            _onDestroy?.Invoke();
+            _onDestroy = null;
+            _subscribed = false;
         }
     }
 }
